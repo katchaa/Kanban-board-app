@@ -96,7 +96,10 @@
 		</form>
 		<p class="text-xs mb-1 text-gray-400">
 			Already have an account?
-			<span class="hover:text-black hover:underline cursor-pointer">
+			<span
+				class="hover:text-black hover:underline cursor-pointer"
+				@click="showLogin()"
+			>
 				Login here
 			</span>
 		</p>
@@ -107,6 +110,12 @@
 import { reactive, computed } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, email, sameAs, helpers } from '@vuelidate/validators'
+
+const emit = defineEmits(['toggleForm'])
+
+const showLogin = () => {
+	emit('toggleForm')
+}
 
 const user = reactive({
 	username: '',

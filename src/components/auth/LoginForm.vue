@@ -45,7 +45,10 @@
 		</form>
 		<p class="text-xs mb-1 text-gray-400">
 			Don't have an account?
-			<span class="hover:text-black hover:underline cursor-pointer">
+			<span
+				class="hover:text-black hover:underline cursor-pointer"
+				@click="showRegister()"
+			>
 				Register here
 			</span>
 		</p>
@@ -56,6 +59,11 @@
 import { reactive, computed } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, email, helpers } from '@vuelidate/validators'
+
+const emit = defineEmits(['toggleForm'])
+const showRegister = () => {
+	emit('toggleForm')
+}
 
 const user = reactive({
 	email: '',
