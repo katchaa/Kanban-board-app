@@ -7,7 +7,7 @@
 			@mouseenter="toggleTooltip()"
 			@mouseleave="toggleTooltip()"
 		>
-			<i :class="`text-white text-xl ${icon}`"></i>
+			<i :class="`text-white ${icon} text-xl`"></i>
 		</button>
 		<AppTooltip v-if="showTooltip" :msg="tooltip" />
 	</div>
