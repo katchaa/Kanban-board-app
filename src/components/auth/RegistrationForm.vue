@@ -5,37 +5,89 @@
 		<h3 class="font-semibold text-2xl text-gray-700 select-none my-2">
 			Register
 		</h3>
-		<form class="w-full flex flex-col items-center gap-3 my-2">
+		<form
+			novalidate
+			@submit.prevent="register()"
+			class="w-full flex flex-col items-center gap-3 my-2"
+		>
 			<input
 				type="text"
 				placeholder="Username"
 				class="w-full focus:outline-none p-1 rounded-sm"
+				v-model="user.username"
 			/>
+			<span
+				class="text-xs text-red-500 self-start -mt-2"
+				v-for="error in v$.username.$errors"
+				:key="error.$uid"
+			>
+				{{ error.$message }}
+			</span>
 			<input
 				type="text"
 				placeholder="First name"
 				class="w-full focus:outline-none p-1 rounded-sm"
+				v-model="user.firstName"
 			/>
+			<span
+				class="text-xs text-red-500 self-start -mt-2"
+				v-for="error in v$.firstName.$errors"
+				:key="error.$uid"
+			>
+				{{ error.$message }}
+			</span>
 			<input
 				type="text"
 				placeholder="Last name"
 				class="w-full focus:outline-none p-1 rounded-sm"
+				v-model="user.lastName"
 			/>
+			<span
+				class="text-xs text-red-500 self-start -mt-2"
+				v-for="error in v$.lastName.$errors"
+				:key="error.$uid"
+			>
+				{{ error.$message }}
+			</span>
 			<input
 				type="email"
 				placeholder="Email"
 				class="w-full focus:outline-none p-1 rounded-sm"
+				v-model="user.email"
 			/>
+			<span
+				class="text-xs text-red-500 self-start -mt-2"
+				v-for="error in v$.email.$errors"
+				:key="error.$uid"
+			>
+				{{ error.$message }}
+			</span>
 			<input
 				type="password"
 				placeholder="Password"
 				class="w-full focus:outline-none p-1 rounded-sm"
+				v-model="user.password"
 			/>
+			<span
+				class="text-xs text-red-500 self-start -mt-2"
+				v-for="error in v$.password.$errors"
+				:key="error.$uid"
+			>
+				{{ error.$message }}
+			</span>
 			<input
 				type="password"
 				placeholder="Confirm password"
 				class="w-full focus:outline-none p-1 rounded-sm"
+				v-model="user.passwordConfirm"
 			/>
+			<span
+				class="text-xs text-red-500 self-start -mt-2"
+				v-for="error in v$.passwordConfirm.$errors"
+				:key="error.$uid"
+			>
+				{{ error.$message }}
+			</span>
 			<button
 				class="self-end py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
 			>
@@ -51,4 +103,57 @@
 	</section>
 </template>
 
-<script setup></script>
+<script setup>
+import { reactive, computed } from 'vue'
+import useVuelidate from '@vuelidate/core'
+import { required, email, sameAs, helpers } from '@vuelidate/validators'
+
+const user = reactive({
+	username: '',
+	firstName: '',
+	lastName: '',
+	email: '',
+	password: '',
+	passwordConfirm: '',
+})
+
+// Validation settings
+const rules = computed(() => {
+	return {
+		username: {
+			required: helpers.withMessage('Username is required', required),
+		},
+		firstName: {
+			required: helpers.withMessage('First name is required', required),
+		},
+		lastName: {
+			required: helpers.withMessage('Last name is required', required),
+		},
+		email: {
+			required: helpers.withMessage('Email is required', required),
+			email: helpers.withMessage('Invalid email format', email),
+		},
+		password: {
+			required: helpers.withMessage('Password is required', required),
+		},
+		passwordConfirm: {
+			required: helpers.withMessage(
+				'Password confirm is required',
+				required
+			),
+			sameAs: helpers.withMessage(
+				"Passwords don't match",
+				sameAs(user.password)
+			),
+		},
+	}
+})
+const v$ = useVuelidate(rules, user)
+
+const register = async () => {
+	const result = await v$.value.$validate()
+	if (result) {
+		console.log(user)
+	}
+}
+</script>
