@@ -1,4 +1,5 @@
 <template>
-	<main>Landing page</main>
+	<div>Home nested page</div>
 </template>
+
 <script setup></script>

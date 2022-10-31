@@ -1,4 +1,5 @@
 <template>
-	<main>Landing page</main>
+	<div>Auth page</div>
 </template>
+
 <script setup></script>

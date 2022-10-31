@@ -1,4 +1,6 @@
 <template>
-	<main>Landing page</main>
+	<div>Board page</div>
+	<RouterView />
 </template>
+
 <script setup></script>
