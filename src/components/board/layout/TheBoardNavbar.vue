@@ -4,16 +4,20 @@
 	>
 		<!-- Icons -->
 		<div class="flex gap-2">
-			<AppIconButton icon="fa-solid fa-house" tooltip="Home" size="9" />
+			<AppIconButton
+				icon="fa-solid fa-house"
+				tooltip="Home"
+				class="w-9 h-9"
+			/>
 			<AppIconButton
 				icon="fa-regular fa-circle-question"
 				tooltip="Info"
-				size="9"
+				class="w-9 h-9"
 			/>
 			<AppIconButton
 				icon="fa-solid fa-plus"
 				tooltip="Add project"
-				size="9"
+				class="w-9 h-9"
 			/>
 		</div>
 		<!-- User tab -->

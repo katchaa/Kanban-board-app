@@ -1,12 +1,10 @@
 <template>
 	<div
 		class="relative flex justify-center items-center bg-white/50 rounded-md cursor-pointer hover:bg-white/70 transition duration-200"
+		@mouseenter="toggleTooltip()"
+		@mouseleave="toggleTooltip()"
 	>
-		<button
-			:class="`w-${size} h-${size}`"
-			@mouseenter="toggleTooltip()"
-			@mouseleave="toggleTooltip()"
-		>
+		<button>
 			<i :class="`text-white ${icon} text-xl`"></i>
 		</button>
 		<AppTooltip v-if="showTooltip" :msg="tooltip" />
@@ -18,10 +16,6 @@ import { ref } from 'vue'
 import AppTooltip from './AppTooltip.vue'
 defineProps({
 	icon: {
-		type: String,
-		required: true,
-	},
-	size: {
 		type: String,
 		required: true,
 	},
