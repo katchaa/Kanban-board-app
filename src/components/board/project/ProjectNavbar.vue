@@ -1,5 +1,5 @@
 <template>
-	<nav class="p-2 flex items-center gap-x-2">
+	<nav class="p-2 flex gap-x-2">
 		<div class="flex items-center relative shrink-0">
 			<button class="text-white text-xl font-semibold select-none">
 				Project name

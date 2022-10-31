@@ -1,8 +1,10 @@
 <template>
 	<TheBoardNavbar />
-	<div class="flex justify-start overflow-y-hidden">
+	<div class="flex justify-start">
 		<TheAsideNavbar />
-		<RouterView />
+		<div class="overflow-y-auto w-full">
+			<RouterView />
+		</div>
 	</div>
 </template>
 
