@@ -1,5 +1,8 @@
 <template>
 	<div>User nested page</div>
+	<UserCard />
 </template>
 
-<script setup></script>
+<script setup>
+import UserCard from '../../components/user/UserCard.vue'
+</script>
