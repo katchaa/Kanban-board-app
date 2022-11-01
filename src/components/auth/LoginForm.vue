@@ -59,6 +59,7 @@
 import { reactive, computed } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, email, helpers } from '@vuelidate/validators'
+import { useAuthStore } from '../../stores/auth'
 
 const emit = defineEmits(['toggleForm'])
 const showRegister = () => {
@@ -84,10 +85,12 @@ const rules = computed(() => {
 })
 const v$ = useVuelidate(rules, user)
 
+// Login action
+const authStore = useAuthStore()
 const login = async () => {
 	const result = await v$.value.$validate()
 	if (result) {
-		console.log(user)
+		authStore.login(user)
 	}
 }
 </script>

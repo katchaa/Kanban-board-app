@@ -7,7 +7,7 @@
 		</h3>
 		<form
 			novalidate
-			@submit.prevent="register()"
+			@submit.prevent="registration()"
 			class="w-full flex flex-col items-center gap-3 my-2"
 		>
 			<input
@@ -91,7 +91,7 @@
 			<button
 				class="self-end py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
 			>
-				Register
+				Registration
 			</button>
 		</form>
 		<p class="text-xs mb-1 text-gray-400">
@@ -110,6 +110,7 @@
 import { reactive, computed } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, email, sameAs, helpers } from '@vuelidate/validators'
+import { useAuthStore } from '../../stores/auth'
 
 const emit = defineEmits(['toggleForm'])
 
@@ -159,10 +160,12 @@ const rules = computed(() => {
 })
 const v$ = useVuelidate(rules, user)
 
-const register = async () => {
+// Registration action
+const authStore = useAuthStore()
+const registration = async () => {
 	const result = await v$.value.$validate()
 	if (result) {
-		console.log(user)
+		authStore.registration(user)
 	}
 }
 </script>
