@@ -19,6 +19,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useProjectStore } from '../../../stores/project'
+
+const props = defineProps({
+	cardId: {
+		type: String,
+		required: true,
+	},
+})
 
 //Toggle textarea
 let showTextarea = ref(false)
@@ -29,10 +38,14 @@ const toggleTextarea = () => {
 }
 
 // Add task
+const projectStore = useProjectStore()
+const route = useRoute()
 const text = ref('')
 
-const addTask = () => {
-	console.log(text.value)
-	showTextarea.value = false
+const addTask = async () => {
+	await projectStore.addTask(text.value, props.cardId).then(() => {
+		projectStore.fetchCards(route.params.projectId)
+	})
+	toggleTextarea()
 }
 </script>

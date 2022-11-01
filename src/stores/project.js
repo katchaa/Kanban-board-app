@@ -12,6 +12,7 @@ export const useProjectStore = defineStore('project', {
 		}
 	},
 	actions: {
+		// Data fetching
 		async fetchProjects() {
 			const authStore = useAuthStore()
 			if (authStore.authUser) {
@@ -22,6 +23,7 @@ export const useProjectStore = defineStore('project', {
 						},
 					})
 					.then((res) => {
+						this.projects = []
 						this.projects.push(...res.data)
 					})
 					.catch((err) => console.log(err))
@@ -61,6 +63,35 @@ export const useProjectStore = defineStore('project', {
 				})
 				.catch((err) => console.log(err))
 			// console.log('tasks ', this.tasks)
+		},
+
+		// Tasks actions
+		async addTask(text, cardId) {
+			// Task post
+			const newTask = {
+				id: nanoid(),
+				text,
+				cardId,
+			}
+			await axios
+				.post('http://localhost:3001/tasks', newTask)
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+			// Edit card tasks array
+			const card = this.cards.find((card) => card.id === cardId)
+			let tasks = this.tasks
+			if (card.tasks.length) {
+				tasks = [...card.tasks, newTask.id]
+			} else {
+				tasks = [newTask.id]
+			}
+
+			await axios
+				.patch(`http://localhost:3001/cards/${card.id}`, {
+					tasks,
+				})
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
 		},
 	},
 })
