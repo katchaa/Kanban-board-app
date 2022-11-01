@@ -70,6 +70,7 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
+import { useProjectStore } from '../../../stores/project'
 import AppIconButton from '../../AppIconButton.vue'
 
 // User menu popup toggle
@@ -84,11 +85,13 @@ const user = computed(() => {
 })
 
 // Logout user
+const projectStore = useProjectStore()
 const router = useRouter()
 const logout = () => {
 	toggleUserMenu()
 	authStore.logout()
 	router.push({ name: 'auth' })
+	projectStore.$reset()
 }
 </script>
 
