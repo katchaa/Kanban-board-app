@@ -20,6 +20,7 @@ const router = createRouter({
 				import(
 					/*webpackChunkName: "board-view"*/ '@/views/BoardView.vue'
 				),
+			redirect: { name: 'projectHome' },
 			children: [
 				{
 					path: 'home',

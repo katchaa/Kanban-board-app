@@ -111,6 +111,7 @@ import { reactive, computed } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, email, sameAs, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '../../stores/auth'
+import { useRouter } from 'vue-router'
 
 const emit = defineEmits(['toggleForm'])
 
@@ -162,10 +163,12 @@ const v$ = useVuelidate(rules, user)
 
 // Registration action
 const authStore = useAuthStore()
+const router = useRouter()
 const registration = async () => {
 	const result = await v$.value.$validate()
 	if (result) {
-		authStore.registration(user)
+		await authStore.registration(user)
+		router.push({ name: 'board', params: { userId: authStore.authUser } })
 	}
 }
 </script>

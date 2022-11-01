@@ -57,6 +57,7 @@
 
 <script setup>
 import { reactive, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import useVuelidate from '@vuelidate/core'
 import { required, email, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '../../stores/auth'
@@ -87,10 +88,12 @@ const v$ = useVuelidate(rules, user)
 
 // Login action
 const authStore = useAuthStore()
+const router = useRouter()
 const login = async () => {
 	const result = await v$.value.$validate()
 	if (result) {
-		authStore.login(user)
+		await authStore.login(user)
+		router.push({ name: 'board', params: { userId: authStore.authUser } })
 	}
 }
 </script>
