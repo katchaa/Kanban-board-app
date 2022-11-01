@@ -70,5 +70,8 @@ export const useAuthStore = defineStore('auth', {
 				.catch((err) => console.log(err))
 			await this.fetchUser()
 		},
+		async logout() {
+			localStorage.removeItem('user')
+		},
 	},
 })

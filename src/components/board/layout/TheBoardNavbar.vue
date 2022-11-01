@@ -56,7 +56,7 @@
 					</RouterLink>
 					<li
 						class="rounded-b-md px-3 pb-1 hover:bg-gray-200/50 transition duration-200 cursor-pointer"
-						@click="toggleUserMenu()"
+						@click="logout()"
 					>
 						Logout
 					</li>
@@ -68,6 +68,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
 import AppIconButton from '../../AppIconButton.vue'
 
@@ -81,6 +82,14 @@ const authStore = useAuthStore()
 const user = computed(() => {
 	return authStore.user
 })
+
+// Logout user
+const router = useRouter()
+const logout = () => {
+	toggleUserMenu()
+	authStore.logout()
+	router.push({ name: 'auth' })
+}
 </script>
 
 <style>
