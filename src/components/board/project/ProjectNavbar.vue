@@ -1,17 +1,25 @@
 <template>
 	<nav class="p-2 flex gap-x-2">
 		<div class="flex items-center relative shrink-0">
-			<button class="text-white text-xl font-semibold select-none">
-				{{ project.projectName }}
+			<button
+				class="text-white text-xl font-semibold select-none"
+				@click="togglePopup"
+			>
+				{{ project?.projectName }}
 				<i class="fa-solid fa-chevron-down text-sm ml-1"></i>
 			</button>
+			<AppPopup
+				v-if="showPopup"
+				@edit-mode="showEditModal()"
+				@delete-mode="showDeleteModal()"
+			/>
 		</div>
 		<span class="text-white/40 text-xl mx-1">|</span>
 		<div
 			class="bg-white/50 rounded-md flex justify-center items-center shrink-0"
 		>
 			<p class="text-white text-lg px-4 select-none">
-				{{ project.companyName }}
+				{{ project?.companyName }}
 			</p>
 		</div>
 		<AppIconButton
@@ -33,6 +41,7 @@ import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 import AppIconButton from '../../AppIconButton.vue'
 import NewCardModal from '@/components/board/modals/NewCardModal.vue'
+import AppPopup from '../../AppPopup.vue'
 
 const projectStore = useProjectStore()
 const route = useRoute()
@@ -46,5 +55,11 @@ const project = computed(() => {
 const showNewCardModal = ref(false)
 const toggleNewCardModal = () => {
 	showNewCardModal.value = !showNewCardModal.value
+}
+
+// Toggle popup
+const showPopup = ref(false)
+const togglePopup = () => {
+	showPopup.value = !showPopup.value
 }
 </script>
