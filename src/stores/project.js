@@ -65,6 +65,33 @@ export const useProjectStore = defineStore('project', {
 			// console.log('tasks ', this.tasks)
 		},
 
+		// Projects actions
+		async addProject(projectData, userId) {
+			const newProject = {
+				id: nanoid(),
+				...projectData,
+				cards: [],
+				userId,
+			}
+			await axios
+				.post('http://localhost:3001/projects', newProject)
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+
+			const authStore = useAuthStore()
+			const user = authStore.user
+			let projects = this.projects
+			if (user.projects.length) {
+				projects = [...user.projects, newProject.id]
+			} else {
+				projects = [newProject.id]
+			}
+			await axios
+				.patch(`http://localhost:3001/users/${user.id}`, { projects })
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+		},
+
 		// Cards actions
 		async addCard(title, projectId) {
 			// Card post

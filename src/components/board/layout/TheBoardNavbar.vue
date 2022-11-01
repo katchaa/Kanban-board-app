@@ -22,6 +22,11 @@
 				icon="fa-solid fa-plus"
 				tooltip="Add project"
 				class="w-9 h-9"
+				@click="toggleNewProjectModal()"
+			/>
+			<NewProjectModal
+				:show="showNewProjectModal"
+				@close-modal="toggleNewProjectModal()"
 			/>
 		</div>
 		<!-- User tab -->
@@ -72,6 +77,7 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
 import AppIconButton from '../../AppIconButton.vue'
+import NewProjectModal from '../modals/NewProjectModal.vue'
 
 // User menu popup toggle
 const showUserMenu = ref(false)
@@ -92,6 +98,12 @@ const logout = () => {
 	authStore.logout()
 	router.push({ name: 'auth' })
 	projectStore.$reset()
+}
+
+// Toggle new project modal
+const showNewProjectModal = ref(false)
+const toggleNewProjectModal = () => {
+	showNewProjectModal.value = !showNewProjectModal.value
 }
 </script>
 
