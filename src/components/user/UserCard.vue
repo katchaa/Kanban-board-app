@@ -7,10 +7,10 @@
 			<header class="flex items-center gap-4">
 				<img
 					class="w-14 h-14 rounded-full -ml-1"
-					src="../../../public/img/groot.jpg"
-					alt=""
+					:src="`/img/${user.avatar}`"
+					:alt="user.username"
 				/>
-				<h2 class="text-lg font-semibold">User name</h2>
+				<h2 class="text-lg font-semibold">{{ user.username }}</h2>
 			</header>
 			<main class="flex gap-5">
 				<div>
@@ -18,8 +18,8 @@
 					<p class="font-semibold">Email:</p>
 				</div>
 				<div>
-					<p>User full name</p>
-					<p>User email</p>
+					<p>{{ authStore.getFullName }}</p>
+					<p>{{ user.email }}</p>
 				</div>
 			</main>
 			<button
@@ -122,6 +122,7 @@
 import { ref, reactive, computed } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
+import { useAuthStore } from '../../stores/auth'
 
 // Toggle edit form
 const editUserForm = ref(false)
@@ -129,14 +130,20 @@ const toggleEdit = () => {
 	editUserForm.value = !editUserForm.value
 }
 
-// Edit user data
-const userData = reactive({
-	username: '',
-	firstName: '',
-	lastName: '',
+// User data from store
+const authStore = useAuthStore()
+const user = computed(() => {
+	return authStore.user
 })
 
-//Validation settings
+// Edit user data
+let userData = reactive({
+	username: user.value.username,
+	firstName: user.value.firstName,
+	lastName: user.value.lastName,
+})
+
+// Validation settings
 const rules = computed(() => {
 	return {
 		username: {

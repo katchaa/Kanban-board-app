@@ -6,8 +6,13 @@ export const useAuthStore = defineStore('auth', {
 	state: () => {
 		return {
 			user: {},
-			authUser: null,
+			authUser: localStorage.getItem('user'),
 		}
+	},
+	getters: {
+		getFullName() {
+			return `${this.user.firstName} ${this.user.lastName}`
+		},
 	},
 	actions: {
 		async fetchUser() {

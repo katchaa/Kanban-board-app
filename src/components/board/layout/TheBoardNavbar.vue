@@ -4,11 +4,15 @@
 	>
 		<!-- Icons -->
 		<div class="flex gap-2">
-			<AppIconButton
-				icon="fa-solid fa-house"
-				tooltip="Home"
-				class="w-9 h-9"
-			/>
+			<RouterLink
+				:to="{ name: 'projectHome', params: { userId: user.id } }"
+			>
+				<AppIconButton
+					icon="fa-solid fa-house"
+					tooltip="Home"
+					class="w-9 h-9"
+				/>
+			</RouterLink>
 			<AppIconButton
 				icon="fa-regular fa-circle-question"
 				tooltip="Info"
@@ -28,11 +32,11 @@
 			>
 				<img
 					class="w-9 h-9 rounded-full"
-					src="../../../../public/img/groot.jpg"
-					alt=""
+					:src="`/img/${user.avatar}`"
+					:alt="user.username"
 				/>
 				<p class="font-semibold text-white ml-1 select-none">
-					User name
+					{{ user.username }}
 				</p>
 				<i class="fa-solid fa-chevron-down text-sm text-white"></i>
 			</div>
@@ -42,13 +46,17 @@
 					class="text-right absolute top-10 right-0 bg-white rounded-md"
 					v-if="showUserMenu"
 				>
-					<li
-						class="rounded-t-md px-3 pt-1 mb-0.5 hover:bg-gray-200/50 transition duration-200 cursor-pointer"
-					>
-						Profile
-					</li>
+					<RouterLink :to="{ name: 'user' }">
+						<li
+							class="rounded-t-md px-3 pt-1 mb-0.5 hover:bg-gray-200/50 transition duration-200 cursor-pointer"
+							@click="toggleUserMenu()"
+						>
+							Profile
+						</li>
+					</RouterLink>
 					<li
 						class="rounded-b-md px-3 pb-1 hover:bg-gray-200/50 transition duration-200 cursor-pointer"
+						@click="toggleUserMenu()"
 					>
 						Logout
 					</li>
@@ -59,7 +67,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useAuthStore } from '../../../stores/auth'
 import AppIconButton from '../../AppIconButton.vue'
 
 // User menu popup toggle
@@ -67,6 +76,11 @@ const showUserMenu = ref(false)
 const toggleUserMenu = () => {
 	showUserMenu.value = !showUserMenu.value
 }
+
+const authStore = useAuthStore()
+const user = computed(() => {
+	return authStore.user
+})
 </script>
 
 <style>

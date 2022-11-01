@@ -11,4 +11,8 @@
 <script setup>
 import TheAsideNavbar from '../components/board/layout/TheAsideNavbar.vue'
 import TheBoardNavbar from '../components/board/layout/TheBoardNavbar.vue'
+import { useAuthStore } from '../stores/auth'
+
+const authStore = useAuthStore()
+await authStore.fetchUser()
 </script>
