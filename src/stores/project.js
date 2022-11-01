@@ -65,6 +65,37 @@ export const useProjectStore = defineStore('project', {
 			// console.log('tasks ', this.tasks)
 		},
 
+		// Cards actions
+		async addCard(title, projectId) {
+			// Card post
+			const newCard = {
+				id: nanoid(),
+				title,
+				tasks: [],
+				projectId,
+			}
+			await axios
+				.post('http://localhost:3001/cards', newCard)
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+			// Edit project cards array
+			const project = this.projects.find(
+				(project) => project.id === projectId
+			)
+			let cards = this.cards
+			if (project.cards.length) {
+				cards = [...project.cards, newCard.id]
+			} else {
+				cards = [newCard.id]
+			}
+			await axios
+				.patch(`http://localhost:3001/projects/${project.id}`, {
+					cards,
+				})
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+		},
+
 		// Tasks actions
 		async addTask(text, cardId) {
 			// Task post

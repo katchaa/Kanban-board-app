@@ -18,15 +18,21 @@
 			icon="fa-solid fa-plus"
 			tooltip="Add card"
 			class="w-7 h-7"
+			@click="toggleNewCardModal()"
+		/>
+		<NewCardModal
+			:show="showNewCardModal"
+			@close-modal="toggleNewCardModal()"
 		/>
 	</nav>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 import AppIconButton from '../../AppIconButton.vue'
+import NewCardModal from '@/components/board/modals/NewCardModal.vue'
 
 const projectStore = useProjectStore()
 const route = useRoute()
@@ -35,4 +41,10 @@ const project = computed(() => {
 		(project) => project.id === route.params.projectId
 	)
 })
+
+// Add new card modal
+const showNewCardModal = ref(false)
+const toggleNewCardModal = () => {
+	showNewCardModal.value = !showNewCardModal.value
+}
 </script>
