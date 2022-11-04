@@ -9,7 +9,7 @@
 				<i class="fa-solid fa-chevron-down text-sm ml-1"></i>
 			</button>
 			<AppPopup
-				v-if="showPopup"
+				:show="showPopup"
 				@edit-mode="toggleEditModal()"
 				@delete-mode="toggleDeleteModal()"
 			/>

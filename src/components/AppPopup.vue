@@ -1,6 +1,7 @@
 <template>
 	<div
 		class="flex flex-col gap-1 absolute top-6 -right-16 z-20 bg-gray-300/90 rounded-md"
+		v-if="props.show"
 	>
 		<button
 			class="flex justify-between items-center text-sm px-2 pt-1 pb-0.5 rounded-t-md hover:bg-gray-400/50 transition-all duration-300"
@@ -21,6 +22,12 @@
 </template>
 
 <script setup>
+const props = defineProps({
+	show: {
+		type: Boolean,
+		required: true,
+	},
+})
 const emit = defineEmits(['editMode', 'deleteMode'])
 
 const editMode = () => {

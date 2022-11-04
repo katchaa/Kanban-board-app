@@ -13,7 +13,7 @@
 			></i>
 		</div>
 		<AppPopup
-			v-if="showPopup"
+			:show="showPopup"
 			@edit-mode="toggleEditModal()"
 			@delete-mode="toggleDeleteModal()"
 		/>
