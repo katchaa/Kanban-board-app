@@ -14,8 +14,13 @@
 		</div>
 		<AppPopup
 			v-if="showPopup"
-			@edit-mode="showEditModal()"
+			@edit-mode="toggleEditModal()"
 			@delete-mode="toggleDeleteModal()"
+		/>
+		<EditCardModal
+			:card="props.card"
+			:show="editModal"
+			@close-edit-modal="toggleEditModal()"
 		/>
 		<DeleteModal
 			type="card"
@@ -37,6 +42,7 @@ import ProjectTask from './ProjectTask.vue'
 import AddNewTask from './AddNewTask.vue'
 import AppPopup from '../../AppPopup.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
+import EditCardModal from '../modals/EditCardModal.vue'
 
 const props = defineProps({
 	card: {
@@ -64,6 +70,13 @@ const togglePopup = () => {
 const deleteModal = ref(false)
 const toggleDeleteModal = () => {
 	deleteModal.value = !deleteModal.value
+	showPopup.value = false
+}
+
+// Toggle edit modal
+const editModal = ref(false)
+const toggleEditModal = () => {
+	editModal.value = !editModal.value
 	showPopup.value = false
 }
 </script>
