@@ -106,16 +106,3 @@ const toggleNewProjectModal = () => {
 	showNewProjectModal.value = !showNewProjectModal.value
 }
 </script>
-
-<style>
-.popup-enter-from,
-.popup-leave-to {
-	opacity: 0;
-	transform: scale(0.7);
-}
-
-.popup-enter-active,
-.popup-leave-active {
-	transition: all 0.3s;
-}
-</style>
