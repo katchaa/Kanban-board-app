@@ -11,8 +11,16 @@
 			<AppPopup
 				v-if="showPopup"
 				@edit-mode="showEditModal()"
-				@delete-mode="showDeleteModal()"
+				@delete-mode="toggleDeleteModal()"
 			/>
+			<DeleteModal
+				type="project"
+				:id="project.id"
+				:show="deleteModal"
+				@close-delete-modal="toggleDeleteModal()"
+			>
+				Are you sure to delete {{ project.projectName }}?
+			</DeleteModal>
 		</div>
 		<span class="text-white/40 text-xl mx-1">|</span>
 		<div
@@ -22,6 +30,7 @@
 				{{ project?.companyName }}
 			</p>
 		</div>
+		<!-- Showing new card modal form -->
 		<AppIconButton
 			icon="fa-solid fa-plus"
 			tooltip="Add card"
@@ -42,6 +51,7 @@ import { useProjectStore } from '../../../stores/project'
 import AppIconButton from '../../AppIconButton.vue'
 import NewCardModal from '@/components/board/modals/NewCardModal.vue'
 import AppPopup from '../../AppPopup.vue'
+import DeleteModal from '../modals/DeleteModal.vue'
 
 const projectStore = useProjectStore()
 const route = useRoute()
@@ -61,5 +71,12 @@ const toggleNewCardModal = () => {
 const showPopup = ref(false)
 const togglePopup = () => {
 	showPopup.value = !showPopup.value
+}
+
+// Delete modal
+const deleteModal = ref(false)
+const toggleDeleteModal = () => {
+	deleteModal.value = !deleteModal.value
+	showPopup.value = false
 }
 </script>

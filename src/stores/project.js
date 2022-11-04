@@ -92,6 +92,39 @@ export const useProjectStore = defineStore('project', {
 				.catch((err) => console.log(err))
 		},
 
+		async deleteProject(projectId) {
+			// Edit user projects array
+			const authStore = useAuthStore()
+			const user = authStore.user
+
+			const projectToDelete = user.projects.indexOf(projectId)
+			user.projects.splice(projectToDelete, 1)
+			await axios
+				.patch(`http://localhost:3001/users/${user.id}`, {
+					projects: user.projects,
+				})
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+			console.log(projectToDelete)
+
+			// Delete project's cards
+			const cards = this.cards.filter(
+				(card) => card.projectId === projectId
+			)
+			cards.forEach((card) => {
+				axios
+					.delete(`http://localhost:3001/cards/${card.id}`)
+					.then((res) => console.log(res.data))
+					.catch((err) => console.log(err))
+			})
+
+			// Delete current project
+			await axios
+				.delete(`http://localhost:3001/projects/${projectId}`)
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+		},
+
 		// Cards actions
 		async addCard(title, projectId) {
 			// Card post
