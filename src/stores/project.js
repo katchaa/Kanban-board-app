@@ -92,6 +92,13 @@ export const useProjectStore = defineStore('project', {
 				.catch((err) => console.log(err))
 		},
 
+		async editProject(projectId, data) {
+			await axios
+				.patch(`http://localhost:3001/projects/${projectId}`, data)
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+		},
+
 		async deleteProject(projectId) {
 			// Edit user projects array
 			const authStore = useAuthStore()

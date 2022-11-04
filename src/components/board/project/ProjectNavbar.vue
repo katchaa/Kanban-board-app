@@ -10,8 +10,12 @@
 			</button>
 			<AppPopup
 				v-if="showPopup"
-				@edit-mode="showEditModal()"
+				@edit-mode="toggleEditModal()"
 				@delete-mode="toggleDeleteModal()"
+			/>
+			<EditProjectModal
+				:show="editModal"
+				@close-edit-modal="toggleEditModal()"
 			/>
 			<DeleteModal
 				type="project"
@@ -52,6 +56,7 @@ import AppIconButton from '../../AppIconButton.vue'
 import NewCardModal from '@/components/board/modals/NewCardModal.vue'
 import AppPopup from '../../AppPopup.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
+import EditProjectModal from '../modals/EditProjectModal.vue'
 
 const projectStore = useProjectStore()
 const route = useRoute()
@@ -77,6 +82,13 @@ const togglePopup = () => {
 const deleteModal = ref(false)
 const toggleDeleteModal = () => {
 	deleteModal.value = !deleteModal.value
+	showPopup.value = false
+}
+
+// Edit modal
+const editModal = ref(false)
+const toggleEditModal = () => {
+	editModal.value = !editModal.value
 	showPopup.value = false
 }
 </script>
