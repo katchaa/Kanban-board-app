@@ -156,6 +156,27 @@ export const useProjectStore = defineStore('project', {
 				.catch((err) => console.log(err))
 		},
 
+		async deleteCard(cardId) {
+			// Edit project cards array
+			const project = this.projects.find((project) =>
+				project.cards.includes(cardId)
+			)
+			const cardToDelete = project.cards.indexOf(cardId)
+			project.cards.splice(cardToDelete, 1)
+			await axios
+				.patch(`http://localhost:3001/projects/${project.id}`, {
+					cards: project.cards,
+				})
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+
+			//Delete current card
+			await axios
+				.delete(`http://localhost:3001/cards/${cardId}`)
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
+		},
+
 		// Tasks actions
 		async addTask(text, cardId) {
 			// Task post

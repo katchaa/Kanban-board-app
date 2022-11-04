@@ -55,6 +55,8 @@ const projectStore = useProjectStore()
 const deleteItem = async () => {
 	if (props.type === 'project') {
 		await projectStore.deleteProject(props.id)
+	} else if (props.type === 'card') {
+		await projectStore.deleteCard(props.id)
 	}
 	emit('closeDeleteModal')
 }

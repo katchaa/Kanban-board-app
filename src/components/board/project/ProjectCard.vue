@@ -15,8 +15,16 @@
 		<AppPopup
 			v-if="showPopup"
 			@edit-mode="showEditModal()"
-			@delete-mode="showDeleteModal()"
+			@delete-mode="toggleDeleteModal()"
 		/>
+		<DeleteModal
+			type="card"
+			:id="props.card.id"
+			:show="deleteModal"
+			@close-delete-modal="toggleDeleteModal()"
+		>
+			Are you sure to delete {{ props.card.title }} card?
+		</DeleteModal>
 		<ProjectTask v-for="task in tasks" :key="task.id" :task="task" />
 		<AddNewTask :cardId="card.id" />
 	</section>
@@ -28,6 +36,7 @@ import { useProjectStore } from '../../../stores/project'
 import ProjectTask from './ProjectTask.vue'
 import AddNewTask from './AddNewTask.vue'
 import AppPopup from '../../AppPopup.vue'
+import DeleteModal from '../modals/DeleteModal.vue'
 
 const props = defineProps({
 	card: {
@@ -49,5 +58,12 @@ const tasks = computed(() => {
 const showPopup = ref(false)
 const togglePopup = () => {
 	showPopup.value = !showPopup.value
+}
+
+// Toggle delete modal
+const deleteModal = ref(false)
+const toggleDeleteModal = () => {
+	deleteModal.value = !deleteModal.value
+	showPopup.value = false
 }
 </script>
