@@ -10,8 +10,13 @@
 		></i>
 		<AppPopup
 			v-if="showPopup"
-			@edit-mode="showEditModal()"
+			@edit-mode="toggleEditModal()"
 			@delete-mode="toggleDeleteModal()"
+		/>
+		<EditTaskModal
+			:task="props.task"
+			:show="editModal"
+			@close-edit-modal="toggleEditModal()"
 		/>
 		<DeleteModal
 			type="task"
@@ -28,6 +33,7 @@
 import { ref } from 'vue'
 import AppPopup from '../../AppPopup.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
+import EditTaskModal from '../modals/EditTaskModal.vue'
 
 const props = defineProps({
 	task: {
@@ -46,6 +52,13 @@ const togglePopup = () => {
 const deleteModal = ref(false)
 const toggleDeleteModal = () => {
 	deleteModal.value = !deleteModal.value
+	showPopup.value = false
+}
+
+// Toggle edit modal
+const editModal = ref(false)
+const toggleEditModal = () => {
+	editModal.value = !editModal.value
 	showPopup.value = false
 }
 </script>

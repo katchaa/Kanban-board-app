@@ -219,6 +219,13 @@ export const useProjectStore = defineStore('project', {
 				.catch((err) => console.log(err))
 		},
 
+		async editTask(taskId, text) {
+			await axios
+				.patch(`http://localhost:3001/tasks/${taskId}`, { text })
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+		},
+
 		async deleteTask(taskId) {
 			// Edit card tasks array
 			const card = this.cards.find((card) => card.tasks.includes(taskId))
