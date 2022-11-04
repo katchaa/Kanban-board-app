@@ -1,7 +1,7 @@
 <template>
 	<TheBoardNavbar />
 	<div class="flex justify-start">
-		<TheAsideNavbar />
+		<TheAsideNavbar v-if="projects.length" />
 		<div class="overflow-y-auto w-full">
 			<RouterView />
 		</div>
@@ -9,6 +9,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import TheAsideNavbar from '../components/board/layout/TheAsideNavbar.vue'
 import TheBoardNavbar from '../components/board/layout/TheBoardNavbar.vue'
 import { useAuthStore } from '../stores/auth'
@@ -18,4 +19,6 @@ const authStore = useAuthStore()
 const projectStore = useProjectStore()
 await authStore.fetchUser()
 await projectStore.fetchProjects()
+
+const projects = computed(() => projectStore.projects)
 </script>
