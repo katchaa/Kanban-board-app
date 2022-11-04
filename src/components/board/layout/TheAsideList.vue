@@ -7,15 +7,15 @@
 		<RouterLink
 			:to="{
 				name: 'project',
-				params: { userId: project.userId, projectId: project.id },
+				params: { userId: project?.userId, projectId: project?.id },
 			}"
 			v-for="project in projects"
-			:key="project.id"
+			:key="project?.id"
 		>
 			<img
 				class="w-9 h-9 rounded"
-				:src="`/img/${project.avatar}`"
-				:alt="project.projectName"
+				:src="`/img/${project?.avatar}`"
+				:alt="project?.projectName"
 			/>
 		</RouterLink>
 	</div>

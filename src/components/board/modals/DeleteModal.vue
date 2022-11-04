@@ -28,12 +28,12 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 
 const props = defineProps({
 	id: {
 		type: String,
-		required: true,
 	},
 	type: {
 		type: String,
@@ -52,12 +52,21 @@ const cancelDelete = () => {
 
 // Delete selected item
 const projectStore = useProjectStore()
+const router = useRouter()
+const route = useRoute()
 const deleteItem = async () => {
 	if (props.type === 'project') {
 		await projectStore.deleteProject(props.id)
+		router.push({
+			name: 'projectHome',
+			params: { userId: route.params.userId },
+		})
 	} else if (props.type === 'card') {
 		await projectStore.deleteCard(props.id)
+	} else if (props.type === 'task') {
+		await projectStore.deleteTask(props.id)
 	}
 	emit('closeDeleteModal')
+	await projectStore.fetchProjects()
 }
 </script>

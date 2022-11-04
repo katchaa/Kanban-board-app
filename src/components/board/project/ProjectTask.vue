@@ -11,14 +11,23 @@
 		<AppPopup
 			v-if="showPopup"
 			@edit-mode="showEditModal()"
-			@delete-mode="showDeleteModal()"
+			@delete-mode="toggleDeleteModal()"
 		/>
+		<DeleteModal
+			type="task"
+			:id="props.task.id"
+			:show="deleteModal"
+			@close-delete-modal="toggleDeleteModal()"
+		>
+			Are you sure to delete current task?
+		</DeleteModal>
 	</div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import AppPopup from '../../AppPopup.vue'
+import DeleteModal from '../modals/DeleteModal.vue'
 
 const props = defineProps({
 	task: {
@@ -31,5 +40,12 @@ const props = defineProps({
 const showPopup = ref(false)
 const togglePopup = () => {
 	showPopup.value = !showPopup.value
+}
+
+// Toggle delete modal
+const deleteModal = ref(false)
+const toggleDeleteModal = () => {
+	deleteModal.value = !deleteModal.value
+	showPopup.value = false
 }
 </script>

@@ -96,7 +96,6 @@ export const useProjectStore = defineStore('project', {
 			// Edit user projects array
 			const authStore = useAuthStore()
 			const user = authStore.user
-
 			const projectToDelete = user.projects.indexOf(projectId)
 			user.projects.splice(projectToDelete, 1)
 			await axios
@@ -111,8 +110,8 @@ export const useProjectStore = defineStore('project', {
 			const cards = this.cards.filter(
 				(card) => card.projectId === projectId
 			)
-			cards.forEach((card) => {
-				axios
+			cards.forEach(async (card) => {
+				await axios
 					.delete(`http://localhost:3001/cards/${card.id}`)
 					.then((res) => console.log(res.data))
 					.catch((err) => console.log(err))
@@ -173,7 +172,7 @@ export const useProjectStore = defineStore('project', {
 			//Delete current card
 			await axios
 				.delete(`http://localhost:3001/cards/${cardId}`)
-				.then((res) => console.log(res))
+				.then((res) => console.log(res.data))
 				.catch((err) => console.log(err))
 		},
 
@@ -202,6 +201,25 @@ export const useProjectStore = defineStore('project', {
 				.patch(`http://localhost:3001/cards/${card.id}`, {
 					tasks,
 				})
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+		},
+
+		async deleteTask(taskId) {
+			// Edit card tasks array
+			const card = this.cards.find((card) => card.tasks.includes(taskId))
+			const taskToDelete = card.tasks.indexOf(taskId)
+			card.tasks.splice(taskToDelete, 1)
+			await axios
+				.patch(`http://localhost:3001/cards/${card.id}`, {
+					tasks: card.tasks,
+				})
+				.then((res) => console.log(res.data))
+				.catch((err) => console.log(err))
+
+			// Delete current task
+			await axios
+				.delete(`http://localhost:3001/tasks/${taskId}`)
 				.then((res) => console.log(res.data))
 				.catch((err) => console.log(err))
 		},

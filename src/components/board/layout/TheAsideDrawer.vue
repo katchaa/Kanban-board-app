@@ -6,10 +6,10 @@
 		></i>
 		<RouterLink
 			v-for="project in projects"
-			:key="project.id"
+			:key="project?.id"
 			:to="{
 				name: 'project',
-				params: { userId: project.userId, projectId: project.id },
+				params: { userId: project?.userId, projectId: project?.id },
 			}"
 		>
 			<div
@@ -17,13 +17,13 @@
 			>
 				<img
 					class="w-9 h-9 rounded"
-					:src="`/img/${project.avatar}`"
-					:alt="project.projectName"
+					:src="`/img/${project?.avatar}`"
+					:alt="project?.projectName"
 				/>
 				<p
 					class="text-lg text-white font-semibold truncate whitespace-nowrap overflow-hidden"
 				>
-					{{ project.projectName }}
+					{{ project?.projectName }}
 				</p>
 			</div>
 		</RouterLink>

@@ -15,11 +15,11 @@
 			/>
 			<DeleteModal
 				type="project"
-				:id="project.id"
+				:id="project?.id"
 				:show="deleteModal"
 				@close-delete-modal="toggleDeleteModal()"
 			>
-				Are you sure to delete {{ project.projectName }}?
+				Are you sure to delete {{ project?.projectName }}?
 			</DeleteModal>
 		</div>
 		<span class="text-white/40 text-xl mx-1">|</span>
