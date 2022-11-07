@@ -49,6 +49,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useProjectStore } from '../../../stores/project'
+import { findById } from '../../../helpers/project'
 import ProjectTask from './ProjectTask.vue'
 import AddNewTask from './AddNewTask.vue'
 import AppPopup from '../../AppPopup.vue'
@@ -66,7 +67,7 @@ const projectStore = useProjectStore()
 const tasks = computed(() => {
 	let currTasks = []
 	props.card?.tasks.forEach((taskId) => {
-		currTasks.push(projectStore.tasks?.find((task) => task.id === taskId))
+		currTasks.push(findById(projectStore.tasks, taskId))
 	})
 	return currTasks
 })

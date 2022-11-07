@@ -41,6 +41,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useProjectStore } from '../../../stores/project'
+import { findById } from '../../../helpers/project'
 
 const props = defineProps({
 	card: {
@@ -55,7 +56,7 @@ const props = defineProps({
 // Card title to edit
 const projectStore = useProjectStore()
 const currCard = computed(() => {
-	return projectStore.cards.find((card) => card.id === props.card.id)
+	return findById(projectStore.cards, props.card.id)
 })
 const title = ref(currCard.value.title)
 

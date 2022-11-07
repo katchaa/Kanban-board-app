@@ -57,13 +57,12 @@ import NewCardModal from '@/components/board/modals/NewCardModal.vue'
 import AppPopup from '../../AppPopup.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
 import EditProjectModal from '../modals/EditProjectModal.vue'
+import { findById } from '../../../helpers/project'
 
 const projectStore = useProjectStore()
 const route = useRoute()
 const project = computed(() => {
-	return projectStore.projects.find(
-		(project) => project.id === route.params.projectId
-	)
+	return findById(projectStore.projects, route.params.projectId)
 })
 
 // Add new card modal

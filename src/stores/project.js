@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
 import { useAuthStore } from './auth'
+import { findById } from '../helpers/project'
 
 export const useProjectStore = defineStore('project', {
 	state: () => {
@@ -144,10 +145,7 @@ export const useProjectStore = defineStore('project', {
 				.post('http://localhost:3001/cards', newCard)
 				.then((res) => console.log(res.data))
 				.catch((err) => console.log(err))
-			// Edit project cards array
-			const project = this.projects.find(
-				(project) => project.id === projectId
-			)
+			const project = findById(this.projects, projectId)
 			let cards = this.cards
 			if (project.cards.length) {
 				cards = [...project.cards, newCard.id]
@@ -203,7 +201,7 @@ export const useProjectStore = defineStore('project', {
 				.then((res) => console.log(res.data))
 				.catch((err) => console.log(err))
 			// Edit card tasks array
-			const card = this.cards.find((card) => card.id === cardId)
+			const card = findById(this.cards, cardId)
 			let tasks = this.tasks
 			if (card.tasks.length) {
 				tasks = [...card.tasks, newTask.id]
@@ -246,9 +244,9 @@ export const useProjectStore = defineStore('project', {
 		},
 
 		async dragAndDrop(cardId, taskId) {
-			const task = this.tasks.find((task) => task.id === taskId)
-			const nextCard = this.cards.find((card) => card.id === cardId)
-			const prevCard = this.cards.find((card) => card.id === task.cardId)
+			const task = findById(this.tasks, taskId)
+			const nextCard = findById(this.cards, cardId)
+			const prevCard = findById(this.cards, task.cardId)
 
 			const nextCardTasks = [...nextCard.tasks, task.id]
 			const prevCardTasks = [...prevCard.tasks]

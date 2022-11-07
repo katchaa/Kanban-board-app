@@ -41,6 +41,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { findById } from '../../../helpers/project'
 import { useProjectStore } from '../../../stores/project'
 
 const props = defineProps({
@@ -57,7 +58,7 @@ const props = defineProps({
 // Task text to edit
 const projectStore = useProjectStore()
 const currTask = computed(() => {
-	return projectStore.tasks?.find((task) => task?.id === props.task?.id)
+	return findById(projectStore.tasks, props.task.id)
 })
 const text = ref(currTask.value?.text)
 

@@ -54,6 +54,7 @@
 import { reactive, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
+import { findById } from '../../../helpers/project'
 
 const props = defineProps({
 	show: {
@@ -67,9 +68,7 @@ const projectId = ref(route.params.projectId)
 
 const projectStore = useProjectStore()
 const currProject = computed(() => {
-	return projectStore.projects.find(
-		(project) => project.id === projectId.value
-	)
+	return findById(projectStore.projects, projectId.value)
 })
 
 // Project data to edit
