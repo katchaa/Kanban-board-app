@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
+import { handlePost } from '../helpers/project'
 
 export const useAuthStore = defineStore('auth', {
 	state: () => {
@@ -41,13 +42,7 @@ export const useAuthStore = defineStore('auth', {
 				projects: [],
 				avatar: 'groot.jpg',
 			}
-			await axios
-				.post('http://localhost:3001/users', newUser)
-				.then((res) => {
-					localStorage.setItem('user', newUser.id)
-					this.authUser = newUser.id
-					console.log(res.data)
-				})
+			await handlePost('users', newUser)
 			await this.fetchUser()
 		},
 

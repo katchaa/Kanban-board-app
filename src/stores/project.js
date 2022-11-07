@@ -2,7 +2,12 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { nanoid } from 'nanoid'
 import { useAuthStore } from './auth'
-import { findById } from '../helpers/project'
+import {
+	findById,
+	handleDelete,
+	handleEdit,
+	handlePost,
+} from '../helpers/project'
 
 export const useProjectStore = defineStore('project', {
 	state: () => {
@@ -74,11 +79,9 @@ export const useProjectStore = defineStore('project', {
 				cards: [],
 				userId,
 			}
-			await axios
-				.post('http://localhost:3001/projects', newProject)
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handlePost('projects', newProject)
 
+			// Edit user projects array
 			const authStore = useAuthStore()
 			const user = authStore.user
 			let projects = this.projects
@@ -94,10 +97,7 @@ export const useProjectStore = defineStore('project', {
 		},
 
 		async editProject(projectId, data) {
-			await axios
-				.patch(`http://localhost:3001/projects/${projectId}`, data)
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleEdit('projects', projectId, data)
 		},
 
 		async deleteProject(projectId) {
@@ -106,30 +106,18 @@ export const useProjectStore = defineStore('project', {
 			const user = authStore.user
 			const projectToDelete = user.projects.indexOf(projectId)
 			user.projects.splice(projectToDelete, 1)
-			await axios
-				.patch(`http://localhost:3001/users/${user.id}`, {
-					projects: user.projects,
-				})
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
-			console.log(projectToDelete)
+			await handleEdit('users', user.id, { projects: user.projects })
 
 			// Delete project's cards
 			const cards = this.cards.filter(
 				(card) => card.projectId === projectId
 			)
 			cards.forEach(async (card) => {
-				await axios
-					.delete(`http://localhost:3001/cards/${card.id}`)
-					.then((res) => console.log(res.data))
-					.catch((err) => console.log(err))
+				await handleDelete('cards', card.id)
 			})
 
 			// Delete current project
-			await axios
-				.delete(`http://localhost:3001/projects/${projectId}`)
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleDelete('projects', projectId)
 		},
 
 		// Cards actions
@@ -141,10 +129,8 @@ export const useProjectStore = defineStore('project', {
 				tasks: [],
 				projectId,
 			}
-			await axios
-				.post('http://localhost:3001/cards', newCard)
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handlePost('cards', newCard)
+
 			const project = findById(this.projects, projectId)
 			let cards = this.cards
 			if (project.cards.length) {
@@ -161,10 +147,7 @@ export const useProjectStore = defineStore('project', {
 		},
 
 		async editCard(cardId, title) {
-			await axios
-				.patch(`http://localhost:3001/cards/${cardId}`, { title })
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleEdit('cards', cardId, { title })
 		},
 
 		async deleteCard(cardId) {
@@ -174,18 +157,10 @@ export const useProjectStore = defineStore('project', {
 			)
 			const cardToDelete = project.cards.indexOf(cardId)
 			project.cards.splice(cardToDelete, 1)
-			await axios
-				.patch(`http://localhost:3001/projects/${project.id}`, {
-					cards: project.cards,
-				})
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleEdit('projects', project.id, { cards: project.cards })
 
 			//Delete current card
-			await axios
-				.delete(`http://localhost:3001/cards/${cardId}`)
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleDelete('cards', cardId)
 		},
 
 		// Tasks actions
@@ -196,10 +171,8 @@ export const useProjectStore = defineStore('project', {
 				text,
 				cardId,
 			}
-			await axios
-				.post('http://localhost:3001/tasks', newTask)
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handlePost('tasks', newTask)
+
 			// Edit card tasks array
 			const card = findById(this.cards, cardId)
 			let tasks = this.tasks
@@ -218,10 +191,7 @@ export const useProjectStore = defineStore('project', {
 		},
 
 		async editTask(taskId, text) {
-			await axios
-				.patch(`http://localhost:3001/tasks/${taskId}`, { text })
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleEdit('tasks', taskId, { text })
 		},
 
 		async deleteTask(taskId) {
@@ -229,18 +199,10 @@ export const useProjectStore = defineStore('project', {
 			const card = this.cards.find((card) => card.tasks.includes(taskId))
 			const taskToDelete = card.tasks.indexOf(taskId)
 			card.tasks.splice(taskToDelete, 1)
-			await axios
-				.patch(`http://localhost:3001/cards/${card.id}`, {
-					tasks: card.tasks,
-				})
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleEdit('cards', card.id, { tasks: card.tasks })
 
 			// Delete current task
-			await axios
-				.delete(`http://localhost:3001/tasks/${taskId}`)
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleDelete('tasks', taskId)
 		},
 
 		async dragAndDrop(cardId, taskId) {
@@ -256,25 +218,9 @@ export const useProjectStore = defineStore('project', {
 			if (nextCard.id === prevCard.id) {
 				return
 			} else {
-				await axios
-					.patch(`http://localhost:3001/tasks/${task.id}`, { cardId })
-					.then((res) => console.log(res.data))
-					.catch((err) => console.log(err))
-
-				await axios
-					.patch(`http://localhost:3001/cards/${prevCard.id}`, {
-						tasks: prevCardTasks,
-					})
-					.then((res) => console.log(res.data))
-					.catch((err) => console.log(err))
-
-				await axios
-					.patch(`http://localhost:3001/cards/${nextCard.id}`, {
-						tasks: nextCardTasks,
-					})
-					.then((res) => console.log(res.data))
-					.catch((err) => console.log(err))
-
+				await handleEdit('tasks', taskId, { cardId })
+				await handleEdit('cards', prevCard.id, { tasks: prevCardTasks })
+				await handleEdit('cards', nextCard.id, { tasks: nextCardTasks })
 				// console.log(prevCardTasks)
 			}
 		},
