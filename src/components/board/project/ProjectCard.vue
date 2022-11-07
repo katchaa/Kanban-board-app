@@ -1,6 +1,9 @@
 <template>
 	<section
 		class="bg-gray-100 w-72 relative flex flex-col shrink-0 px-2 rounded-md mt-2 shadow-md h-fit"
+		@drop="onDrop($event, props.card.id)"
+		@dragenter.prevent
+		@dragover.prevent
 	>
 		<!-- Card title -->
 		<div class="flex justify-between p-2">
@@ -30,7 +33,13 @@
 		>
 			Are you sure to delete {{ props.card.title }} card?
 		</DeleteModal>
-		<ProjectTask v-for="task in tasks" :key="task.id" :task="task" />
+		<ProjectTask
+			v-for="task in tasks"
+			:key="task.id"
+			:task="task"
+			draggable="true"
+			@dragstart="startDrag($event, task.id)"
+		/>
 		<AddNewTask :cardId="card.id" />
 	</section>
 </template>
@@ -59,6 +68,19 @@ const tasks = computed(() => {
 	})
 	return currTasks
 })
+
+// Task drag and drop
+const startDrag = (e, taskId) => {
+	e.dataTransfer.dropEffect = 'move'
+	e.dataTransfer.effectAllowed = 'move'
+	e.dataTransfer.setData('taskId', taskId)
+}
+
+const onDrop = async (e, cardId) => {
+	const taskId = e.dataTransfer.getData('taskId')
+	await projectStore.dragAndDrop(cardId, taskId)
+	await projectStore.fetchProjects()
+}
 
 // Toggle popup
 const showPopup = ref(false)

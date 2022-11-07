@@ -244,5 +244,41 @@ export const useProjectStore = defineStore('project', {
 				.then((res) => console.log(res.data))
 				.catch((err) => console.log(err))
 		},
+
+		async dragAndDrop(cardId, taskId) {
+			const task = this.tasks.find((task) => task.id === taskId)
+			const nextCard = this.cards.find((card) => card.id === cardId)
+			const prevCard = this.cards.find((card) => card.id === task.cardId)
+
+			const nextCardTasks = [...nextCard.tasks, task.id]
+			const prevCardTasks = [...prevCard.tasks]
+			const taskToMove = prevCardTasks.indexOf(task.id)
+			prevCardTasks.splice(taskToMove, 1)
+
+			if (nextCard.id === prevCard.id) {
+				return
+			} else {
+				await axios
+					.patch(`http://localhost:3001/tasks/${task.id}`, { cardId })
+					.then((res) => console.log(res.data))
+					.catch((err) => console.log(err))
+
+				await axios
+					.patch(`http://localhost:3001/cards/${prevCard.id}`, {
+						tasks: prevCardTasks,
+					})
+					.then((res) => console.log(res.data))
+					.catch((err) => console.log(err))
+
+				await axios
+					.patch(`http://localhost:3001/cards/${nextCard.id}`, {
+						tasks: nextCardTasks,
+					})
+					.then((res) => console.log(res.data))
+					.catch((err) => console.log(err))
+
+				// console.log(prevCardTasks)
+			}
+		},
 	},
 })
