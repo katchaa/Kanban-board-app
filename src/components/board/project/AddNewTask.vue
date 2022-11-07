@@ -43,9 +43,8 @@ const route = useRoute()
 const text = ref('')
 
 const addTask = async () => {
-	await projectStore.addTask(text.value, props.cardId).then(() => {
-		projectStore.fetchCards(route.params.projectId)
-	})
+	await projectStore.addTask(text.value, props.cardId)
+	await projectStore.fetchCards(route.params.projectId)
 	toggleTextarea()
 }
 </script>

@@ -57,12 +57,12 @@ const props = defineProps({
 // Task text to edit
 const projectStore = useProjectStore()
 const currTask = computed(() => {
-	return projectStore.tasks.find((task) => task.id === props.task.id)
+	return projectStore.tasks?.find((task) => task?.id === props.task?.id)
 })
-const text = ref(currTask.value.text)
+const text = ref(currTask.value?.text)
 
 const editTask = async () => {
-	await projectStore.editTask(props.task.id, text.value)
+	await projectStore.editTask(props.task?.id, text.value)
 	await projectStore.fetchProjects()
 	emit('closeEditModal')
 }

@@ -21,3 +21,26 @@
 	transition: opacity 0.35s ease;
 }
 
+/* Card transition */
+.card-enter-from,
+.card-leave-to {
+	opacity: 0.8;
+	transform: scale(0.9);
+}
+
+.card-enter-active,
+.card-leave-active {
+	transition: all 0.2s;
+}
+
+/* Task transition */
+.task-enter-from,
+.task-leave-to {
+	transform: scale(0.95);
+}
+
+.task-enter-active,
+.task-leave-active {
+	transition: all 0.5s 0.2s;
+}
+

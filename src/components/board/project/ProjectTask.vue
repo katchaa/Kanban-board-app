@@ -1,32 +1,34 @@
 <template>
-	<div
-		class="relative flex justify-between w-full bg-white px-2 rounded-sm mb-2 shadow-sm py-1"
-	>
-		<!-- Task text -->
-		<p class="pr-1">{{ props.task.text }}</p>
-		<i
-			class="fa-solid fa-ellipsis text-gray-300 cursor-pointer"
-			@click="togglePopup()"
-		></i>
-		<AppPopup
-			:show="showPopup"
-			@edit-mode="toggleEditModal()"
-			@delete-mode="toggleDeleteModal()"
-		/>
-		<EditTaskModal
-			:task="props.task"
-			:show="editModal"
-			@close-edit-modal="toggleEditModal()"
-		/>
-		<DeleteModal
-			type="task"
-			:id="props.task.id"
-			:show="deleteModal"
-			@close-delete-modal="toggleDeleteModal()"
+	<Transition name="task" appear>
+		<div
+			class="relative flex justify-between w-full bg-white px-2 rounded-sm mb-2 shadow-sm py-1"
 		>
-			Are you sure to delete current task?
-		</DeleteModal>
-	</div>
+			<!-- Task text -->
+			<p class="pr-1">{{ props.task?.text }}</p>
+			<i
+				class="fa-solid fa-ellipsis text-gray-300 cursor-pointer"
+				@click="togglePopup()"
+			></i>
+			<AppPopup
+				:show="showPopup"
+				@edit-mode="toggleEditModal()"
+				@delete-mode="toggleDeleteModal()"
+			/>
+			<EditTaskModal
+				:task="props.task"
+				:show="editModal"
+				@close-edit-modal="toggleEditModal()"
+			/>
+			<DeleteModal
+				type="task"
+				:id="props.task?.id"
+				:show="deleteModal"
+				@close-delete-modal="toggleDeleteModal()"
+			>
+				Are you sure to delete current task?
+			</DeleteModal>
+		</div>
+	</Transition>
 </template>
 
 <script setup>
@@ -37,7 +39,7 @@ import EditTaskModal from '../modals/EditTaskModal.vue'
 
 const props = defineProps({
 	task: {
-		type: Object,
+		type: [Object, undefined],
 		required: true,
 	},
 })
