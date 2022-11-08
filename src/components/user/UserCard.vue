@@ -1,11 +1,11 @@
 <template>
-	<div class="h-fit flex justify-center mt-10">
+	<div class="relative h-fit flex justify-center mt-10">
 		<div
 			class="relative flex flex-col gap-3 bg-gray-100 px-6 py-6 rounded-lg shadow-lg"
 		>
 			<i
 				class="fa-solid fa-ellipsis absolute right-3 top-2 text-gray-300 cursor-pointer"
-				@click="togglePopup()"
+				@click="toggleEditPopup()"
 			></i>
 			<header class="flex items-center gap-4">
 				<img
@@ -26,12 +26,22 @@
 				</div>
 			</main>
 		</div>
-
+		<UserEditPopup
+			:show="showEditPopup"
+			@close-popup="toggleEditPopup()"
+			@edit-profile="toggleEditModal()"
+			@change-password="togglePasswordModal()"
+		/>
 		<!-- Edit form -->
 		<EditUserModal
 			:show="editUserModal"
 			:user="user"
 			@close-modal="toggleEditModal()"
+		/>
+		<ChangePasswordModal
+			:user="user"
+			:show="changePasswordModal"
+			@close-modal="togglePasswordModal()"
 		/>
 	</div>
 </template>
@@ -39,7 +49,9 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useAuthStore } from '../../stores/auth'
+import ChangePasswordModal from './modals/ChangePasswordModal.vue'
 import EditUserModal from './modals/EditUserModal.vue'
+import UserEditPopup from './UserEditPopup.vue'
 
 // User data from store
 const authStore = useAuthStore()
@@ -47,9 +59,21 @@ const user = computed(() => {
 	return authStore.user
 })
 
-// Toggle edit modal
+// Toggle edit popup
+const showEditPopup = ref(false)
+const toggleEditPopup = () => {
+	showEditPopup.value = !showEditPopup.value
+}
+
+// Toggle edit profile modal
 const editUserModal = ref(false)
 const toggleEditModal = () => {
 	editUserModal.value = !editUserModal.value
+}
+
+// Toggle change password
+const changePasswordModal = ref(false)
+const togglePasswordModal = () => {
+	changePasswordModal.value = !changePasswordModal.value
 }
 </script>
