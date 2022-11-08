@@ -50,6 +50,10 @@ export const useAuthStore = defineStore('auth', {
 			await this.fetchUser()
 		},
 
+		async changePassword(userId, password) {
+			await handleEdit('users', userId, { password })
+		},
+
 		async login(data) {
 			await axios
 				.get('http://localhost:3001/users', {

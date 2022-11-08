@@ -73,8 +73,9 @@
 
 <script setup>
 import useVuelidate from '@vuelidate/core'
-import { required, sameAs, helpers } from '@vuelidate/validators'
+import { required, sameAs, not, helpers } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
+import { useAuthStore } from '../../../stores/auth'
 
 const props = defineProps({
 	show: {
@@ -95,6 +96,7 @@ const closeModal = () => {
 
 // Passwords data
 const passwordData = reactive({
+	oldPassword: props.user.password,
 	newPassword: '',
 	confirmNewPassword: '',
 })
@@ -104,6 +106,10 @@ const rules = computed(() => {
 	return {
 		newPassword: {
 			required: helpers.withMessage('New password is required', required),
+			sameAs: helpers.withMessage(
+				"New password can't be your old password",
+				not(sameAs(passwordData.oldPassword))
+			),
 		},
 		confirmNewPassword: {
 			required: helpers.withMessage(
@@ -119,10 +125,12 @@ const rules = computed(() => {
 })
 const v$ = useVuelidate(rules, passwordData)
 
+// Change password action
+const authStore = useAuthStore()
 const editPassword = async () => {
 	const result = await v$.value.$validate()
 	if (result) {
-		console.log(passwordData.newPassword)
+		await authStore.changePassword(props.user.id, passwordData.newPassword)
 		emit('closeModal')
 	}
 }
