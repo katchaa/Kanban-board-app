@@ -31,6 +31,7 @@
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
 
 const props = defineProps({
@@ -55,6 +56,7 @@ const cancelDelete = () => {
 
 // Delete selected item
 const projectStore = useProjectStore()
+const authStore = useAuthStore()
 const router = useRouter()
 const route = useRoute()
 const deleteItem = async () => {
@@ -69,7 +71,9 @@ const deleteItem = async () => {
 	} else if (props.type === 'task') {
 		await projectStore.deleteTask(props.id)
 	} else if (props.type === 'user') {
-		console.log('user deleted')
+		await authStore.deleteAccount(props.id)
+		router.push({ name: 'auth' })
+		projectStore.$reset()
 	}
 	emit('closeDeleteModal')
 	await projectStore.fetchProjects()

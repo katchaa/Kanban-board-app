@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
+import { useProjectStore } from './project'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
-import { handleEdit, handlePost } from '../helpers/project'
+import { handleDelete, handleEdit } from '../helpers/project'
 
 export const useAuthStore = defineStore('auth', {
 	state: () => {
@@ -35,6 +36,29 @@ export const useAuthStore = defineStore('auth', {
 			await handleEdit('users', userId, data)
 		},
 
+		async changePassword(userId, password) {
+			await handleEdit('users', userId, { password })
+		},
+
+		async deleteAccount(userId) {
+			// Delete all users cards and tasks
+			const projectStore = useProjectStore()
+			const projects = projectStore.projects.filter(
+				(project) => project.userId === userId
+			)
+			let cards = []
+			for (let project of projects) {
+				cards.push(...project.cards)
+			}
+			for (let cardId of cards) {
+				await handleDelete('cards', cardId)
+			}
+
+			// Delete user account
+			await handleDelete('users', userId)
+			localStorage.removeItem('user')
+		},
+
 		async registration(data) {
 			const newUser = {
 				id: nanoid(),
@@ -46,12 +70,15 @@ export const useAuthStore = defineStore('auth', {
 				projects: [],
 				avatar: 'groot.jpg',
 			}
-			await handlePost('users', newUser)
-			await this.fetchUser()
-		},
+			await axios
+				.post('http://localhost:3001/users', newUser)
+				.then((res) => {
+					localStorage.setItem('user', res.data.id)
+					this.authUser = res.data.id
+				})
+				.catch((err) => console.log(err))
 
-		async changePassword(userId, password) {
-			await handleEdit('users', userId, { password })
+			await this.fetchUser()
 		},
 
 		async login(data) {
@@ -73,6 +100,7 @@ export const useAuthStore = defineStore('auth', {
 				.catch((err) => console.log(err))
 			await this.fetchUser()
 		},
+
 		async logout() {
 			localStorage.removeItem('user')
 		},

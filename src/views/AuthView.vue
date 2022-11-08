@@ -16,7 +16,7 @@ import LoginForm from '@/components/auth/LoginForm.vue'
 import RegistrationForm from '@/components/auth/RegistrationForm.vue'
 import { ref } from 'vue'
 
-const showForm = ref(true)
+const showForm = ref(false)
 
 const toggleForm = () => {
 	showForm.value = !showForm.value
