@@ -1,7 +1,7 @@
 <template>
 	<Transition name="popup">
 		<div
-			class="flex flex-col gap-1 absolute top-5 right-36 z-20 bg-gray-300/90 rounded-md"
+			class="flex flex-col gap-1 absolute top-6 right-20 z-20 bg-gray-300/90 rounded-md"
 			v-if="props.show"
 		>
 			<button
