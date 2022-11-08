@@ -1,8 +1,12 @@
 <template>
 	<div class="h-fit flex justify-center mt-10">
 		<div
-			class="flex flex-col gap-3 bg-gray-100 px-6 py-4 rounded-lg shadow-lg"
+			class="relative flex flex-col gap-3 bg-gray-100 px-6 py-6 rounded-lg shadow-lg"
 		>
+			<i
+				class="fa-solid fa-ellipsis absolute right-3 top-2 text-gray-300 cursor-pointer"
+				@click="togglePopup()"
+			></i>
 			<header class="flex items-center gap-4">
 				<img
 					class="w-14 h-14 rounded-full -ml-1"
@@ -21,12 +25,6 @@
 					<p>{{ user.email }}</p>
 				</div>
 			</main>
-			<button
-				class="self-end -mb-2 -mr-2 px-2 py-1 rounded-md hover:bg-gray-300/50 transition duration-200"
-				@click="toggleEditModal"
-			>
-				Edit
-			</button>
 		</div>
 
 		<!-- Edit form -->

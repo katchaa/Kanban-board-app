@@ -46,63 +46,35 @@
 				<i class="fa-solid fa-chevron-down text-sm text-white"></i>
 			</div>
 			<!-- User menu popup -->
-			<Transition name="popup">
-				<ul
-					class="text-right absolute top-10 right-0 bg-white rounded-md"
-					v-if="showUserMenu"
-				>
-					<RouterLink :to="{ name: 'user' }">
-						<li
-							class="rounded-t-md px-3 pt-1 mb-0.5 hover:bg-gray-200/50 transition duration-200 cursor-pointer"
-							@click="toggleUserMenu()"
-						>
-							Profile
-						</li>
-					</RouterLink>
-					<li
-						class="rounded-b-md px-3 pb-1 hover:bg-gray-200/50 transition duration-200 cursor-pointer"
-						@click="logout()"
-					>
-						Logout
-					</li>
-				</ul>
-			</Transition>
+			<UserMenuPopup
+				:show="showUserMenu"
+				@close-menu="toggleUserMenu()"
+			/>
 		</div>
 	</nav>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
-import { useProjectStore } from '../../../stores/project'
 import AppIconButton from '../../AppIconButton.vue'
+import UserMenuPopup from '../../user/UserMenuPopup.vue'
 import NewProjectModal from '../modals/NewProjectModal.vue'
-
-// User menu popup toggle
-const showUserMenu = ref(false)
-const toggleUserMenu = () => {
-	showUserMenu.value = !showUserMenu.value
-}
 
 const authStore = useAuthStore()
 const user = computed(() => {
 	return authStore.user
 })
 
-// Logout user
-const projectStore = useProjectStore()
-const router = useRouter()
-const logout = () => {
-	toggleUserMenu()
-	authStore.logout()
-	router.push({ name: 'auth' })
-	projectStore.$reset()
-}
-
 // Toggle new project modal
 const showNewProjectModal = ref(false)
 const toggleNewProjectModal = () => {
 	showNewProjectModal.value = !showNewProjectModal.value
+}
+
+// Toggle user menu popup
+const showUserMenu = ref(false)
+const toggleUserMenu = () => {
+	showUserMenu.value = !showUserMenu.value
 }
 </script>
