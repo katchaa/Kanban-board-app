@@ -10,18 +10,13 @@
 						<slot></slot>
 					</p>
 					<div class="flex justify-around">
-						<button
-							class="font-semibold mt-1 py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
-							@click="deleteItem()"
-						>
-							Delete
-						</button>
-						<button
-							class="font-semibold text-gray-400 mt-1 py-0.5 px-1.5 rounded-md hover:bg-gray-200 hover:text-black transition duration-200"
+						<AppButton @click="deleteItem()"> Delete </AppButton>
+						<AppButton
+							class="text-gray-400 hover:text-black"
 							@click="cancelDelete()"
 						>
-							Cancel
-						</button>
+							Cancel</AppButton
+						>
 					</div>
 				</div>
 			</section>
@@ -33,6 +28,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
+import AppButton from '../../AppButton.vue'
 
 const props = defineProps({
 	id: {

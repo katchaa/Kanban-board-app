@@ -51,13 +51,7 @@
 								{{ error.$message }}
 							</span>
 						</div>
-						<div class="self-end -mb-2 -mr-1">
-							<button
-								class="px-2 py-1 rounded-md hover:bg-gray-300/50 transition duration-200"
-							>
-								Save
-							</button>
-						</div>
+						<AppButton class="self-end -mb-2 -mr-1">Save</AppButton>
 					</form>
 				</section>
 				<button
@@ -76,6 +70,7 @@ import useVuelidate from '@vuelidate/core'
 import { required, sameAs, not, helpers } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
 import { useAuthStore } from '../../../stores/auth'
+import AppButton from '../../AppButton.vue'
 
 const props = defineProps({
 	show: {

@@ -19,12 +19,7 @@
 							v-model="title"
 							placeholder="New title"
 						/>
-						<button
-							class="py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
-							type="submit"
-						>
-							Save
-						</button>
+						<AppButton>Save</AppButton>
 					</form>
 				</section>
 				<button
@@ -42,6 +37,7 @@
 import { computed, ref } from 'vue'
 import { useProjectStore } from '../../../stores/project'
 import { findById } from '../../../helpers/project'
+import AppButton from '../../AppButton.vue'
 
 const props = defineProps({
 	card: {

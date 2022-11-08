@@ -32,12 +32,7 @@
 							class="w-3/4 focus:outline-none p-1"
 							v-model="newProject.avatar"
 						/>
-						<button
-							class="self-end py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
-							type="submit"
-						>
-							Add project
-						</button>
+						<AppButton class="self-end">Add project</AppButton>
 					</form>
 				</section>
 				<button
@@ -56,6 +51,7 @@ import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
+import AppButton from '../../AppButton.vue'
 
 const props = defineProps({
 	show: {

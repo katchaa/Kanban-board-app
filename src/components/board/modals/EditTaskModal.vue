@@ -20,12 +20,7 @@
 							v-model="text"
 							placeholder="New text"
 						/>
-						<button
-							class="self-end py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
-							type="submit"
-						>
-							Save
-						</button>
+						<AppButton class="self-end">Save</AppButton>
 					</form>
 				</section>
 				<button
@@ -43,6 +38,7 @@
 import { computed, ref } from 'vue'
 import { findById } from '../../../helpers/project'
 import { useProjectStore } from '../../../stores/project'
+import AppButton from '../../AppButton.vue'
 
 const props = defineProps({
 	task: {

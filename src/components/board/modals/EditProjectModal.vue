@@ -31,12 +31,7 @@
 							v-model="project.avatar"
 							placeholder="Avatar"
 						/>
-						<button
-							class="py-0.5 px-1.5 rounded-md self-end hover:bg-gray-200 transition duration-200"
-							type="submit"
-						>
-							Save
-						</button>
+						<AppButton class="self-end">Save</AppButton>
 					</form>
 				</section>
 				<button
@@ -55,6 +50,7 @@ import { reactive, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 import { findById } from '../../../helpers/project'
+import AppButton from '../../AppButton.vue'
 
 const props = defineProps({
 	show: {

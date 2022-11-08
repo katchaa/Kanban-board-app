@@ -17,12 +17,7 @@
 							v-model="cardTitle"
 							placeholder="Card title"
 						/>
-						<button
-							class="py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
-							type="submit"
-						>
-							Add card
-						</button>
+						<AppButton>Add card</AppButton>
 					</form>
 				</section>
 				<button
@@ -40,6 +35,7 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
+import AppButton from '../../AppButton.vue'
 
 const props = defineProps({
 	show: {
