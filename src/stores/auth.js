@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
-import { handlePost } from '../helpers/project'
+import { handleEdit, handlePost } from '../helpers/project'
 
 export const useAuthStore = defineStore('auth', {
 	state: () => {
@@ -29,6 +29,10 @@ export const useAuthStore = defineStore('auth', {
 						console.log(this.user)
 					})
 			}
+		},
+
+		async editUser(userId, data) {
+			await handleEdit('users', userId, data)
 		},
 
 		async registration(data) {

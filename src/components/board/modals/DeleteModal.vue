@@ -1,7 +1,7 @@
 <template>
 	<Teleport to="body">
 		<Transition name="modal">
-			<article
+			<section
 				class="absolute left-0 top-0 z-10 w-full h-screen bg-black/40 flex justify-center items-start pt-36"
 				v-if="props.show"
 			>
@@ -24,7 +24,7 @@
 						</button>
 					</div>
 				</div>
-			</article>
+			</section>
 		</Transition>
 	</Teleport>
 </template>

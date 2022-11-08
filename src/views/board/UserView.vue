@@ -1,5 +1,4 @@
 <template>
-	<div>User nested page</div>
 	<UserCard />
 </template>
 
