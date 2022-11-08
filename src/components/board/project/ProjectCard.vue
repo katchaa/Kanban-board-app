@@ -1,7 +1,7 @@
 <template>
 	<Transition name="card" appear>
 		<section
-			class="bg-gray-100 w-72 relative flex flex-col shrink-0 px-2 rounded-md mt-2 shadow-md h-fit"
+			class="bg-gray-100 w-72 relative flex flex-col shrink-0 px-2 rounded-md mt-2 shadow-md h-fit max-h-[60vh] overflow-y-auto scrollbar-hide"
 			@drop="onDrop($event, props.card.id)"
 			@dragenter.prevent
 			@dragover.prevent

@@ -8,7 +8,11 @@
 		</button>
 	</div>
 	<form @submit.prevent="addTask()" v-if="showTextarea" class="w-full mb-2">
-		<textarea class="w-full focus:outline-none p-2" v-model="text" />
+		<textarea
+			rows="4"
+			class="w-full focus:outline-none p-2"
+			v-model="text"
+		/>
 		<AppButton>Send</AppButton>
 	</form>
 </template>

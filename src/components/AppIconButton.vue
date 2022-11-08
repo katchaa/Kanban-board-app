@@ -1,6 +1,6 @@
 <template>
 	<div
-		class="relative flex justify-center items-center bg-white/50 rounded-md cursor-pointer hover:bg-white/70 transition duration-200"
+		:class="`w-${size} h-${size} relative flex justify-center items-center bg-white/50 rounded-md cursor-pointer hover:bg-white/70 transition duration-200`"
 		@mouseenter="toggleTooltip()"
 		@mouseleave="toggleTooltip()"
 	>
@@ -15,6 +15,7 @@
 import { ref } from 'vue'
 import AppSVGIcon from './AppSVGIcon.vue'
 import AppTooltip from './AppTooltip.vue'
+
 const props = defineProps({
 	icon: {
 		type: String,
@@ -23,8 +24,13 @@ const props = defineProps({
 	tooltip: {
 		type: String,
 	},
+	size: {
+		type: String,
+		default: '9',
+	},
 })
 
+// Tooltip toggle
 const showTooltip = ref(false)
 const toggleTooltip = () => {
 	showTooltip.value = !showTooltip.value

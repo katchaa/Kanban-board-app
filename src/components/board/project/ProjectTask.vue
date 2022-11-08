@@ -1,14 +1,16 @@
 <template>
 	<Transition name="task" appear>
 		<div
-			class="relative flex justify-between w-full bg-white px-2 rounded-sm mb-2 shadow-sm py-1"
+			class="relative flex justify-between bg-white pl-2 pr-4 py-1 rounded-sm mb-2 shadow-sm"
 			v-if="props.task"
 		>
 			<!-- Task text -->
-			<p class="pr-1">{{ props.task.text }}</p>
-			<button class="self-start" @click="togglePopup()">
+			<button class="self-start absolute right-2" @click="togglePopup()">
 				<AppSVGIcon icon="ellipsis" />
 			</button>
+			<p class="mt-2 max-w-full break-words">
+				{{ props.task.text }}
+			</p>
 			<AppPopup
 				:show="showPopup"
 				@edit-mode="toggleEditModal()"

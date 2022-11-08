@@ -7,13 +7,13 @@
 			<RouterLink
 				:to="{ name: 'projectHome', params: { userId: user.id } }"
 			>
-				<AppIconButton icon="home" tooltip="Home" class="w-9 h-9" />
+				<AppIconButton icon="home" tooltip="Home" size="9" />
 			</RouterLink>
-			<AppIconButton icon="info" tooltip="Info" class="w-9 h-9" />
+			<AppIconButton icon="info" tooltip="Info" size="9" />
 			<AppIconButton
 				icon="add"
 				tooltip="Add project"
-				class="w-9 h-9"
+				size="9"
 				@click="toggleNewProjectModal()"
 			/>
 			<NewProjectModal

@@ -40,7 +40,7 @@
 		<AppIconButton
 			icon="addSmall"
 			tooltip="Add card"
-			class="w-7 h-7"
+			size="7"
 			@click="toggleNewCardModal()"
 		/>
 		<NewCardModal
