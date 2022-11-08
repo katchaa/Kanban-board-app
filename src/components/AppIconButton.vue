@@ -5,16 +5,17 @@
 		@mouseleave="toggleTooltip()"
 	>
 		<button>
-			<i :class="`text-white ${icon} text-xl`"></i>
+			<AppSVGIcon :icon="props.icon" />
 		</button>
-		<AppTooltip v-if="showTooltip" :msg="tooltip" />
+		<AppTooltip v-if="showTooltip" :msg="props.tooltip" />
 	</div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import AppSVGIcon from './AppSVGIcon.vue'
 import AppTooltip from './AppTooltip.vue'
-defineProps({
+const props = defineProps({
 	icon: {
 		type: String,
 		required: true,

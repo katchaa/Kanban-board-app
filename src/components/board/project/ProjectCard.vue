@@ -11,10 +11,9 @@
 				<h3 class="font-semibold text-gray-700 select-none">
 					{{ props.card.title }}
 				</h3>
-				<i
-					class="fa-solid fa-ellipsis text-gray-400 cursor-pointer"
-					@click="togglePopup()"
-				></i>
+				<button class="self-start" @click="togglePopup()">
+					<AppSVGIcon icon="ellipsis" />
+				</button>
 			</div>
 			<AppPopup
 				:show="showPopup"
@@ -55,6 +54,7 @@ import AddNewTask from './AddNewTask.vue'
 import AppPopup from '../../AppPopup.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
 import EditCardModal from '../modals/EditCardModal.vue'
+import AppSVGIcon from '../../AppSVGIcon.vue'
 
 const props = defineProps({
 	card: {

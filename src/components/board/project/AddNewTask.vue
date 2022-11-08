@@ -1,19 +1,15 @@
 <template>
-	<div class="mb-2">
-		<i
-			v-if="!showTextarea"
-			class="fa-solid fa-plus text-gray-400 mr-2 mb-1 cursor-pointer"
-			@click="toggleTextarea()"
-		></i>
-		<i
-			v-else
-			@click="toggleTextarea()"
-			class="fa-solid fa-minus text-gray-400 mr-2 mb-1 cursor-pointer"
-		></i>
+	<div>
+		<button v-if="!showTextarea" @click="toggleTextarea()">
+			<AppSVGIcon icon="addGray" />
+		</button>
+		<button v-else @click="toggleTextarea()">
+			<AppSVGIcon icon="minus" />
+		</button>
 	</div>
 	<form @submit.prevent="addTask()" v-if="showTextarea" class="w-full mb-2">
 		<textarea class="w-full focus:outline-none p-2" v-model="text" />
-		<button type="submit">Odeslat</button>
+		<AppButton>Send</AppButton>
 	</form>
 </template>
 
@@ -21,6 +17,8 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
+import AppButton from '../../AppButton.vue'
+import AppSVGIcon from '../../AppSVGIcon.vue'
 
 const props = defineProps({
 	cardId: {

@@ -1,12 +1,18 @@
 <template>
 	<div class="relative flex justify-center mt-10">
 		<div
-			class="relative w-1/2 flex flex-col gap-3 bg-gray-100 px-6 py-6 rounded-lg shadow-lg"
+			class="relative flex flex-col gap-3 bg-gray-100 px-6 py-6 rounded-lg shadow-lg"
 		>
-			<i
-				class="fa-solid fa-ellipsis absolute right-3 top-2 text-gray-300 cursor-pointer"
-				@click="toggleEditPopup()"
-			></i>
+			<button class="absolute right-3 top-3" @click="toggleEditPopup()">
+				<AppSVGIcon icon="ellipsis" />
+			</button>
+			<UserEditPopup
+				:show="showEditPopup"
+				@close-popup="toggleEditPopup()"
+				@edit-profile="toggleEditModal()"
+				@change-password="togglePasswordModal()"
+				@delete-account="toggleDeleteModal()"
+			/>
 			<header class="flex items-center gap-4">
 				<img
 					class="w-14 h-14 rounded-full -ml-1"
@@ -26,13 +32,7 @@
 				</div>
 			</main>
 		</div>
-		<UserEditPopup
-			:show="showEditPopup"
-			@close-popup="toggleEditPopup()"
-			@edit-profile="toggleEditModal()"
-			@change-password="togglePasswordModal()"
-			@delete-account="toggleDeleteModal()"
-		/>
+
 		<!-- Edit form -->
 		<EditUserModal
 			:show="editUserModal"
@@ -58,6 +58,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useAuthStore } from '../../stores/auth'
+import AppSVGIcon from '../AppSVGIcon.vue'
 import DeleteModal from '../board/modals/DeleteModal.vue'
 import ChangePasswordModal from './modals/ChangePasswordModal.vue'
 import EditUserModal from './modals/EditUserModal.vue'

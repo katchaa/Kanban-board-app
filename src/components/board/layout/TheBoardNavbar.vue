@@ -7,19 +7,11 @@
 			<RouterLink
 				:to="{ name: 'projectHome', params: { userId: user.id } }"
 			>
-				<AppIconButton
-					icon="fa-solid fa-house"
-					tooltip="Home"
-					class="w-9 h-9"
-				/>
+				<AppIconButton icon="home" tooltip="Home" class="w-9 h-9" />
 			</RouterLink>
+			<AppIconButton icon="info" tooltip="Info" class="w-9 h-9" />
 			<AppIconButton
-				icon="fa-regular fa-circle-question"
-				tooltip="Info"
-				class="w-9 h-9"
-			/>
-			<AppIconButton
-				icon="fa-solid fa-plus"
+				icon="add"
 				tooltip="Add project"
 				class="w-9 h-9"
 				@click="toggleNewProjectModal()"
@@ -43,7 +35,7 @@
 				<p class="font-semibold text-white ml-1 select-none">
 					{{ user.username }}
 				</p>
-				<i class="fa-solid fa-chevron-down text-sm text-white"></i>
+				<AppSVGIcon icon="chevronDown" />
 			</div>
 			<!-- User menu popup -->
 			<UserMenuPopup
@@ -58,6 +50,7 @@
 import { computed, ref } from 'vue'
 import { useAuthStore } from '../../../stores/auth'
 import AppIconButton from '../../AppIconButton.vue'
+import AppSVGIcon from '../../AppSVGIcon.vue'
 import UserMenuPopup from '../../user/UserMenuPopup.vue'
 import NewProjectModal from '../modals/NewProjectModal.vue'
 

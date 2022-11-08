@@ -6,10 +6,9 @@
 		>
 			<!-- Task text -->
 			<p class="pr-1">{{ props.task.text }}</p>
-			<i
-				class="fa-solid fa-ellipsis text-gray-300 cursor-pointer"
-				@click="togglePopup()"
-			></i>
+			<button class="self-start" @click="togglePopup()">
+				<AppSVGIcon icon="ellipsis" />
+			</button>
 			<AppPopup
 				:show="showPopup"
 				@edit-mode="toggleEditModal()"
@@ -35,6 +34,7 @@
 <script setup>
 import { ref } from 'vue'
 import AppPopup from '../../AppPopup.vue'
+import AppSVGIcon from '../../AppSVGIcon.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
 import EditTaskModal from '../modals/EditTaskModal.vue'
 

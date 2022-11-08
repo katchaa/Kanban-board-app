@@ -1,9 +1,8 @@
 <template>
 	<div class="flex flex-col items-center gap-y-2">
-		<i
-			class="fa-solid fa-chevron-right text-white/50 hover:text-white transition duration-200 self-end mb-0.5 cursor-pointer"
-			@click="toggleDrawer()"
-		></i>
+		<button class="self-end -mr-1" @click="toggleDrawer()">
+			<AppSVGIcon icon="chevronRight" />
+		</button>
 		<RouterLink
 			:to="{
 				name: 'project',
@@ -24,6 +23,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useProjectStore } from '../../../stores/project'
+import AppSVGIcon from '../../AppSVGIcon.vue'
 
 const emit = defineEmits(['toggleDrawer'])
 const toggleDrawer = () => {
