@@ -35,7 +35,12 @@ const props = defineProps({
 	},
 })
 
-const emit = defineEmits(['closePopup', 'editProfile', 'changePassword'])
+const emit = defineEmits([
+	'closePopup',
+	'editProfile',
+	'changePassword',
+	'deleteAccount',
+])
 
 const editProfile = () => {
 	emit('editProfile')
@@ -44,6 +49,11 @@ const editProfile = () => {
 
 const editPassword = () => {
 	emit('changePassword')
+	emit('closePopup')
+}
+
+const deleteAccount = () => {
+	emit('deleteAccount')
 	emit('closePopup')
 }
 </script>

@@ -14,44 +14,42 @@
 						class="w-full flex flex-col gap-2 my-2"
 					>
 						<div>
-							<label for="username" class="text-gray-400"
-								>Old password
-							</label>
-
-							<input
-								type="password"
-								placeholder="Username"
-								id="username"
-								class="w-full focus:outline-none p-1 text-black"
-								v-model="passwordData.oldPassword"
-							/>
-							<!-- <span
-								class="text-xs text-red-500 self-start -mt-2"
-								v-for="error in v$.username.$errors"
-								:key="error.$uid"
-							>
-								{{ error.$message }}
-							</span> -->
-						</div>
-						<div>
-							<label for="firstName" class="text-gray-400"
+							<label for="newPassword" class="text-gray-400"
 								>New password
 							</label>
 
 							<input
 								type="password"
-								placeholder="New password"
-								id="firstName"
+								id="newPassword"
 								class="w-full focus:outline-none p-1 text-black"
 								v-model="passwordData.newPassword"
 							/>
-							<!-- <span
+							<span
 								class="text-xs text-red-500 self-start -mt-2"
-								v-for="error in v$.firstName.$errors"
+								v-for="error in v$.newPassword.$errors"
 								:key="error.$uid"
 							>
 								{{ error.$message }}
-							</span> -->
+							</span>
+						</div>
+						<div>
+							<label for="confirmPassword" class="text-gray-400"
+								>Confirm password
+							</label>
+
+							<input
+								type="password"
+								id="confirmPassword"
+								class="w-full focus:outline-none p-1 text-black"
+								v-model="passwordData.confirmNewPassword"
+							/>
+							<span
+								class="text-xs text-red-500 self-start -mt-2"
+								v-for="error in v$.confirmNewPassword.$errors"
+								:key="error.$uid"
+							>
+								{{ error.$message }}
+							</span>
 						</div>
 						<div class="self-end -mb-2 -mr-1">
 							<button
@@ -74,7 +72,9 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import useVuelidate from '@vuelidate/core'
+import { required, sameAs, helpers } from '@vuelidate/validators'
+import { computed, reactive } from 'vue'
 
 const props = defineProps({
 	show: {
@@ -95,12 +95,35 @@ const closeModal = () => {
 
 // Passwords data
 const passwordData = reactive({
-	oldPassword: props.user.password,
 	newPassword: '',
+	confirmNewPassword: '',
 })
 
-const editPassword = () => {
-	console.log(passwordData.newPassword)
-	emit('closeModal')
+// Validation settings
+const rules = computed(() => {
+	return {
+		newPassword: {
+			required: helpers.withMessage('New password is required', required),
+		},
+		confirmNewPassword: {
+			required: helpers.withMessage(
+				'Confirm password is required',
+				required
+			),
+			sameAs: helpers.withMessage(
+				"Passwords don't match",
+				sameAs(passwordData.newPassword)
+			),
+		},
+	}
+})
+const v$ = useVuelidate(rules, passwordData)
+
+const editPassword = async () => {
+	const result = await v$.value.$validate()
+	if (result) {
+		console.log(passwordData.newPassword)
+		emit('closeModal')
+	}
 }
 </script>

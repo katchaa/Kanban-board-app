@@ -31,6 +31,7 @@
 			@close-popup="toggleEditPopup()"
 			@edit-profile="toggleEditModal()"
 			@change-password="togglePasswordModal()"
+			@delete-account="toggleDeleteModal()"
 		/>
 		<!-- Edit form -->
 		<EditUserModal
@@ -43,12 +44,21 @@
 			:show="changePasswordModal"
 			@close-modal="togglePasswordModal()"
 		/>
+		<DeleteModal
+			:id="user.id"
+			type="user"
+			:show="showDeleteModal"
+			@close-delete-modal="toggleDeleteModal()"
+		>
+			Are you sure to delete your account?
+		</DeleteModal>
 	</div>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { useAuthStore } from '../../stores/auth'
+import DeleteModal from '../board/modals/DeleteModal.vue'
 import ChangePasswordModal from './modals/ChangePasswordModal.vue'
 import EditUserModal from './modals/EditUserModal.vue'
 import UserEditPopup from './UserEditPopup.vue'
@@ -71,9 +81,15 @@ const toggleEditModal = () => {
 	editUserModal.value = !editUserModal.value
 }
 
-// Toggle change password
+// Toggle change password modal
 const changePasswordModal = ref(false)
 const togglePasswordModal = () => {
 	changePasswordModal.value = !changePasswordModal.value
+}
+
+// Toggle delete modal
+const showDeleteModal = ref(false)
+const toggleDeleteModal = () => {
+	showDeleteModal.value = !showDeleteModal.value
 }
 </script>

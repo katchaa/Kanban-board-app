@@ -36,6 +36,7 @@ import { useProjectStore } from '../../../stores/project'
 const props = defineProps({
 	id: {
 		type: String,
+		required: true,
 	},
 	type: {
 		type: String,
@@ -67,6 +68,8 @@ const deleteItem = async () => {
 		await projectStore.deleteCard(props.id)
 	} else if (props.type === 'task') {
 		await projectStore.deleteTask(props.id)
+	} else if (props.type === 'user') {
+		console.log('user deleted')
 	}
 	emit('closeDeleteModal')
 	await projectStore.fetchProjects()
