@@ -29,7 +29,7 @@
 			>
 				<img
 					class="w-9 h-9 rounded-full"
-					:src="`/img/${user.avatar}`"
+					:src="user.avatar"
 					:alt="user.username"
 				/>
 				<p class="font-semibold text-white ml-1 select-none">

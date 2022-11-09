@@ -16,7 +16,7 @@
 			<header class="flex items-center gap-4">
 				<img
 					class="w-14 h-14 rounded-full -ml-1"
-					:src="`/img/${user.avatar}`"
+					:src="user.avatar"
 					:alt="user.username"
 				/>
 				<h2 class="text-lg font-semibold">{{ user.username }}</h2>

@@ -27,11 +27,6 @@
 							placeholder="Company name"
 							v-model="newProject.companyName"
 						/>
-						<input
-							type="text"
-							class="w-3/4 focus:outline-none p-1"
-							v-model="newProject.avatar"
-						/>
 						<AppButton class="self-end">Add project</AppButton>
 					</form>
 				</section>
@@ -68,7 +63,9 @@ const route = useRoute()
 let newProject = reactive({
 	projectName: '',
 	companyName: '',
-	avatar: 'groot.jpg',
+	avatar: `http://picsum.photos/id/${Math.floor(
+		Math.random() * 1000
+	)}/200/300`,
 })
 
 const add = async () => {

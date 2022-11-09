@@ -25,12 +25,6 @@
 							v-model="project.companyName"
 							placeholder="Company name"
 						/>
-						<input
-							type="text"
-							class="w-full focus:outline-none p-1"
-							v-model="project.avatar"
-							placeholder="Avatar"
-						/>
 						<AppButton class="self-end">Save</AppButton>
 					</form>
 				</section>
@@ -71,7 +65,6 @@ const currProject = computed(() => {
 const project = reactive({
 	projectName: currProject.value.projectName,
 	companyName: currProject.value.companyName,
-	avatar: 'groot.jpg',
 })
 
 const editProject = async () => {

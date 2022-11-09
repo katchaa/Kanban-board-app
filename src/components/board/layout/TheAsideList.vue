@@ -13,7 +13,7 @@
 		>
 			<img
 				class="w-9 h-9 rounded"
-				:src="`/img/${project?.avatar}`"
+				:src="project?.avatar"
 				:alt="project?.projectName"
 			/>
 		</RouterLink>

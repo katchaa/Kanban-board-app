@@ -67,8 +67,10 @@ export const useAuthStore = defineStore('auth', {
 				lastName: data.lastName,
 				email: data.email,
 				password: data.password,
+				avatar: `http://picsum.photos/id/${Math.floor(
+					Math.random() * 1000
+				)}/200/300`,
 				projects: [],
-				avatar: 'groot.jpg',
 			}
 			await axios
 				.post('http://localhost:3001/users', newUser)
