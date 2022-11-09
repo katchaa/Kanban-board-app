@@ -1,26 +1,25 @@
 <template>
 	<Transition name="task" appear>
 		<div
-			class="relative flex justify-between bg-white pl-2 pr-4 py-1 rounded-sm mb-2 shadow-sm"
+			class="flex justify-between bg-white pl-2 pr-1 py-1 mb-2 rounded-sm shadow-sm"
 			v-if="props.task"
 		>
 			<!-- Task text -->
-			<button class="self-start absolute right-2" @click="togglePopup()">
-				<AppSVGIcon icon="ellipsis" />
-			</button>
-			<p class="mt-2 max-w-full break-words">
+			<p
+				class="flex-1 mt-2 max-w-full break-words focus:outline-none"
+				:class="{ 'border-b-2': edit }"
+				ref="text"
+				:contenteditable="edit"
+				spellcheck="false"
+				@click="startEdit()"
+				@input="editText"
+				@blur="editTask()"
+			>
 				{{ props.task.text }}
 			</p>
-			<AppPopup
-				:show="showPopup"
-				@edit-mode="toggleEditModal()"
-				@delete-mode="toggleDeleteModal()"
-			/>
-			<EditTaskModal
-				:task="props.task"
-				:show="editModal"
-				@close-edit-modal="toggleEditModal()"
-			/>
+			<button class="self-start" @click="toggleDeleteModal()">
+				<AppSVGIcon icon="trash" />
+			</button>
 			<DeleteModal
 				type="task"
 				:id="props.task.id"
@@ -35,10 +34,9 @@
 
 <script setup>
 import { ref } from 'vue'
-import AppPopup from '../../AppPopup.vue'
+import { useProjectStore } from '../../../stores/project'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
-import EditTaskModal from '../modals/EditTaskModal.vue'
 
 const props = defineProps({
 	task: {
@@ -47,23 +45,36 @@ const props = defineProps({
 	},
 })
 
-// Toggle popup
-const showPopup = ref(false)
-const togglePopup = () => {
-	showPopup.value = !showPopup.value
+// Edit task text
+const edit = ref(false)
+const text = ref()
+const startEdit = () => {
+	edit.value = true
+	setTimeout(() => {
+		text.value.focus()
+	}, 0)
+}
+
+const newText = ref('')
+const editText = (e) => {
+	newText.value = e.target.innerText
+}
+
+const projectStore = useProjectStore()
+const editTask = async () => {
+	if (newText.value === '' || newText.value === props.task.text) {
+		edit.value = false
+	} else {
+		await projectStore.editTask(props.task.id, newText.value)
+		await projectStore.fetchProjects()
+		edit.value = false
+	}
 }
 
 // Toggle delete modal
 const deleteModal = ref(false)
 const toggleDeleteModal = () => {
 	deleteModal.value = !deleteModal.value
-	showPopup.value = false
-}
-
-// Toggle edit modal
-const editModal = ref(false)
-const toggleEditModal = () => {
-	editModal.value = !editModal.value
-	showPopup.value = false
+	// showPopup.value = false
 }
 </script>

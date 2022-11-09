@@ -7,7 +7,9 @@
 		<button>
 			<AppSVGIcon :icon="props.icon" />
 		</button>
-		<AppTooltip v-if="showTooltip" :msg="props.tooltip" />
+		<Transition name="popup">
+			<AppTooltip :show="showTooltip" :msg="props.tooltip" />
+		</Transition>
 	</div>
 </template>
 

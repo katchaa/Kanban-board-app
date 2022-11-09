@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="py-1 leading-none">
 		<button v-if="!showTextarea" @click="toggleTextarea()">
 			<AppSVGIcon icon="addGray" />
 		</button>
@@ -9,7 +9,7 @@
 	</div>
 	<form @submit.prevent="addTask()" v-if="showTextarea" class="w-full mb-2">
 		<textarea
-			rows="4"
+			rows="3"
 			class="w-full focus:outline-none p-2"
 			v-model="text"
 		/>

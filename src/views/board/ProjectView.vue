@@ -1,7 +1,7 @@
 <template>
-	<div class="h-[94%] px-2.5 overflow-x-auto">
+	<div class="h-[94%] px-2.5 overflow-x-auto scrollbar">
 		<ProjectNavbar />
-		<div class="flex gap-3">
+		<div class="flex items-start gap-3">
 			<ProjectCard v-for="card in cards" :key="card.id" :card="card" />
 		</div>
 	</div>
