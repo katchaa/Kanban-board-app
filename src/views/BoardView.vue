@@ -2,7 +2,7 @@
 	<TheBoardNavbar />
 	<div class="flex justify-start">
 		<TheAsideNavbar v-if="projects.length" />
-		<div class="overflow-y-hidden w-full">
+		<div class="w-full">
 			<RouterView />
 		</div>
 	</div>

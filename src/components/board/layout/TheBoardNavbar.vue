@@ -9,7 +9,9 @@
 			>
 				<AppIconButton icon="home" tooltip="Home" size="9" />
 			</RouterLink>
-			<AppIconButton icon="info" tooltip="Info" size="9" />
+			<RouterLink :to="{ name: 'info', params: { userId: user.id } }">
+				<AppIconButton icon="info" tooltip="Info" size="9" />
+			</RouterLink>
 			<AppIconButton
 				icon="add"
 				tooltip="Add project"

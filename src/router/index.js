@@ -46,6 +46,14 @@ const router = createRouter({
 							/*webpackChunkName: "user-profile"*/ '@/views/board/UserView.vue'
 						),
 				},
+				{
+					path: 'info',
+					name: 'info',
+					component: () =>
+						import(
+							/*webpackChunkName: "info-view"*/ '@/views/board/InfoView.vue'
+						),
+				},
 			],
 		},
 		{

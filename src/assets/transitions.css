@@ -44,3 +44,34 @@
 	transition: all 0.5s 0.2s;
 }
 
+/* Info cards */
+.info-card-enter-from {
+	opacity: 0;
+	position: absolute;
+}
+
+.info-card-leave-to {
+	opacity: 0;
+}
+
+.info-card-enter-active {
+	transition: all 0.4s 0.5s;
+}
+
+.info-card-leave-active,
+.inof-card-move {
+	transition: all 0.3s;
+}
+
+/* Info subcard */
+.info-enter-from,
+.info-leave-to {
+	opacity: 0;
+	transform: scale(0.9);
+}
+
+.info-enter-active,
+.info-leave-active {
+	transition: all 0.4s 0.2s;
+}
+
