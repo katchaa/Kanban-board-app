@@ -3,7 +3,7 @@
 		class="bg-gray-100 w-72 relative flex flex-col items-center mx-auto mt-16 shrink-0 py-2 px-4 rounded-md shadow-md h-fit"
 	>
 		<h3 class="font-semibold text-2xl text-gray-700 select-none my-2">
-			Register
+			Registration
 		</h3>
 		<form
 			novalidate
