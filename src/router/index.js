@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 import LandingPage from '../views/LandingPage.vue'
 
@@ -8,10 +9,9 @@ const router = createRouter({
 	routes: [
 		{
 			path: '/',
-
 			name: 'landingPage',
-
 			component: LandingPage,
+			meta: { auth: false },
 		},
 		{
 			path: '/:userId',
@@ -21,6 +21,7 @@ const router = createRouter({
 					/*webpackChunkName: "board-view"*/ '@/views/BoardView.vue'
 				),
 			redirect: { name: 'projectHome' },
+			meta: { auth: true },
 			children: [
 				{
 					path: 'home',
@@ -59,12 +60,20 @@ const router = createRouter({
 		{
 			path: '/auth',
 			name: 'auth',
+			meta: { auth: false },
 			component: () =>
 				import(
 					/*webpackChunkName: "auth-view"*/ '@/views/AuthView.vue'
 				),
 		},
 	],
+})
+
+router.beforeEach(async (to, from, next) => {
+	const authStore = useAuthStore()
+	if (to.meta.auth && !authStore.authUser) {
+		next({ name: 'auth' })
+	} else next()
 })
 
 export default router

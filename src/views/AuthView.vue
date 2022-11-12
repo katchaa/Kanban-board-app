@@ -6,8 +6,8 @@
 		tag="div"
 		class="overflow-y-hidden"
 	>
-		<LoginForm v-if="showForm" @toggleForm="toggleForm()" />
-		<RegistrationForm v-if="!showForm" @toggleForm="toggleForm()" />
+		<LoginForm v-if="!showForm" @toggleForm="toggleForm()" />
+		<RegistrationForm v-if="showForm" @toggleForm="toggleForm()" />
 	</TransitionGroup>
 </template>
 
