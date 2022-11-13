@@ -2,11 +2,11 @@
 	<Teleport to="body">
 		<Transition name="modal">
 			<div
-				class="flex justify-center items-start w-screen h-screen absolute left-0 top-0 pt-36 z-10 bg-black/40"
+				class="flex justify-center items-start bg-black/40 w-screen h-screen absolute left-0 top-0 z-10 pt-28 px-6 sm:pt-36"
 				v-if="props.show"
 			>
 				<section
-					class="bg-gray-100 w-1/2 shrink-0 p-2 rounded-md shadow-md"
+					class="bg-gray-100 w-full max-w-md shrink-0 p-2 ml-5 rounded-md shadow-md"
 				>
 					<h1 class="text-lg font-semibold text-center">
 						Start New Project
@@ -17,13 +17,13 @@
 					>
 						<input
 							type="text"
-							class="w-3/4 focus:outline-none p-1"
+							class="w-11/12 focus:outline-none p-1 sm:w-3/4"
 							placeholder="Project name"
 							v-model="newProject.projectName"
 						/>
 						<input
 							type="text"
-							class="w-3/4 focus:outline-none p-1"
+							class="w-11/12 focus:outline-none p-1 sm:w-3/4"
 							placeholder="Company name"
 							v-model="newProject.companyName"
 						/>
@@ -31,10 +31,10 @@
 					</form>
 				</section>
 				<button
-					class="relative z-60 right-6 top-0.5 text-lg text-gray-300 hover:text-gray-600 transition duration-200"
+					class="relative z-60 right-6 top-1 text-lg text-gray-300 hover:text-gray-600 transition duration-200"
 					@click="closeModal()"
 				>
-					<i class="fa-regular fa-circle-xmark"></i>
+					<AppSVGIcon icon="xmark" />
 				</button>
 			</div>
 		</Transition>
@@ -47,6 +47,7 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
 import AppButton from '../../AppButton.vue'
+import AppSVGIcon from '../../AppSVGIcon.vue'
 
 const props = defineProps({
 	show: {

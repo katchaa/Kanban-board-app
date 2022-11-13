@@ -1,8 +1,8 @@
 <template>
-	<nav class="p-2 flex gap-x-2">
+	<nav class="flex gap-x-1 ml-2 px-2 pt-2 sm:gap-x-2 sm:ml-0">
 		<div class="flex items-center relative shrink-0">
 			<button
-				class="flex items-center text-white text-xl font-semibold select-none"
+				class="flex items-center text-white text-lg font-semibold select-none sm:text-xl"
 				@click="togglePopup"
 			>
 				{{ project?.projectName }}
@@ -28,11 +28,11 @@
 				Are you sure to delete {{ project?.projectName }}?
 			</DeleteModal>
 		</div>
-		<span class="text-white/40 text-xl mx-1">|</span>
+		<span class="text-white/40 text-lg mx-1 sm:text-xl">|</span>
 		<div
-			class="bg-white/50 rounded-md flex justify-center items-center shrink-0"
+			class="hidden bg-white/50 rounded-md sm:flex sm:justify-center sm:items-center sm:shrink-0"
 		>
-			<p class="text-white text-lg px-4 select-none">
+			<p class="text-white text-base px-4 select-none sm:text-lg">
 				{{ project?.companyName }}
 			</p>
 		</div>

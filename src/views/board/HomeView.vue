@@ -1,10 +1,12 @@
 <template>
-	<section class="m-6" v-if="user">
-		<h1 class="text-4xl font-semibold text-gray-700 mb-3 drop-shadow-md">
+	<section class="m-4 sm:m-6" v-if="user">
+		<h1
+			class="text-2xl font-semibold text-gray-700 mb-3 drop-shadow-md sm:text-4xl"
+		>
 			Welcome {{ user.username }}
 		</h1>
 		<!-- Project card -->
-		<aside class="flex grow-0 shrink-0 gap-6">
+		<aside class="flex flex-col sm:flex-row gap-6">
 			<RouterLink
 				:to="{
 					name: 'project',
@@ -13,7 +15,7 @@
 						projectId: project.id,
 					},
 				}"
-				class="bg-gray-200 w-96 h-64 px-3 py-2 rounded-md hover:underline"
+				class="w-full max-w-sm h-48 shrink-0 bg-gray-200 px-3 py-2 rounded-md hover:underline sm:w-96 sm:h-64"
 				v-for="project in projects"
 				:key="project.id"
 			>

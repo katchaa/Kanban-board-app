@@ -1,11 +1,11 @@
 <template>
 	<Teleport to="body">
 		<Transition name="modal">
-			<section
-				class="absolute left-0 top-0 z-10 w-full h-screen bg-black/40 flex justify-center items-start pt-36"
+			<div
+				class="flex justify-center items-start bg-black/40 w-screen h-screen absolute left-0 top-0 z-10 pt-28 px-6 sm:pt-36"
 				v-if="props.show"
 			>
-				<div class="bg-gray-100 w-64 p-2 text-center rounded-md">
+				<section class="bg-gray-100 w-64 p-2 text-center rounded-md">
 					<p class="text-xl font-semibold py-2">
 						<slot></slot>
 					</p>
@@ -18,8 +18,8 @@
 							Cancel</AppButton
 						>
 					</div>
-				</div>
-			</section>
+				</section>
+			</div>
 		</Transition>
 	</Teleport>
 </template>

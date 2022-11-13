@@ -2,11 +2,11 @@
 	<Teleport to="body">
 		<Transition name="modal">
 			<div
-				class="absolute left-0 top-0 z-10 w-full h-screen bg-black/40 flex justify-center items-start p-36"
+				class="absolute left-0 top-0 z-10 w-full h-screen bg-black/40 flex justify-center items-start pt-28 sm:pt-36"
 				v-if="props.show"
 			>
 				<section
-					class="w-64 bg-gray-100 px-3 py-4 rounded-lg shadow-lg"
+					class="w-64 bg-gray-100 px-3 py-4 -mr-4 rounded-lg shadow-lg"
 				>
 					<form
 						novalidate
@@ -55,10 +55,10 @@
 					</form>
 				</section>
 				<button
-					class="relative right-6 top-0.5 text-lg text-gray-300 hover:text-gray-600 transition duration-200"
+					class="relative right-2 top-1 text-lg text-gray-300 hover:text-gray-600 transition duration-200"
 					@click="closeModal()"
 				>
-					<i class="fa-regular fa-circle-xmark"></i>
+					<AppSVGIcon icon="xmark" />
 				</button>
 			</div>
 		</Transition>
@@ -71,6 +71,7 @@ import { required, sameAs, not, helpers } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
 import { useAuthStore } from '../../../stores/auth'
 import AppButton from '../../AppButton.vue'
+import AppSVGIcon from '../../AppSVGIcon.vue'
 
 const props = defineProps({
 	show: {

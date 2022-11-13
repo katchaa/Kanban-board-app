@@ -1,9 +1,9 @@
 <template>
-	<section class="bg-gray-100 py-2 px-4 rounded-md shadow-md">
+	<section class="py-2 px-3 bg-gray-100 rounded-md shadow-md sm:pt-2 sm:px-4">
 		<Transition name="info" mode="out-in">
 			<component :is="activeComponent"></component>
 		</Transition>
-		<div class="flex justify-end my-2">
+		<div class="flex justify-end">
 			<AppButton v-if="activeComponent !== ProjectCreate" @click="back()"
 				>Back</AppButton
 			>

@@ -1,7 +1,7 @@
 <template>
 	<Transition name="card" appear>
 		<section
-			class="bg-gray-100 w-72 max-h-[35rem] flex flex-col shrink-0 grow-0 px-2 mt-2 rounded-md shadow-md"
+			class="bg-gray-100 w-11/12 flex flex-col shrink-0 grow-0 px-2 mt-2 rounded-md shadow-md sm:max-h-[35rem] sm:w-72"
 			@drop="onDrop($event, props.card.id)"
 			@dragenter.prevent
 			@dragover.prevent
@@ -14,7 +14,7 @@
 					:contenteditable="edit"
 					ref="card"
 					spellcheck="false"
-					@click="startEdit()"
+					@dblclick="startEdit()"
 					@input="editTitle"
 					@blur="editCard()"
 				>
@@ -32,7 +32,7 @@
 			>
 				Are you sure to delete {{ props.card.title }} card?
 			</DeleteModal>
-			<div class="overflow-y-scroll scrollbar-hidden">
+			<div class="sm:overflow-y-scroll scrollbar-hidden">
 				<ProjectTask
 					v-for="task in tasks"
 					:key="task?.id"

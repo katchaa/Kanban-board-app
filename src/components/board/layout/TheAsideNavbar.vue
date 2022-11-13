@@ -1,8 +1,8 @@
 <template>
-	<aside class="h-screen bg-gray-500/10 px-2 pt-2">
+	<TransitionGroup tag="aside" name="drawer" mode="out-in" class="h-screen">
 		<TheAsideList v-if="!showDrawer" @toggle-drawer="toggleDrawer()" />
 		<TheAsideDrawer v-if="showDrawer" @toggle-drawer="toggleDrawer()" />
-	</aside>
+	</TransitionGroup>
 </template>
 
 <script setup>
@@ -16,3 +16,23 @@ const toggleDrawer = () => {
 	showDrawer.value = !showDrawer.value
 }
 </script>
+
+<style>
+.drawer-enter-from {
+	transform: translateX(-12rem);
+}
+
+.drawer-leave-to {
+	transform: translateX(-15rem);
+}
+
+.drawer-enter-active {
+	transition: all 0.8s;
+}
+
+.drawer-leave-active,
+.drawer-move {
+	position: absolute;
+	transition: all 0.7s;
+}
+</style>

@@ -1,16 +1,18 @@
 <template>
-	<article class="bg-gray-100 py-2 px-4">
-		<h2 class="text-lg font-semibold mb-1 underline underline-offset-2">
+	<article>
+		<h2
+			class="mb-0.5 text-base font-semibold underline underline-offset-2 sm:text-lg sm:mb-1"
+		>
 			Create new task
 		</h2>
-		<p class="mb-6">
+		<p class="text-sm text-justify mb-3 sm:text-base sm:mb-6">
 			For creating new task click "plus" icon on the bottom of the card.
 		</p>
-		<div class="flex flex-col items-center relative">
+		<div class="flex flex-col items-center">
 			<img
-				class="w-auto h-80 mx-auto"
+				class="w-auto h-60 mx-auto sm:h-80"
 				src="../../../assets/svg/task.svg"
-				alt=""
+				alt="Create task"
 				@click="toggleInfo()"
 			/>
 		</div>

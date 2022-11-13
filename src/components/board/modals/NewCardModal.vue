@@ -2,22 +2,24 @@
 	<Teleport to="body">
 		<Transition name="modal">
 			<div
-				class="flex justify-center items-start w-screen h-screen absolute left-0 top-0 pt-36 z-10 bg-black/40"
+				class="flex justify-center items-start bg-black/40 w-screen h-screen absolute left-0 top-0 z-10 pt-28 px-6 sm:pt-36"
 				v-if="props.show"
 			>
-				<section class="bg-gray-100 w-96 p-2 rounded-md shadow-md">
-					<h1 class="text-lg font-semibold ml-2">New card</h1>
+				<section
+					class="bg-gray-100 w-full max-w-md shrink-0 p-2 ml-5 rounded-md shadow-md"
+				>
+					<h1 class="text-lg font-semibold text-center">New card</h1>
 					<form
 						@submit.prevent="add()"
-						class="w-full flex justify-around gap-3 my-2"
+						class="w-full flex flex-col items-center gap-3 my-2"
 					>
 						<input
 							type="text"
-							class="w-3/4 focus:outline-none p-1"
+							class="w-11/12 focus:outline-none p-1 sm:w-3/4"
 							v-model="cardTitle"
 							placeholder="Card title"
 						/>
-						<AppButton>Add card</AppButton>
+						<AppButton class="self-end">Add card</AppButton>
 					</form>
 				</section>
 				<button

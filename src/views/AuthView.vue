@@ -4,7 +4,7 @@
 		mode="out-in"
 		appear
 		tag="div"
-		class="overflow-y-hidden"
+		class="overflow-hidden"
 	>
 		<LoginForm v-if="!showForm" @toggleForm="toggleForm()" />
 		<RegistrationForm v-if="showForm" @toggleForm="toggleForm()" />

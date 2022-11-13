@@ -1,6 +1,8 @@
 <template>
-	<div class="flex flex-col w-48 transition duration-300">
-		<button class="self-end -mr-1" @click="toggleDrawer()">
+	<div
+		class="absolute z-10 h-full bg-gray-600/70 w-60 flex flex-col pt-2 pr-1"
+	>
+		<button class="self-end" @click="toggleDrawer()">
 			<AppSVGIcon icon="chevronLeft" />
 		</button>
 		<RouterLink
@@ -12,7 +14,7 @@
 			}"
 		>
 			<div
-				class="flex items-center gap-2 shrink-0 hover:bg-white/50 transition duration-300 cursor-pointer py-1 pl-1 rounded-md"
+				class="flex items-center gap-2 shrink-0 hover:bg-gray-700/50 transition duration-300 cursor-pointer py-1 pl-1 rounded-md"
 			>
 				<img
 					class="w-9 h-9 rounded"

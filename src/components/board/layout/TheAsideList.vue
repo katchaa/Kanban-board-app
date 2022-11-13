@@ -1,9 +1,12 @@
 <template>
-	<div class="flex flex-col items-center gap-y-2">
-		<button class="self-end -mr-1" @click="toggleDrawer()">
+	<div
+		class="h-full bg-gray-500/10 flex flex-col items-center gap-y-2 w-7 pt-2 sm:w-11"
+	>
+		<button class="self-end" @click="toggleDrawer()">
 			<AppSVGIcon icon="chevronRight" />
 		</button>
 		<RouterLink
+			class="hidden sm:block"
 			:to="{
 				name: 'project',
 				params: { userId: project?.userId, projectId: project?.id },

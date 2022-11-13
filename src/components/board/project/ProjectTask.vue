@@ -11,7 +11,7 @@
 				ref="text"
 				:contenteditable="edit"
 				spellcheck="false"
-				@click="startEdit()"
+				@dblclick="startEdit()"
 				@input="editText"
 				@blur="editTask()"
 			>

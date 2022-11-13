@@ -1,7 +1,9 @@
 <template>
-	<div class="h-[94%] px-2.5 overflow-x-auto scrollbar">
+	<div class="flex-1 h-[94%] grid-cols-2 sm:px-2">
 		<ProjectNavbar />
-		<div class="flex items-start gap-3">
+		<div
+			class="flex flex-col items-center gap-2 sm:flex-row sm:items-start"
+		>
 			<ProjectCard v-for="card in cards" :key="card.id" :card="card" />
 		</div>
 	</div>

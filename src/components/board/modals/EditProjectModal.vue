@@ -2,13 +2,13 @@
 	<Teleport to="body">
 		<Transition name="modal">
 			<div
-				class="flex justify-center items-start w-screen h-screen absolute left-0 top-0 pt-36 z-10 bg-black/40"
+				class="flex justify-center items-start bg-black/40 w-screen h-screen absolute left-0 top-0 z-10 pt-28 px-6 sm:pt-36"
 				v-if="props.show"
 			>
 				<section
-					class="bg-gray-100 w-96 shrink-0 p-2 rounded-md shadow-md"
+					class="bg-gray-100 w-full max-w-md shrink-0 p-2 ml-5 rounded-md shadow-md"
 				>
-					<h1 class="text-lg font-semibold ml-2">Edit card</h1>
+					<h1 class="text-lg font-semibold ml-2">Edit project</h1>
 					<form
 						@submit.prevent="editProject()"
 						class="w-full flex flex-col items-center gap-3 py-2 px-3"
