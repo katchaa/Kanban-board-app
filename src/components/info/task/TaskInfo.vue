@@ -1,9 +1,9 @@
 <template>
-	<article class="py-2 px-3 bg-gray-100 rounded-md shadow-md sm:pt-2 sm:px-4">
+	<article class="container">
 		<Transition name="info" mode="out-in">
 			<component :is="activeComponent"></component>
 		</Transition>
-		<div class="flex justify-end">
+		<div class="btn-group">
 			<AppButton v-if="activeComponent !== TaskCreate" @click="back()"
 				>Back</AppButton
 			>
@@ -38,3 +38,23 @@ const back = () => {
 	}
 }
 </script>
+
+<style scoped lang="scss">
+.container {
+	background-color: $gray-light;
+	padding: 0.5rem 0.75rem;
+	border-radius: $radius;
+	box-shadow: $card-shadow;
+
+	.btn-group {
+		display: flex;
+		justify-content: flex-end;
+	}
+}
+
+@media screen and (min-width: $media-sm) {
+	.container {
+		padding: 0.5rem 2rem;
+	}
+}
+</style>

@@ -1,9 +1,7 @@
 <template>
-	<div class="flex-1 h-[94%] grid-cols-2 sm:px-2">
+	<div class="container">
 		<ProjectNavbar />
-		<div
-			class="flex flex-col items-center gap-2 sm:flex-row sm:items-start"
-		>
+		<div class="cards">
 			<ProjectCard v-for="card in cards" :key="card.id" :card="card" />
 		</div>
 	</div>
@@ -26,3 +24,29 @@ const cards = computed(() => {
 	)
 })
 </script>
+
+<style scoped lang="scss">
+.container {
+	display: flex;
+	flex-direction: column;
+	max-width: 89vw;
+
+	.cards {
+		flex: 1;
+		align-self: center;
+	}
+}
+
+@media screen and (min-width: $media-sm) {
+	.container {
+		max-width: 98vw;
+
+		.cards {
+			align-self: flex-start;
+			display: flex;
+			align-items: flex-start;
+			gap: 0.75rem;
+		}
+	}
+}
+</style>

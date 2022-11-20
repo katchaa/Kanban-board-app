@@ -1,12 +1,10 @@
 <template>
-	<div
-		class="h-full bg-gray-500/10 flex flex-col items-center gap-y-2 w-7 pt-2 sm:w-11"
-	>
-		<button class="self-end" @click="toggleDrawer()">
+	<div class="wrapper">
+		<button class="icon" @click="toggleDrawer()">
 			<AppSVGIcon icon="chevronRight" />
 		</button>
 		<RouterLink
-			class="hidden sm:block"
+			class="avatar"
 			:to="{
 				name: 'project',
 				params: { userId: project?.userId, projectId: project?.id },
@@ -14,11 +12,7 @@
 			v-for="project in projects"
 			:key="project?.id"
 		>
-			<img
-				class="w-9 h-9 rounded"
-				:src="project?.avatar"
-				:alt="project?.projectName"
-			/>
+			<img :src="project?.avatar" :alt="project?.projectName" />
 		</RouterLink>
 	</div>
 </template>
@@ -38,3 +32,40 @@ const projects = computed(() => {
 	return projectStore.projects
 })
 </script>
+
+<style scoped lang="scss">
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 0.5rem;
+
+	background: linear-gradient(to bottom, $bg-gray-transparent, transparent);
+	width: 1.75rem;
+	height: 92vh;
+	padding-top: 0.5rem;
+
+	.icon {
+		align-self: flex-end;
+	}
+
+	.avatar {
+		display: none;
+
+		img {
+			width: 2.25rem;
+			height: 2.25rem;
+			border-radius: $radius-sm;
+		}
+	}
+}
+
+@media screen and (min-width: $media-xs) {
+	.wrapper {
+		width: 2.75rem;
+		.avatar {
+			display: block;
+		}
+	}
+}
+</style>

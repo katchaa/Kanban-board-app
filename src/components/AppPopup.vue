@@ -1,24 +1,9 @@
 <template>
 	<Transition name="popup">
-		<div
-			class="flex flex-col gap-1 absolute top-6 -right-16 z-20 bg-gray-300/90 rounded-md"
-			v-if="props.show"
-		>
-			<button
-				class="flex justify-between items-center text-sm px-2 pt-1 pb-0.5 rounded-t-md hover:bg-gray-400/50 transition-all duration-300"
-				@click="editMode()"
-			>
-				Edit
-				<i id="edit" class="fa-regular fa-pen-to-square"></i>
-			</button>
+		<div class="wrapper" v-if="props.show">
+			<button class="item top" @click="editMode()">Edit</button>
 
-			<button
-				class="flex justify-between items-center text-sm px-2 pb-1 pt-0.5 rounded-b-md hover:bg-gray-400/50 transition-all duration-300"
-				@click="deleteMode()"
-			>
-				Delete
-				<i class="fa-regular fa-trash-can text-sm ml-3"></i>
-			</button>
+			<button class="item bottom" @click="deleteMode()">Delete</button>
 		</div>
 	</Transition>
 </template>
@@ -40,3 +25,45 @@ const deleteMode = () => {
 	emit('deleteMode')
 }
 </script>
+
+<style scoped lang="scss">
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+
+	position: absolute;
+	top: 1.5rem;
+	right: -4rem;
+	z-index: 20;
+
+	background-color: $bg-popup;
+	border-radius: $radius;
+
+	.item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		font-size: $sm;
+		padding: 0 1rem 0 0.5rem;
+		cursor: pointer;
+		transition: 300ms;
+
+		&:hover {
+			background-color: darken($bg-popup, 5%);
+		}
+
+		&.top {
+			padding-top: 0.25rem;
+			padding-bottom: 0.125rem;
+			border-radius: $radius $radius 0 0;
+		}
+		&.bottom {
+			padding-bottom: 0.25rem;
+			padding-top: 0.125rem;
+			border-radius: 0 0 $radius $radius;
+		}
+	}
+}
+</style>

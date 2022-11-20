@@ -1,12 +1,14 @@
 <template>
-	<!-- Start on screen 360px -->
-	<div
-		class="bg-gradient-to-tr from-sky-400 to-teal-300 h-screen w-full overflow-y-hidden"
-	>
-		<Suspense>
-			<RouterView />
-		</Suspense>
-	</div>
+	<!-- Start on screen 340px -->
+	<Suspense>
+		<RouterView />
+	</Suspense>
 </template>
 
-<script setup></script>
+<style lang="scss">
+// @import '@/assets/scss/main.scss';
+#app {
+	background-image: linear-gradient(to right, #38bdf8, #5eead4);
+	min-height: 100vh;
+}
+</style>

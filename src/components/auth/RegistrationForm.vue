@@ -1,23 +1,10 @@
 <template>
-	<section
-		class="bg-gray-100 w-72 relative flex flex-col items-center mx-auto mt-16 shrink-0 py-2 px-4 rounded-md shadow-md h-fit"
-	>
-		<h3 class="font-semibold text-2xl text-gray-700 select-none my-2">
-			Registration
-		</h3>
-		<form
-			novalidate
-			@submit.prevent="registration()"
-			class="w-full flex flex-col items-center gap-3 my-2"
-		>
-			<input
-				type="text"
-				placeholder="Username"
-				class="w-full focus:outline-none p-1 rounded-sm"
-				v-model="user.username"
-			/>
+	<section class="card">
+		<h3>Registration</h3>
+		<form novalidate @submit.prevent="registration()">
+			<input type="text" placeholder="Username" v-model="user.username" />
 			<span
-				class="text-xs text-red-500 self-start -mt-2"
+				class="error-msg"
 				v-for="error in v$.username.$errors"
 				:key="error.$uid"
 			>
@@ -26,11 +13,10 @@
 			<input
 				type="text"
 				placeholder="First name"
-				class="w-full focus:outline-none p-1 rounded-sm"
 				v-model="user.firstName"
 			/>
 			<span
-				class="text-xs text-red-500 self-start -mt-2"
+				class="error-msg"
 				v-for="error in v$.firstName.$errors"
 				:key="error.$uid"
 			>
@@ -39,24 +25,18 @@
 			<input
 				type="text"
 				placeholder="Last name"
-				class="w-full focus:outline-none p-1 rounded-sm"
 				v-model="user.lastName"
 			/>
 			<span
-				class="text-xs text-red-500 self-start -mt-2"
+				class="error-msg"
 				v-for="error in v$.lastName.$errors"
 				:key="error.$uid"
 			>
 				{{ error.$message }}
 			</span>
-			<input
-				type="email"
-				placeholder="Email"
-				class="w-full focus:outline-none p-1 rounded-sm"
-				v-model="user.email"
-			/>
+			<input type="email" placeholder="Email" v-model="user.email" />
 			<span
-				class="text-xs text-red-500 self-start -mt-2"
+				class="error-msg"
 				v-for="error in v$.email.$errors"
 				:key="error.$uid"
 			>
@@ -65,11 +45,10 @@
 			<input
 				type="password"
 				placeholder="Password"
-				class="w-full focus:outline-none p-1 rounded-sm"
 				v-model="user.password"
 			/>
 			<span
-				class="text-xs text-red-500 self-start -mt-2"
+				class="error-msg"
 				v-for="error in v$.password.$errors"
 				:key="error.$uid"
 			>
@@ -78,30 +57,20 @@
 			<input
 				type="password"
 				placeholder="Confirm password"
-				class="w-full focus:outline-none p-1 rounded-sm"
 				v-model="user.passwordConfirm"
 			/>
 			<span
-				class="text-xs text-red-500 self-start -mt-2"
+				class="error-msg"
 				v-for="error in v$.passwordConfirm.$errors"
 				:key="error.$uid"
 			>
 				{{ error.$message }}
 			</span>
-			<button
-				class="self-end py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
-			>
-				Registration
-			</button>
+			<AppButton class="btn">Registration</AppButton>
 		</form>
-		<p class="text-xs mb-1 text-gray-400">
+		<p>
 			Already have an account?
-			<span
-				class="hover:text-black hover:underline cursor-pointer"
-				@click="showLogin()"
-			>
-				Login here
-			</span>
+			<span class="link" @click="showLogin()"> Login here </span>
 		</p>
 	</section>
 </template>
@@ -112,6 +81,7 @@ import useVuelidate from '@vuelidate/core'
 import { required, email, sameAs, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '../../stores/auth'
 import { useRouter } from 'vue-router'
+import AppButton from '../AppButton.vue'
 
 const emit = defineEmits(['toggleForm'])
 
@@ -172,3 +142,7 @@ const registration = async () => {
 	}
 }
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/scss/authCard.scss';
+</style>

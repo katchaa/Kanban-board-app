@@ -1,0 +1,33 @@
+form {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.6rem;
+
+	input {
+		width: 100%;
+		padding: 0.35rem;
+		font-size: $sm;
+		border-radius: $radius;
+
+		&:focus {
+			outline: none;
+		}
+
+		&::placeholder {
+			color: transparentize($text-muted, 0.5);
+		}
+	}
+
+	.btn {
+		align-self: flex-end;
+	}
+
+	.error-msg {
+		font-size: $xs;
+		font-weight: 500;
+		color: $error;
+		margin-top: -0.3rem;
+	}
+}

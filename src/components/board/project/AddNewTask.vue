@@ -1,20 +1,22 @@
 <template>
-	<div class="py-1 leading-none">
+	<section class="wrapper">
 		<button v-if="!showTextarea" @click="toggleTextarea()">
 			<AppSVGIcon icon="addGray" />
 		</button>
 		<button v-else @click="toggleTextarea()">
 			<AppSVGIcon icon="minus" />
 		</button>
-	</div>
-	<form @submit.prevent="addTask()" v-if="showTextarea" class="w-full mb-2">
-		<textarea
-			rows="3"
-			class="w-full focus:outline-none p-2"
-			v-model="text"
-		/>
-		<AppButton>Send</AppButton>
-	</form>
+		<form @submit.prevent="addTask()" v-if="showTextarea">
+			<textarea
+				class="text-area"
+				rows="4"
+				cols="32"
+				wrap="hard"
+				v-model="text"
+			/>
+			<AppButton>Send</AppButton>
+		</form>
+	</section>
 </template>
 
 <script setup>
@@ -50,3 +52,22 @@ const addTask = async () => {
 	toggleTextarea()
 }
 </script>
+
+<style scoped lang="scss">
+.wrapper {
+	width: 100%;
+	margin-top: 0.2rem;
+
+	form {
+		.text-area {
+			width: 100%;
+			padding: 0.5rem;
+			border-radius: $radius-sm;
+
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+}
+</style>

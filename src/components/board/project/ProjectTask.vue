@@ -1,13 +1,10 @@
 <template>
 	<Transition name="task" appear>
-		<div
-			class="flex justify-between bg-white pl-2 pr-1 py-1 mb-2 rounded-sm shadow-sm"
-			v-if="props.task"
-		>
+		<div class="task" v-if="props.task">
 			<!-- Task text -->
 			<p
-				class="flex-1 mt-2 max-w-full break-words focus:outline-none"
-				:class="{ 'border-b-2': edit }"
+				class="content"
+				:class="{ edit: edit }"
 				ref="text"
 				:contenteditable="edit"
 				spellcheck="false"
@@ -17,7 +14,7 @@
 			>
 				{{ props.task.text }}
 			</p>
-			<button class="self-start" @click="toggleDeleteModal()">
+			<button class="icon" @click="toggleDeleteModal()">
 				<AppSVGIcon icon="trash" />
 			</button>
 			<DeleteModal
@@ -78,3 +75,34 @@ const toggleDeleteModal = () => {
 	// showPopup.value = false
 }
 </script>
+
+<style scoped lang="scss">
+.task {
+	display: flex;
+	justify-content: space-between;
+
+	padding: 0.25rem 0.3rem 0.25rem 0.5rem;
+	background-color: #fff;
+	border-radius: $radius-sm;
+	border-bottom: 1px solid lighten($gray-medium, 40%);
+
+	.content {
+		flex: 1;
+		font-size: $sm;
+		margin-top: 0.25rem;
+		margin-right: 0.2rem;
+
+		&:focus {
+			outline: none;
+		}
+
+		&.edit {
+			border-bottom: $edit-border;
+		}
+	}
+
+	.icon {
+		align-self: flex-start;
+	}
+}
+</style>

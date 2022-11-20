@@ -1,29 +1,16 @@
 <template>
 	<Transition name="popup">
-		<div
-			class="flex flex-col gap-1 absolute top-6 right-4 z-20 bg-gray-300/90 rounded-md sm:-right-28"
-			v-if="props.show"
-		>
-			<button
-				class="flex justify-between items-center text-sm px-2 pt-1 pb-0.5 rounded-t-md hover:bg-gray-400/50 transition-all duration-300"
-				@click="editProfile()"
-			>
+		<aside class="wrapper" v-if="props.show">
+			<button class="item top" @click="editProfile()">
 				Edit profile
 			</button>
-			<button
-				class="flex justify-between items-center text-sm px-2 pt-1 pb-0.5 hover:bg-gray-400/50 transition-all duration-300"
-				@click="editPassword()"
-			>
+			<button class="item middle" @click="editPassword()">
 				Change password
 			</button>
-
-			<button
-				class="flex justify-between items-center text-sm px-2 pb-1 pt-0.5 rounded-b-md hover:bg-gray-400/50 transition-all duration-300"
-				@click="deleteAccount()"
-			>
+			<button class="item bottom" @click="deleteAccount()">
 				Delete account
 			</button>
-		</div>
+		</aside>
 	</Transition>
 </template>
 
@@ -57,3 +44,55 @@ const deleteAccount = () => {
 	emit('closePopup')
 }
 </script>
+
+<style scoped lang="scss">
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	// gap: 0.5rem;
+	position: absolute;
+	top: 1.5rem;
+	right: 1rem;
+	z-index: 20;
+
+	background-color: $bg-popup;
+	border-radius: $radius;
+
+	.item {
+		width: 100%;
+		font-size: $sm;
+		text-align: right;
+		padding: 0 0.5rem;
+		transition: 300ms;
+
+		&:hover {
+			background-color: darken($bg-popup, 5%);
+		}
+
+		&.top {
+			padding-top: 0.25rem;
+			padding-bottom: 0.15rem;
+			border-radius: $radius $radius 0 0;
+		}
+		&.middle {
+			padding-top: 0.15rem;
+			padding-bottom: 0.15rem;
+		}
+		&.bottom {
+			padding-bottom: 0.25rem;
+			padding-top: 0.15rem;
+			border-radius: 0 0 $radius $radius;
+		}
+	}
+}
+
+@media screen and (min-width: $media-sm) {
+	.wrapper {
+		right: -7rem;
+
+		.item {
+			text-align: left;
+		}
+	}
+}
+</style>

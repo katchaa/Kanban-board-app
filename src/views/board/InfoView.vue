@@ -1,41 +1,22 @@
 <template>
-	<div
-		class="flex flex-col items-center gap-2 mx-6 my-4 sm:items-start sm:justify-center"
-	>
-		<ul class="flex gap-2">
+	<section class="wrapper">
+		<ul>
 			<li>
-				<button
-					class="bg-gray-100 hover:bg-gray-200 w-full font-semibold py-1.5 px-3 mb-1.5 rounded-md shadow-md border-b-2 border-b-gray-300 transition duration-200"
-					@click="toggleInfo('project')"
-				>
-					Projects
-				</button>
+				<button @click="toggleInfo('project')">Projects</button>
 			</li>
 			<li>
-				<button
-					class="bg-gray-100 hover:bg-gray-200 w-full font-semibold py-1.5 px-3 mb-1.5 rounded-md shadow-md border-b-2 border-b-gray-300 transition duration-200"
-					@click="toggleInfo('card')"
-				>
-					Cards
-				</button>
+				<button @click="toggleInfo('card')">Cards</button>
 			</li>
 			<li>
-				<button
-					class="bg-gray-100 hover:bg-gray-200 w-full font-semibold py-1.5 px-3 mb-1.5 rounded-md shadow-md border-b-2 border-b-gray-300 transition duration-200"
-					@click="toggleInfo('task')"
-				>
-					Tasks
-				</button>
+				<button @click="toggleInfo('task')">Tasks</button>
 			</li>
 		</ul>
-		<section class="w-full flex-1 md:max-w-2xl">
-			<TransitionGroup name="info-card" mode="out-in">
-				<ProjectInfo v-if="show === 'project'" :key="show" />
-				<CardInfo v-if="show === 'card'" :key="show" />
-				<TaskInfo v-if="show === 'task'" :key="show" />
-			</TransitionGroup>
-		</section>
-	</div>
+		<TransitionGroup name="info-card" mode="out-in" tag="main">
+			<ProjectInfo v-if="show === 'project'" :key="show" />
+			<CardInfo v-if="show === 'card'" :key="show" />
+			<TaskInfo v-if="show === 'task'" :key="show" />
+		</TransitionGroup>
+	</section>
 </template>
 
 <script setup>
@@ -49,3 +30,37 @@ const toggleInfo = (item) => {
 	show.value = item
 }
 </script>
+
+<style scoped lang="scss">
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+
+	ul {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 0.4rem;
+
+		li {
+			background-color: $gray-light;
+			border-radius: $radius-sm;
+			box-shadow: $card-shadow;
+
+			button {
+				padding: 0.4rem 0.6rem;
+				font-size: $sm;
+				font-weight: 600;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: $media-sm) {
+	.wrapper {
+		align-items: flex-start;
+		margin: 1rem 0 0 1rem;
+	}
+}
+</style>

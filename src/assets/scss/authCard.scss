@@ -1,0 +1,39 @@
+@import './form.scss';
+
+.card {
+	background-color: $gray-light;
+	max-width: 18rem;
+	border-radius: $radius;
+	box-shadow: $card-shadow;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	margin: 0 auto;
+	padding: 0.6rem 1rem;
+
+	h3 {
+		font-size: $xl;
+		font-weight: 500;
+		color: $text-primary;
+		margin: 0.3rem 0 0.8rem 0;
+	}
+
+	p {
+		font-size: $xs;
+		color: $text-muted;
+
+		.link {
+			font-size: inherit;
+			cursor: pointer;
+			transition: 200ms;
+
+			&:hover {
+				color: $text-hover;
+				text-decoration: underline;
+			}
+		}
+	}
+}
+

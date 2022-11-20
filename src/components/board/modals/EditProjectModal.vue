@@ -1,42 +1,25 @@
 <template>
-	<Teleport to="body">
-		<Transition name="modal">
-			<div
-				class="flex justify-center items-start bg-black/40 w-screen h-screen absolute left-0 top-0 z-10 pt-28 px-6 sm:pt-36"
-				v-if="props.show"
-			>
-				<section
-					class="bg-gray-100 w-full max-w-md shrink-0 p-2 ml-5 rounded-md shadow-md"
-				>
-					<h1 class="text-lg font-semibold ml-2">Edit project</h1>
-					<form
-						@submit.prevent="editProject()"
-						class="w-full flex flex-col items-center gap-3 py-2 px-3"
-					>
-						<input
-							type="text"
-							class="w-full focus:outline-none p-1"
-							v-model="project.projectName"
-							placeholder="Project name"
-						/>
-						<input
-							type="text"
-							class="w-full focus:outline-none p-1"
-							v-model="project.companyName"
-							placeholder="Company name"
-						/>
-						<AppButton class="self-end">Save</AppButton>
-					</form>
-				</section>
-				<button
-					class="relative right-6 top-0.5 text-lg text-gray-300 hover:text-gray-600 transition duration-200"
-					@click="closeModal()"
-				>
-					<i class="fa-regular fa-circle-xmark"></i>
-				</button>
-			</div>
-		</Transition>
-	</Teleport>
+	<AppModal :show="props.show">
+		<section class="card">
+			<h1 class="title">Edit project</h1>
+			<form @submit.prevent="editProject()">
+				<input
+					type="text"
+					v-model="project.projectName"
+					placeholder="Project name"
+				/>
+				<input
+					type="text"
+					v-model="project.companyName"
+					placeholder="Company name"
+				/>
+				<AppButton class="btn">Save</AppButton>
+			</form>
+			<button class="x-mark" @click="closeModal()">
+				<AppSVGIcon icon="xmark" />
+			</button>
+		</section>
+	</AppModal>
 </template>
 
 <script setup>
@@ -45,6 +28,8 @@ import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 import { findById } from '../../../helpers/project'
 import AppButton from '../../AppButton.vue'
+import AppSVGIcon from '../../AppSVGIcon.vue'
+import AppModal from '../../AppModal.vue'
 
 const props = defineProps({
 	show: {
@@ -79,3 +64,7 @@ const closeModal = () => {
 	emit('closeEditModal')
 }
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/scss/modalCard.scss';
+</style>

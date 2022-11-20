@@ -1,68 +1,42 @@
 <template>
-	<Teleport to="body">
-		<Transition name="modal">
-			<div
-				class="absolute left-0 top-0 z-10 w-full h-screen bg-black/40 flex justify-center items-start pt-28 sm:pt-36"
-				v-if="props.show"
-			>
-				<section
-					class="w-64 bg-gray-100 px-3 py-4 -mr-4 rounded-lg shadow-lg"
-				>
-					<form
-						novalidate
-						@submit.prevent="editPassword()"
-						class="w-full flex flex-col gap-2 my-2"
-					>
-						<div>
-							<label for="newPassword" class="text-gray-400"
-								>New password
-							</label>
+	<AppModal :show="props.show">
+		<section class="card">
+			<form novalidate @submit.prevent="editPassword()">
+				<label for="newPassword">New password </label>
 
-							<input
-								type="password"
-								id="newPassword"
-								class="w-full focus:outline-none p-1 text-black"
-								v-model="passwordData.newPassword"
-							/>
-							<span
-								class="text-xs text-red-500 self-start -mt-2"
-								v-for="error in v$.newPassword.$errors"
-								:key="error.$uid"
-							>
-								{{ error.$message }}
-							</span>
-						</div>
-						<div>
-							<label for="confirmPassword" class="text-gray-400"
-								>Confirm password
-							</label>
-
-							<input
-								type="password"
-								id="confirmPassword"
-								class="w-full focus:outline-none p-1 text-black"
-								v-model="passwordData.confirmNewPassword"
-							/>
-							<span
-								class="text-xs text-red-500 self-start -mt-2"
-								v-for="error in v$.confirmNewPassword.$errors"
-								:key="error.$uid"
-							>
-								{{ error.$message }}
-							</span>
-						</div>
-						<AppButton class="self-end -mb-2 -mr-1">Save</AppButton>
-					</form>
-				</section>
-				<button
-					class="relative right-2 top-1 text-lg text-gray-300 hover:text-gray-600 transition duration-200"
-					@click="closeModal()"
+				<input
+					type="password"
+					id="newPassword"
+					v-model="passwordData.newPassword"
+				/>
+				<span
+					class="error-msg"
+					v-for="error in v$.newPassword.$errors"
+					:key="error.$uid"
 				>
-					<AppSVGIcon icon="xmark" />
-				</button>
-			</div>
-		</Transition>
-	</Teleport>
+					{{ error.$message }}
+				</span>
+				<label for="confirmPassword">Confirm password </label>
+
+				<input
+					type="password"
+					id="confirmPassword"
+					v-model="passwordData.confirmNewPassword"
+				/>
+				<span
+					class="error-msg"
+					v-for="error in v$.confirmNewPassword.$errors"
+					:key="error.$uid"
+				>
+					{{ error.$message }}
+				</span>
+				<AppButton class="btn">Save</AppButton>
+			</form>
+			<button class="x-mark" @click="closeModal()">
+				<AppSVGIcon icon="xmark" />
+			</button>
+		</section>
+	</AppModal>
 </template>
 
 <script setup>
@@ -71,6 +45,7 @@ import { required, sameAs, not, helpers } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
 import { useAuthStore } from '../../../stores/auth'
 import AppButton from '../../AppButton.vue'
+import AppModal from '../../AppModal.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 
 const props = defineProps({
@@ -131,3 +106,7 @@ const editPassword = async () => {
 	}
 }
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/scss/modalCard.scss';
+</style>

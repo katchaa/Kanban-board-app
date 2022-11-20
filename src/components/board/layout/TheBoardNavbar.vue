@@ -1,9 +1,7 @@
 <template>
-	<nav
-		class="flex justify-between items-center px-2 py-1 bg-gray-500/10 shadow shadow-black/10"
-	>
-		<!-- Icons -->
-		<div class="flex gap-2">
+	<nav class="navbar">
+		<!-- Icons tab -->
+		<div class="icons">
 			<RouterLink
 				:to="{ name: 'projectHome', params: { userId: user.id } }"
 			>
@@ -24,27 +22,17 @@
 			/>
 		</div>
 		<!-- User tab -->
-		<div class="flex gap-2 relative">
-			<div
-				class="flex items-center gap-1.5 px-1.5 py-1 rounded-md hover:bg-white/50 transition duration-200 cursor-pointer"
-				@click="toggleUserMenu()"
-			>
-				<img
-					class="w-9 h-9 rounded-full"
-					:src="user.avatar"
-					:alt="user.username"
-				/>
-				<p class="font-semibold text-white ml-1 select-none">
-					{{ user.username }}
-				</p>
+		<div class="user-tab" @click="toggleUserMenu()">
+			<img class="avatar" :src="user.avatar" :alt="user.username" />
+			<p class="username">
+				{{ user.username }}
+			</p>
+			<button class="icon">
 				<AppSVGIcon icon="chevronDown" />
-			</div>
-			<!-- User menu popup -->
-			<UserMenuPopup
-				:show="showUserMenu"
-				@close-menu="toggleUserMenu()"
-			/>
+			</button>
 		</div>
+		<!-- User menu popup -->
+		<UserMenuPopup :show="showUserMenu" @close-menu="toggleUserMenu()" />
 	</nav>
 </template>
 
@@ -73,3 +61,61 @@ const toggleUserMenu = () => {
 	showUserMenu.value = !showUserMenu.value
 }
 </script>
+
+<style scoped lang="scss">
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	max-width: 100vw;
+
+	padding: 0.25rem 0.5rem;
+	background-color: $bg-gray-transparent;
+	box-shadow: $navbar-shadow;
+
+	.icons {
+		display: flex;
+		gap: 0.35rem;
+	}
+
+	.user-tab {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+
+		padding: 0.25rem 0.4rem;
+		border-radius: $radius;
+		cursor: pointer;
+		transition: 200ms;
+
+		&:hover {
+			background-color: $bg-user-tab;
+		}
+
+		.avatar {
+			width: 2rem;
+			height: 2rem;
+			border-radius: 50%;
+		}
+
+		.username {
+			color: #fff;
+			font-size: $md;
+			font-weight: 600;
+			margin-right: -0.2rem;
+		}
+
+		.icon {
+			margin-top: 0.1rem;
+		}
+	}
+}
+
+@media screen and (min-width: $media-sm) {
+	.navbar {
+		.user-tab {
+			margin-right: 0;
+		}
+	}
+}
+</style>

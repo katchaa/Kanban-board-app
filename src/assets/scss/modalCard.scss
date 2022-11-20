@@ -1,0 +1,53 @@
+@import './form.scss';
+
+.card {
+	position: relative;
+	background-color: $gray-light;
+	width: 85vw;
+	max-width: 23rem;
+	margin: 0 auto;
+	padding: 1.1rem 0.5rem 0.5rem 0.5rem;
+	border-radius: $radius;
+
+	.title {
+		font-size: $md;
+		font-weight: 600;
+		margin-bottom: 0.3rem;
+		text-transform: capitalize;
+	}
+
+	// Confirm Modal
+	.question {
+		font-size: $md;
+		font-weight: 600;
+		margin-bottom: 0.8rem;
+		max-width: 100%;
+		text-align: center;
+		word-break: normal;
+	}
+	.btn-group {
+		display: flex;
+		justify-content: space-around;
+		.muted {
+			color: $text-muted;
+
+			&:hover {
+				color: $text-hover;
+			}
+		}
+	}
+	.x-mark {
+		position: absolute;
+		right: 0.3rem;
+		top: 0.3rem;
+		cursor: pointer;
+	}
+}
+
+label {
+	align-self: flex-start;
+	margin-bottom: -0.4rem;
+	color: $text-muted;
+	font-size: $sm;
+}
+

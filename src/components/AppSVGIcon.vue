@@ -6,7 +6,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.2"
 		stroke="currentColor"
-		class="w-7 h-7 text-white"
+		class="white-md"
 		v-if="props.icon === 'home'"
 	>
 		<path
@@ -23,7 +23,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.2"
 		stroke="currentColor"
-		class="w-7 h-7 text-white"
+		class="white-md"
 		v-if="props.icon === 'info'"
 	>
 		<path
@@ -40,7 +40,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.5"
 		stroke="currentColor"
-		class="w-7 h-7 text-white"
+		class="white-md"
 		v-if="props.icon === 'add'"
 	>
 		<path
@@ -57,7 +57,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.5"
 		stroke="currentColor"
-		class="w-6 h-6 text-white"
+		class="white-sm"
 		v-if="props.icon === 'addSmall'"
 	>
 		<path
@@ -74,7 +74,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.5"
 		stroke="currentColor"
-		class="w-5 h-5 text-gray-400 hover:text-gray-600 transition duration-200"
+		class="gray-md"
 		v-if="props.icon === 'addGray'"
 	>
 		<path
@@ -91,7 +91,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="1.5"
 		stroke="currentColor"
-		class="w-5 h-5 text-gray-400 hover:text-gray-600 transition duration-200"
+		class="gray-md"
 		v-if="props.icon == 'minus'"
 	>
 		<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
@@ -104,7 +104,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.8"
 		stroke="currentColor"
-		class="w-5 h-5 text-white"
+		class="white-xs"
 		v-if="props.icon === 'chevronDown'"
 	>
 		<path
@@ -121,7 +121,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.5"
 		stroke="currentColor"
-		class="w-5 h-5 text-white/50 hover:text-white transition duration-200"
+		class="white-xs-hover"
 		v-if="props.icon === 'chevronLeft'"
 	>
 		<path
@@ -138,7 +138,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.5"
 		stroke="currentColor"
-		class="w-5 h-5 text-white/50 hover:text-white transition duration-200"
+		class="white-xs-hover"
 		v-if="props.icon === 'chevronRight'"
 	>
 		<path
@@ -155,7 +155,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2.4"
 		stroke="currentColor"
-		class="w-5 h-5 -mr-1 -mt-1 text-gray-400 hover:text-gray-600 transition duration-200"
+		class="gray-md"
 		v-if="props.icon === 'ellipsis'"
 	>
 		<path
@@ -172,7 +172,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="1.5"
 		stroke="currentColor"
-		class="w-4 h-4 text-gray-300 hover:text-gray-400 transition duration-200"
+		class="gray-sm"
 		v-if="props.icon === 'trash'"
 	>
 		<path
@@ -189,7 +189,7 @@
 		viewBox="0 0 24 24"
 		stroke-width="2"
 		stroke="currentColor"
-		class="w-5 h-5"
+		class="gray-md"
 		v-if="props.icon === 'xmark'"
 	>
 		<path
@@ -208,3 +208,52 @@ const props = defineProps({
 	},
 })
 </script>
+
+<style scoped lang="scss">
+.white-md {
+	width: 1.75rem;
+	height: 1.75rem;
+}
+
+.white-sm {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.white-xs {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+.white-xs-hover {
+	width: 1.25rem;
+	height: 1.25rem;
+	stroke: rgba(255, 255, 255, 0.5);
+	transition: 200ms;
+
+	&:hover {
+		stroke: #fff;
+	}
+}
+
+.gray-md {
+	width: 1.25rem;
+	height: 1.25rem;
+	stroke: lighten($text-muted, 20%);
+	transition: 200ms;
+
+	&:hover {
+		stroke: $text-muted;
+	}
+}
+.gray-sm {
+	width: 1rem;
+	height: 1rem;
+	stroke: lighten($text-muted, 20%);
+	transition: 200ms;
+
+	&:hover {
+		stroke: $text-muted;
+	}
+}
+</style>

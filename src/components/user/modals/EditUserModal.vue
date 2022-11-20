@@ -1,90 +1,59 @@
 <template>
-	<Teleport to="body">
-		<Transition name="modal">
-			<div
-				class="absolute left-0 top-0 z-10 w-full h-screen bg-black/40 flex justify-center items-start pt-28 sm:pt-36"
-				v-if="props.show"
-			>
-				<section
-					class="w-72 bg-gray-100 px-3 py-4 -mr-4 rounded-lg shadow-lg"
+	<AppModal :show="props.show">
+		<section class="card">
+			<form novalidate @submit.prevent="editUser()">
+				<label for="username">Username </label>
+
+				<input
+					type="text"
+					placeholder="Username"
+					id="username"
+					v-model="userData.username"
+				/>
+				<span
+					class="error-msg"
+					v-for="error in v$.username.$errors"
+					:key="error.$uid"
 				>
-					<form
-						novalidate
-						@submit.prevent="editUser()"
-						class="w-full flex flex-col gap-2 my-2"
-					>
-						<div>
-							<label for="username" class="text-gray-400"
-								>Username
-							</label>
+					{{ error.$message }}
+				</span>
+				<label for="firstName">First name </label>
 
-							<input
-								type="text"
-								placeholder="Username"
-								id="username"
-								class="w-full focus:outline-none p-1 text-black"
-								v-model="userData.username"
-							/>
-							<span
-								class="text-xs text-red-500 self-start -mt-2"
-								v-for="error in v$.username.$errors"
-								:key="error.$uid"
-							>
-								{{ error.$message }}
-							</span>
-						</div>
-						<div>
-							<label for="firstName" class="text-gray-400"
-								>First name
-							</label>
-
-							<input
-								type="text"
-								placeholder="First name"
-								id="firstName"
-								class="w-full focus:outline-none p-1 text-black"
-								v-model="userData.firstName"
-							/>
-							<span
-								class="text-xs text-red-500 self-start -mt-2"
-								v-for="error in v$.firstName.$errors"
-								:key="error.$uid"
-							>
-								{{ error.$message }}
-							</span>
-						</div>
-						<div>
-							<label for="lastName" class="text-gray-400"
-								>Last name
-							</label>
-
-							<input
-								type="text"
-								placeholder="Last name"
-								id="lastName"
-								class="w-full focus:outline-none p-1 text-black"
-								v-model="userData.lastName"
-							/>
-							<span
-								class="text-xs text-red-500 self-start -mt-2"
-								v-for="error in v$.lastName.$errors"
-								:key="error.$uid"
-							>
-								{{ error.$message }}
-							</span>
-						</div>
-						<AppButton class="self-end -mb-2 -mr-1">Save</AppButton>
-					</form>
-				</section>
-				<button
-					class="relative right-2 top-1 text-lg text-gray-300 hover:text-gray-600 transition duration-200"
-					@click="closeModal()"
+				<input
+					type="text"
+					placeholder="First name"
+					id="firstName"
+					v-model="userData.firstName"
+				/>
+				<span
+					class="error-msg"
+					v-for="error in v$.firstName.$errors"
+					:key="error.$uid"
 				>
-					<AppSVGIcon icon="xmark" />
-				</button>
-			</div>
-		</Transition>
-	</Teleport>
+					{{ error.$message }}
+				</span>
+				<label for="lastName">Last name </label>
+
+				<input
+					type="text"
+					placeholder="Last name"
+					id="lastName"
+					v-model="userData.lastName"
+				/>
+				<span
+					class="error-msg"
+					v-for="error in v$.lastName.$errors"
+					:key="error.$uid"
+				>
+					{{ error.$message }}
+				</span>
+				<AppButton class="btn">Save</AppButton>
+			</form>
+			<button class="x-mark" @click="closeModal()">
+				<AppSVGIcon icon="xmark" />
+			</button>
+		</section>
+	</AppModal>
 </template>
 
 <script setup>
@@ -94,6 +63,7 @@ import { required, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '../../../stores/auth'
 import AppButton from '../../AppButton.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
+import AppModal from '../../AppModal.vue'
 
 const props = defineProps({
 	user: {
@@ -151,3 +121,7 @@ const editUser = async () => {
 	}
 }
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/scss/modalCard.scss';
+</style>

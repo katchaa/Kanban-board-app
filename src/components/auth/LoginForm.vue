@@ -1,23 +1,10 @@
 <template>
-	<section
-		class="bg-gray-100 w-72 relative flex flex-col items-center mx-auto mt-16 shrink-0 py-2 px-4 rounded-md shadow-md h-fit"
-	>
-		<h3 class="font-semibold text-2xl text-gray-700 select-none my-2">
-			Login
-		</h3>
-		<form
-			novalidate
-			@submit.prevent="login()"
-			class="w-full flex flex-col items-center gap-3 my-2"
-		>
-			<input
-				type="email"
-				placeholder="Your email"
-				class="w-full focus:outline-none p-1 rounded-sm"
-				v-model="user.email"
-			/>
+	<section class="card">
+		<h3>Login</h3>
+		<form novalidate @submit.prevent="login()">
+			<input type="email" placeholder="Your email" v-model="user.email" />
 			<span
-				class="text-xs text-red-500 self-start -mt-2"
+				class="error-msg"
 				v-for="error in v$.email.$errors"
 				:key="error.$uid"
 			>
@@ -26,31 +13,20 @@
 			<input
 				type="password"
 				placeholder="Password"
-				class="w-full focus:outline-none p-1 rounded-sm"
 				v-model="user.password"
 			/>
 			<span
-				class="text-xs text-red-500 self-start -mt-2"
+				class="error-msg"
 				v-for="error in v$.password.$errors"
 				:key="error.$uid"
 			>
 				{{ error.$message }}
 			</span>
-			<button
-				type="submit"
-				class="self-end py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
-			>
-				Login
-			</button>
+			<AppButton class="btn">Login</AppButton>
 		</form>
-		<p class="text-xs mb-1 text-gray-400">
+		<p>
 			Don't have an account?
-			<span
-				class="hover:text-black hover:underline cursor-pointer"
-				@click="showRegister()"
-			>
-				Register here
-			</span>
+			<span class="link" @click="showRegister()"> Register here </span>
 		</p>
 	</section>
 </template>
@@ -61,6 +37,7 @@ import { useRouter } from 'vue-router'
 import useVuelidate from '@vuelidate/core'
 import { required, email, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '../../stores/auth'
+import AppButton from '../AppButton.vue'
 
 const emit = defineEmits(['toggleForm'])
 const showRegister = () => {
@@ -97,3 +74,7 @@ const login = async () => {
 	}
 }
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/scss/authCard.scss';
+</style>

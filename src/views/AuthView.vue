@@ -1,10 +1,12 @@
 <template>
+	<!-- class="overflow-hidden" -->
+
 	<TransitionGroup
 		name="auth"
 		mode="out-in"
 		appear
 		tag="div"
-		class="overflow-hidden"
+		class="auth-view"
 	>
 		<LoginForm v-if="!showForm" @toggleForm="toggleForm()" />
 		<RegistrationForm v-if="showForm" @toggleForm="toggleForm()" />
@@ -31,3 +33,9 @@ const toggleForm = () => {
 	showForm.value = !showForm.value
 }
 </script>
+
+<style scoped lang="scss">
+.auth-view {
+	padding: 8rem 1rem 0 1rem;
+}
+</style>

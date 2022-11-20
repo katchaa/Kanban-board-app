@@ -1,0 +1,37 @@
+// COLORS
+$gray-light: #f3f4f6;
+$gray-medium: #6b7280;
+$text-primary: #4b5563;
+$text-dark: #333;
+$text-muted: #9ca3af;
+$text-hover: #000;
+$error: #ef4444;
+
+// TYPOGRAPHY
+$xxl: 2rem;
+$xl: 1.5rem;
+$lg: 1.3rem;
+$md: 1rem;
+$sm: 0.85rem;
+$xs: 0.7rem;
+
+// BREAKPOINTS
+$media-xs: 341px;
+$media-sm: 640px;
+$media-md: 768px;
+$media-lg: 1024px;
+$media-xl: 1280px;
+
+// LAYOUT
+$bg-gray-transparent: transparentize($gray-medium, 0.8);
+$bg-drawer: transparentize($text-primary, 0.2);
+$bg-user-tab: transparentize(#fff, 0.6);
+$bg-popup: transparentize(#d1d5db, 0.1);
+
+// ASSETS
+$radius: 0.5rem;
+$radius-sm: 0.3rem;
+$card-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
+$navbar-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+$edit-border: 1px solid lighten($gray-medium, 40%);
+

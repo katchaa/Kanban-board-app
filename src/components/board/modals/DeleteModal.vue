@@ -1,27 +1,17 @@
 <template>
-	<Teleport to="body">
-		<Transition name="modal">
-			<div
-				class="flex justify-center items-start bg-black/40 w-screen h-screen absolute left-0 top-0 z-10 pt-28 px-6 sm:pt-36"
-				v-if="props.show"
-			>
-				<section class="bg-gray-100 w-64 p-2 text-center rounded-md">
-					<p class="text-xl font-semibold py-2">
-						<slot></slot>
-					</p>
-					<div class="flex justify-around">
-						<AppButton @click="deleteItem()"> Delete </AppButton>
-						<AppButton
-							class="text-gray-400 hover:text-black"
-							@click="cancelDelete()"
-						>
-							Cancel</AppButton
-						>
-					</div>
-				</section>
+	<AppModal :show="props.show">
+		<section class="card">
+			<p class="question">
+				<slot></slot>
+			</p>
+			<div class="btn-group">
+				<AppButton @click="deleteItem()"> Delete </AppButton>
+				<AppButton class="muted" @click="cancelDelete()">
+					Cancel</AppButton
+				>
 			</div>
-		</Transition>
-	</Teleport>
+		</section>
+	</AppModal>
 </template>
 
 <script setup>
@@ -29,6 +19,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
 import AppButton from '../../AppButton.vue'
+import AppModal from '../../AppModal.vue'
 
 const props = defineProps({
 	id: {
@@ -75,3 +66,7 @@ const deleteItem = async () => {
 	await projectStore.fetchProjects()
 }
 </script>
+
+<style scoped lang="scss">
+@import '@/assets/scss/modalCard.scss';
+</style>

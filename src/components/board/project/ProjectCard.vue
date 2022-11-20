@@ -1,16 +1,16 @@
 <template>
 	<Transition name="card" appear>
 		<section
-			class="bg-gray-100 w-11/12 flex flex-col shrink-0 grow-0 px-2 mt-2 rounded-md shadow-md sm:max-h-[35rem] sm:w-72"
+			class="card"
 			@drop="onDrop($event, props.card.id)"
 			@dragenter.prevent
 			@dragover.prevent
 		>
 			<!-- Card title -->
-			<div class="flex justify-between items-center py-2">
+			<header>
 				<h3
-					class="flex-1 mr-2 font-semibold text-gray-700 focus:outline-none select-none"
-					:class="{ 'border-b-[3px]': edit }"
+					class="title"
+					:class="{ edit: edit }"
 					:contenteditable="edit"
 					ref="card"
 					spellcheck="false"
@@ -20,10 +20,10 @@
 				>
 					{{ props.card.title }}
 				</h3>
-				<button class="self-start" @click="toggleDeleteModal()">
+				<button class="icon" @click="toggleDeleteModal()">
 					<AppSVGIcon icon="trash" />
 				</button>
-			</div>
+			</header>
 			<DeleteModal
 				type="card"
 				:id="props.card.id"
@@ -32,7 +32,7 @@
 			>
 				Are you sure to delete {{ props.card.title }} card?
 			</DeleteModal>
-			<div class="sm:overflow-y-scroll scrollbar-hidden">
+			<div class="tasks">
 				<ProjectTask
 					v-for="task in tasks"
 					:key="task?.id"
@@ -116,3 +116,71 @@ const toggleDeleteModal = () => {
 	// showPopup.value = false
 }
 </script>
+
+<style scoped lang="scss">
+.card {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+
+	background-color: $gray-light;
+	margin-top: 0.5rem;
+	padding: 0 0.5rem 0.3rem 0.5rem;
+	width: 75vw;
+	border-radius: $radius;
+	box-shadow: $card-shadow;
+
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: 0.5rem;
+		margin-bottom: 0.2rem;
+
+		.title {
+			flex: 1;
+			margin-right: 0.5rem;
+
+			color: $text-primary;
+			font-weight: 600;
+			text-transform: capitalize;
+
+			&:focus {
+				outline: none;
+			}
+
+			&.edit {
+				border-bottom: $edit-border;
+			}
+		}
+
+		.icon {
+			margin-right: 0.25rem;
+			cursor: pointer;
+		}
+	}
+
+	.tasks {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+	}
+}
+
+@media screen and (min-width: $media-sm) {
+	.card {
+		max-width: 18rem;
+		max-height: 35rem;
+
+		.tasks {
+			overflow-y: scroll;
+		}
+	}
+}
+</style>

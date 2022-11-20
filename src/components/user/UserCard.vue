@@ -1,58 +1,50 @@
 <template>
-	<div class="relative flex justify-center mt-10">
-		<div
-			class="relative flex flex-col gap-3 bg-gray-100 px-6 py-6 rounded-lg shadow-lg"
-		>
-			<button class="absolute right-3 top-3" @click="toggleEditPopup()">
-				<AppSVGIcon icon="ellipsis" />
-			</button>
-			<UserEditPopup
-				:show="showEditPopup"
-				@close-popup="toggleEditPopup()"
-				@edit-profile="toggleEditModal()"
-				@change-password="togglePasswordModal()"
-				@delete-account="toggleDeleteModal()"
-			/>
-			<header class="flex items-center gap-4">
-				<img
-					class="w-14 h-14 rounded-full -ml-1"
-					:src="user.avatar"
-					:alt="user.username"
-				/>
-				<h2 class="text-lg font-semibold">{{ user.username }}</h2>
-			</header>
-			<main class="flex gap-5">
-				<div>
-					<p class="font-semibold">Name:</p>
-					<p class="font-semibold">Email:</p>
-				</div>
-				<div>
-					<p>{{ authStore.getFullName }}</p>
-					<p>{{ user.email }}</p>
-				</div>
-			</main>
-		</div>
+	<section class="card">
+		<button class="icon" @click="toggleEditPopup()">
+			<AppSVGIcon icon="ellipsis" />
+		</button>
+		<UserEditPopup
+			:show="showEditPopup"
+			@close-popup="toggleEditPopup()"
+			@edit-profile="toggleEditModal()"
+			@change-password="togglePasswordModal()"
+			@delete-account="toggleDeleteModal()"
+		/>
+		<header>
+			<img class="avatar" :src="user.avatar" :alt="user.username" />
+			<h2 class="username">{{ user.username }}</h2>
+		</header>
+		<main>
+			<div class="desc">
+				<p>Name:</p>
+				<p>Email:</p>
+			</div>
+			<div class="user-data">
+				<p>{{ authStore.getFullName }}</p>
+				<p>{{ user.email }}</p>
+			</div>
+		</main>
+	</section>
 
-		<!-- Edit form -->
-		<EditUserModal
-			:show="editUserModal"
-			:user="user"
-			@close-modal="toggleEditModal()"
-		/>
-		<ChangePasswordModal
-			:user="user"
-			:show="changePasswordModal"
-			@close-modal="togglePasswordModal()"
-		/>
-		<DeleteModal
-			:id="user.id"
-			type="user"
-			:show="showDeleteModal"
-			@close-delete-modal="toggleDeleteModal()"
-		>
-			Are you sure to delete your account?
-		</DeleteModal>
-	</div>
+	<!-- Edit form -->
+	<EditUserModal
+		:show="editUserModal"
+		:user="user"
+		@close-modal="toggleEditModal()"
+	/>
+	<ChangePasswordModal
+		:user="user"
+		:show="changePasswordModal"
+		@close-modal="togglePasswordModal()"
+	/>
+	<DeleteModal
+		:id="user.id"
+		type="user"
+		:show="showDeleteModal"
+		@close-delete-modal="toggleDeleteModal()"
+	>
+		Are you sure to delete your account?
+	</DeleteModal>
 </template>
 
 <script setup>
@@ -94,3 +86,80 @@ const toggleDeleteModal = () => {
 	showDeleteModal.value = !showDeleteModal.value
 }
 </script>
+
+<style scoped lang="scss">
+.card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+
+	background-color: $gray-light;
+	width: max-content;
+	height: max-content;
+	margin-top: 3rem;
+	padding: 1rem;
+
+	border-radius: $radius;
+	box-shadow: $card-shadow;
+
+	.icon {
+		position: absolute;
+		right: 0.75rem;
+		top: 0.55rem;
+		cursor: pointer;
+	}
+
+	header {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+
+		.avatar {
+			width: 3.5rem;
+			height: 3.5rem;
+			border-radius: 50%;
+			margin-left: -0.25rem;
+		}
+
+		.username {
+			font-size: $xl;
+			font-weight: 600;
+		}
+	}
+
+	main {
+		display: flex;
+		gap: 0.8rem;
+
+		.desc > p {
+			font-size: $sm;
+			font-weight: 600;
+		}
+
+		.user-data > p {
+			font-size: $sm;
+		}
+	}
+}
+
+@media screen and (min-width: $media-xs) {
+	.card {
+		margin-top: 4rem;
+	}
+}
+
+@media screen and (min-width: $media-sm) {
+	.card {
+		main {
+			.desc > p {
+				font-size: $md;
+			}
+
+			.user-data > p {
+				font-size: $md;
+			}
+		}
+	}
+}
+</style>

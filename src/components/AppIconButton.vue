@@ -1,12 +1,14 @@
 <template>
-	<div
-		:class="`w-${size} h-${size} relative flex justify-center items-center bg-white/50 rounded-md cursor-pointer hover:bg-white/70 transition duration-200`"
-		@mouseenter="toggleTooltip()"
-		@mouseleave="toggleTooltip()"
-	>
-		<button>
-			<AppSVGIcon :icon="props.icon" />
-		</button>
+	<div class="wrapper">
+		<div
+			class="btn"
+			@mouseenter="toggleTooltip()"
+			@mouseleave="toggleTooltip()"
+		>
+			<button>
+				<AppSVGIcon :icon="props.icon" />
+			</button>
+		</div>
 		<Transition name="popup">
 			<AppTooltip :show="showTooltip" :msg="props.tooltip" />
 		</Transition>
@@ -26,10 +28,6 @@ const props = defineProps({
 	tooltip: {
 		type: String,
 	},
-	size: {
-		type: String,
-		default: '9',
-	},
 })
 
 // Tooltip toggle
@@ -39,15 +37,24 @@ const toggleTooltip = () => {
 }
 </script>
 
-<style scoped>
-.tooltip-enter-from,
-.tooltip-leave-to {
-	opacity: 0;
-	transform: scale(0.9);
-}
+<style scoped lang="scss">
+.wrapper {
+	position: relative;
 
-.tooltip-enter-active,
-.tooltip-leave-active {
-	transition: all 0.25s;
+	.btn {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		padding: 0.2rem;
+		background-color: rgba(255, 255, 255, 0.5);
+		border-radius: $radius;
+		transition: 200ms;
+		cursor: pointer;
+
+		&:hover {
+			background-color: rgba(255, 255, 255, 0.7);
+		}
+	}
 }
 </style>

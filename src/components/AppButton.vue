@@ -1,9 +1,20 @@
 <template>
-	<button
-		class="font-medium text-gray-700 py-0.5 px-1.5 rounded-md hover:bg-gray-200 transition duration-200"
-	>
+	<button class="app-btn">
 		<slot />
 	</button>
 </template>
 
-<script setup></script>
+<style scoped lang="scss">
+.app-btn {
+	font-size: $md;
+	font-weight: 500;
+	color: $text-primary;
+	padding: 0.4rem 0.5rem;
+	border-radius: $radius;
+	transition: 200ms;
+
+	&:hover {
+		background-color: transparentize($gray-medium, 0.85);
+	}
+}
+</style>

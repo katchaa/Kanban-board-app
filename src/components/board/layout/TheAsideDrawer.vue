@@ -1,11 +1,11 @@
 <template>
-	<div
-		class="absolute z-10 h-full bg-gray-600/70 w-60 flex flex-col pt-2 pr-1"
-	>
-		<button class="self-end" @click="toggleDrawer()">
+	<div class="wrapper">
+		<button class="icon" @click="toggleDrawer()">
 			<AppSVGIcon icon="chevronLeft" />
 		</button>
 		<RouterLink
+			@click="toggleDrawer()"
+			class="link"
 			v-for="project in projects"
 			:key="project?.id"
 			:to="{
@@ -13,20 +13,10 @@
 				params: { userId: project?.userId, projectId: project?.id },
 			}"
 		>
-			<div
-				class="flex items-center gap-2 shrink-0 hover:bg-gray-700/50 transition duration-300 cursor-pointer py-1 pl-1 rounded-md"
-			>
-				<img
-					class="w-9 h-9 rounded"
-					:src="project?.avatar"
-					:alt="project?.projectName"
-				/>
-				<p
-					class="text-lg text-white font-semibold truncate whitespace-nowrap overflow-hidden"
-				>
-					{{ project?.projectName }}
-				</p>
-			</div>
+			<img :src="project?.avatar" :alt="project?.projectName" />
+			<p class="title">
+				{{ project?.projectName }}
+			</p>
 		</RouterLink>
 	</div>
 </template>
@@ -47,3 +37,52 @@ const projects = computed(() => {
 	return projectStore.projects
 })
 </script>
+
+<style scoped lang="scss">
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	z-index: 10;
+
+	width: 15rem;
+	height: 92vh;
+	padding: 0.5rem 0.7rem 0 0.3rem;
+	background: linear-gradient(to bottom, $bg-drawer, transparent);
+
+	.icon {
+		align-self: flex-end;
+	}
+
+	.link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+
+		padding: 0.3rem 0 0.3rem 0.25rem;
+		margin-bottom: 0.2rem;
+		cursor: pointer;
+		transition: 300ms;
+
+		&:hover {
+			background-color: $bg-user-tab;
+			border-radius: $radius;
+		}
+
+		img {
+			width: 2.25rem;
+			height: 2.25rem;
+			border-radius: $radius-sm;
+		}
+		.title {
+			font-size: $md;
+			font-weight: 500;
+			color: #fff;
+
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+}
+</style>

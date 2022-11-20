@@ -1,12 +1,11 @@
 <template>
-	<nav class="flex gap-x-1 ml-2 px-2 pt-2 sm:gap-x-2 sm:ml-0">
-		<div class="flex items-center relative shrink-0">
-			<button
-				class="flex items-center text-white text-lg font-semibold select-none sm:text-xl"
-				@click="togglePopup"
-			>
-				{{ project?.projectName }}
-				<button class="ml-1.5 self-end">
+	<nav class="navbar">
+		<div class="project-menu">
+			<button class="project-title" @click="togglePopup">
+				<p>
+					{{ project?.projectName }}
+				</p>
+				<button class="icon">
 					<AppSVGIcon icon="chevronDown" />
 				</button>
 			</button>
@@ -28,11 +27,9 @@
 				Are you sure to delete {{ project?.projectName }}?
 			</DeleteModal>
 		</div>
-		<span class="text-white/40 text-lg mx-1 sm:text-xl">|</span>
-		<div
-			class="hidden bg-white/50 rounded-md sm:flex sm:justify-center sm:items-center sm:shrink-0"
-		>
-			<p class="text-white text-base px-4 select-none sm:text-lg">
+		<span class="divider">|</span>
+		<div class="company-title">
+			<p class="title">
 				{{ project?.companyName }}
 			</p>
 		</div>
@@ -94,3 +91,73 @@ const toggleEditModal = () => {
 	showPopup.value = false
 }
 </script>
+
+<style scoped lang="scss">
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 0.5rem;
+	margin-left: 0.25rem;
+	margin-top: 0.25rem;
+
+	.project-menu {
+		position: relative;
+		max-width: 60%;
+
+		.project-title {
+			display: flex;
+			align-items: center;
+			max-width: 100%;
+
+			p {
+				color: #fff;
+				font-size: 1.1rem;
+				font-weight: 600;
+				text-transform: capitalize;
+				text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.icon {
+				margin-top: 0.2rem;
+				margin-left: 0.25rem;
+				cursor: pointer;
+			}
+		}
+	}
+	.divider {
+		display: none;
+		color: rgba(255, 255, 255, 0.6);
+		font-size: $lg;
+		align-self: flex-start;
+	}
+
+	.company-title {
+		display: none;
+		background-color: $bg-user-tab;
+		border-radius: $radius;
+		height: 100%;
+
+		.title {
+			color: #fff;
+			padding: 0 0.5rem;
+		}
+	}
+}
+
+@media screen and (min-width: $media-sm) {
+	.navbar {
+		.divider {
+			display: block;
+		}
+		.company-title {
+			display: flex;
+			align-items: center;
+		}
+	}
+}
+</style>
