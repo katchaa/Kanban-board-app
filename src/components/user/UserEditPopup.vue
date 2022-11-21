@@ -49,7 +49,6 @@ const deleteAccount = () => {
 .wrapper {
 	display: flex;
 	flex-direction: column;
-	// gap: 0.5rem;
 	position: absolute;
 	top: 1.5rem;
 	right: 1rem;

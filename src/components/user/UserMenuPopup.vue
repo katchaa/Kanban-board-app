@@ -60,7 +60,7 @@ const logout = async () => {
 			border-radius: $radius $radius 0 0;
 
 			&:hover {
-				background-color: $bg-gray-transparent;
+				background-color: $bg-board-navbar;
 			}
 		}
 
@@ -70,7 +70,7 @@ const logout = async () => {
 			border-radius: 0 0 $radius $radius;
 
 			&:hover {
-				background-color: $bg-gray-transparent;
+				background-color: $bg-board-navbar;
 			}
 		}
 	}

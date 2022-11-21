@@ -1,16 +1,19 @@
 <template>
-	<!-- class="overflow-hidden" -->
-
-	<TransitionGroup
-		name="auth"
-		mode="out-in"
-		appear
-		tag="div"
-		class="auth-view"
-	>
-		<LoginForm v-if="!showForm" @toggleForm="toggleForm()" />
-		<RegistrationForm v-if="showForm" @toggleForm="toggleForm()" />
-	</TransitionGroup>
+	<div class="container">
+		<header>
+			<RouterLink :to="{ name: 'landingPage' }">Back</RouterLink>
+		</header>
+		<TransitionGroup
+			name="auth"
+			mode="out-in"
+			appear
+			tag="div"
+			class="auth-view"
+		>
+			<LoginForm v-if="!showForm" @toggleForm="toggleForm()" />
+			<RegistrationForm v-if="showForm" @toggleForm="toggleForm()" />
+		</TransitionGroup>
+	</div>
 </template>
 
 <script setup>
@@ -35,7 +38,37 @@ const toggleForm = () => {
 </script>
 
 <style scoped lang="scss">
-.auth-view {
-	padding: 8rem 1rem 0 1rem;
+.container {
+	margin: 0 auto;
+	header {
+		display: flex;
+		justify-content: flex-end;
+		padding: 0.5rem 0.5rem 0 0;
+
+		a {
+			font-size: $sm;
+			padding: 0.2rem 0.4rem;
+			border-radius: $radius;
+			transition: 200ms;
+
+			&:hover {
+				background-color: $bg-user-tab;
+			}
+		}
+	}
+	.auth-view {
+		padding: 6rem 1rem 0 1rem;
+	}
+}
+
+@media screen and (min-width: $media-lg) {
+	.container {
+		max-width: 80%;
+	}
+}
+@media screen and (min-width: $media-xl) {
+	.container {
+		max-width: 40%;
+	}
 }
 </style>

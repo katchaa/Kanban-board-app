@@ -37,6 +37,7 @@ const toggleInfo = (item) => {
 	flex-direction: column;
 	align-items: center;
 	gap: 0.5rem;
+	margin-top: 0.5rem;
 
 	ul {
 		display: flex;

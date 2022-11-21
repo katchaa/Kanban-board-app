@@ -23,7 +23,7 @@ $media-lg: 1024px;
 $media-xl: 1280px;
 
 // LAYOUT
-$bg-gray-transparent: transparentize($gray-medium, 0.8);
+$bg-board-navbar: transparentize($gray-medium, 0.8);
 $bg-drawer: transparentize($text-primary, 0.2);
 $bg-user-tab: transparentize(#fff, 0.6);
 $bg-popup: transparentize(#d1d5db, 0.1);

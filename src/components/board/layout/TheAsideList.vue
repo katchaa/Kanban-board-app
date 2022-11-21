@@ -40,7 +40,7 @@ const projects = computed(() => {
 	align-items: center;
 	row-gap: 0.5rem;
 
-	background: linear-gradient(to bottom, $bg-gray-transparent, transparent);
+	background: linear-gradient(to bottom, $bg-board-navbar, transparent);
 	width: 1.75rem;
 	height: 92vh;
 	padding-top: 0.5rem;

@@ -70,7 +70,7 @@ const toggleUserMenu = () => {
 	max-width: 100vw;
 
 	padding: 0.25rem 0.5rem;
-	background-color: $bg-gray-transparent;
+	background-color: $bg-board-navbar;
 	box-shadow: $navbar-shadow;
 
 	.icons {
