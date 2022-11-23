@@ -1,6 +1,9 @@
 <template>
 	<section class="card">
 		<h3>Login</h3>
+		<p v-if="authError" class="auth-error">
+			{{ authError }}
+		</p>
 		<form novalidate @submit.prevent="login()">
 			<input type="email" placeholder="Your email" v-model="user.email" />
 			<span
@@ -65,13 +68,17 @@ const v$ = useVuelidate(rules, user)
 
 // Login action
 const authStore = useAuthStore()
+const authError = computed(() => authStore.authError)
 const router = useRouter()
 const login = async () => {
 	const result = await v$.value.$validate()
 	if (result) {
 		await authStore.login(user)
-		router.push({ name: 'board', params: { userId: authStore.authUser } })
+		if (authError.value) {
+			return
+		}
 	}
+	router.push({ name: 'board', params: { userId: authStore.authUser } })
 }
 </script>
 

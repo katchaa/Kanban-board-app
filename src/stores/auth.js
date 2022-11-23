@@ -9,6 +9,7 @@ export const useAuthStore = defineStore('auth', {
 		return {
 			user: {},
 			authUser: localStorage.getItem('user'),
+			authError: null,
 		}
 	},
 	getters: {
@@ -92,14 +93,19 @@ export const useAuthStore = defineStore('auth', {
 					},
 				})
 				.then((res) => {
-					if (res.data.length !== 0) {
+					if (res.data.length === 0) {
+						throw new Error(
+							'Something went wrong. Please, check up your email and password.'
+						)
+					} else {
+						this.authError = null
 						localStorage.setItem('user', res.data[0].id)
 						this.authUser = res.data[0].id
-					} else {
-						return
 					}
 				})
-				.catch((err) => console.log(err))
+				.catch((err) => {
+					this.authError = err.message
+				})
 			await this.fetchUser()
 		},
 
