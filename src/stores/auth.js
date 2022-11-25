@@ -28,7 +28,6 @@ export const useAuthStore = defineStore('auth', {
 					})
 					.then((res) => {
 						this.user = res.data[0]
-						console.log(this.user)
 					})
 			}
 		},
