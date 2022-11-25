@@ -74,11 +74,11 @@ const login = async () => {
 	const result = await v$.value.$validate()
 	if (result) {
 		await authStore.login(user)
-		if (authError.value) {
+		if (authError.value || v$.value.$error) {
 			return
 		}
+		router.push({ name: 'board', params: { userId: authStore.authUser } })
 	}
-	router.push({ name: 'board', params: { userId: authStore.authUser } })
 }
 </script>
 

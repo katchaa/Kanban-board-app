@@ -25,6 +25,7 @@ form {
 	}
 
 	.error-msg {
+		align-self: flex-start;
 		font-size: $xs;
 		font-weight: 500;
 		color: $error;
