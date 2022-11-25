@@ -1,14 +1,11 @@
-# trello_clone
+# Kanban Board
 
-This template should help get you started developing with Vue 3 in Vite.
+Simple kanban board inspired by Trello, made with Vue 3, Vite and JSON-server.
 
-## Recommended IDE Setup
+## Prerequisites
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+-   [Node.js](https://nodejs.org/en/)
+-   [JSON-server](https://www.npmjs.com/package/json-server) (globally installed)
 
 ## Project Setup
 
@@ -16,20 +13,21 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## Project launch
+
+#### Vue
+
+Run local dev server
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+#### JSON-server
+
+Run REST API on localhost connected with JSON file in the root directory.
 
 ```sh
-npm run build
+npm run dev
 ```
 
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
