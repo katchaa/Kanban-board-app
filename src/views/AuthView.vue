@@ -46,13 +46,21 @@ const toggleForm = () => {
 		padding: 0.5rem 0.5rem 0 0;
 
 		a {
+			background-color: $bg-user-tab;
+			padding: 0.25rem 0.5rem;
+			border-radius: $radius-sm;
+
 			font-size: $sm;
-			padding: 0.2rem 0.4rem;
-			border-radius: $radius;
+			font-weight: 600;
+			text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+			box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.2);
+			text-transform: capitalize;
 			transition: 200ms;
 
 			&:hover {
-				background-color: $bg-user-tab;
+				background-color: rgba(255, 255, 255, 0.8);
+				text-decoration: underline;
+				text-underline-offset: 2px;
 			}
 		}
 	}

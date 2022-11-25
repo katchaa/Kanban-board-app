@@ -2,7 +2,7 @@
 	<div class="grid-board">
 		<TheBoardNavbar class="board-navbar" />
 		<TheAsideNavbar class="board-aside-navbar" v-if="projects.length" />
-		<RouterView class="router-view" />
+		<RouterView class="router-view" :class="{ full: !projects.length }" />
 	</div>
 </template>
 
@@ -63,6 +63,9 @@ const projects = computed(() => projectStore.projects)
 		&::-webkit-scrollbar-track {
 			background: transparent;
 		}
+	}
+	.full {
+		grid-column: 1/3;
 	}
 }
 

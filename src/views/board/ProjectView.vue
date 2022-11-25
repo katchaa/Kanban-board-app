@@ -32,6 +32,7 @@ const cards = computed(() => {
 	max-width: 89vw;
 
 	.cards {
+		margin: 0 auto;
 		flex: 1;
 		align-self: center;
 	}
@@ -42,6 +43,7 @@ const cards = computed(() => {
 		max-width: 98vw;
 
 		.cards {
+			margin: 0;
 			align-self: flex-start;
 			display: flex;
 			align-items: flex-start;

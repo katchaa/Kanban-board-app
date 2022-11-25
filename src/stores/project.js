@@ -33,7 +33,6 @@ export const useProjectStore = defineStore('project', {
 						this.projects.push(...res.data)
 					})
 					.catch((err) => console.log(err))
-				// console.log('projects ', this.projects)
 				const projectId = this.projects.map((project) => project.id)
 				await this.fetchCards(projectId)
 			}
@@ -51,7 +50,6 @@ export const useProjectStore = defineStore('project', {
 					this.cards.push(...res.data)
 				})
 				.catch((err) => console.log(err))
-			// console.log('cards ', this.cards)
 			const cardId = this.cards.map((card) => card.id)
 			await this.fetchTasks(cardId)
 		},
@@ -68,7 +66,6 @@ export const useProjectStore = defineStore('project', {
 					this.tasks.push(...res.data)
 				})
 				.catch((err) => console.log(err))
-			// console.log('tasks ', this.tasks)
 		},
 
 		// Projects actions
@@ -76,6 +73,9 @@ export const useProjectStore = defineStore('project', {
 			const newProject = {
 				id: nanoid(),
 				...projectData,
+				avatar: `http://picsum.photos/id/${Math.floor(
+					Math.random() * 500
+				)}/200/300`,
 				cards: [],
 				userId,
 			}
@@ -90,10 +90,7 @@ export const useProjectStore = defineStore('project', {
 			} else {
 				projects = [newProject.id]
 			}
-			await axios
-				.patch(`http://localhost:3001/users/${user.id}`, { projects })
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleEdit('users', user.id, { projects })
 		},
 
 		async editProject(projectId, data) {
@@ -131,6 +128,7 @@ export const useProjectStore = defineStore('project', {
 			}
 			await handlePost('cards', newCard)
 
+			// Edit projects cards array
 			const project = findById(this.projects, projectId)
 			let cards = this.cards
 			if (project.cards.length) {
@@ -138,12 +136,7 @@ export const useProjectStore = defineStore('project', {
 			} else {
 				cards = [newCard.id]
 			}
-			await axios
-				.patch(`http://localhost:3001/projects/${project.id}`, {
-					cards,
-				})
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleEdit('projects', project.id, { cards })
 		},
 
 		async editCard(cardId, title) {
@@ -181,13 +174,7 @@ export const useProjectStore = defineStore('project', {
 			} else {
 				tasks = [newTask.id]
 			}
-
-			await axios
-				.patch(`http://localhost:3001/cards/${card.id}`, {
-					tasks,
-				})
-				.then((res) => console.log(res.data))
-				.catch((err) => console.log(err))
+			await handleEdit('cards', card.id, { tasks })
 		},
 
 		async editTask(taskId, text) {
@@ -221,7 +208,6 @@ export const useProjectStore = defineStore('project', {
 				await handleEdit('tasks', taskId, { cardId })
 				await handleEdit('cards', prevCard.id, { tasks: prevCardTasks })
 				await handleEdit('cards', nextCard.id, { tasks: nextCardTasks })
-				// console.log(prevCardTasks)
 			}
 		},
 	},

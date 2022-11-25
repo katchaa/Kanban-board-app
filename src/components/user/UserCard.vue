@@ -95,7 +95,8 @@ const toggleDeleteModal = () => {
 	gap: 0.75rem;
 
 	background-color: $gray-light;
-	width: max-content;
+	min-width: 15rem;
+	max-width: max-content;
 	height: max-content;
 	margin-top: 3rem;
 	padding: 1rem;

@@ -60,7 +60,6 @@ const deleteItem = async () => {
 	} else if (props.type === 'user') {
 		await authStore.deleteAccount(props.id)
 		router.push({ name: 'auth' })
-		projectStore.$reset()
 	}
 	emit('closeDeleteModal')
 	await projectStore.fetchProjects()

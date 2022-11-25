@@ -71,13 +71,13 @@ const projects = computed(() => {
 		align-items: center;
 		gap: 1rem;
 
-		width: 80vw;
+		min-width: 80vw;
 
 		.link {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			width: 90%;
+			width: 100%;
 			max-width: 24rem;
 			height: 12rem;
 

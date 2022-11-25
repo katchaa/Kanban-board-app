@@ -46,9 +46,6 @@ const route = useRoute()
 let newProject = reactive({
 	projectName: '',
 	companyName: '',
-	avatar: `http://picsum.photos/id/${Math.floor(
-		Math.random() * 1000
-	)}/200/300`,
 })
 
 const add = async () => {
@@ -56,6 +53,8 @@ const add = async () => {
 		projectStore.fetchProjects()
 		authStore.fetchUser()
 	})
+	newProject.projectName = ''
+	newProject.companyName = ''
 	closeModal()
 }
 

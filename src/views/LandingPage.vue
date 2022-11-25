@@ -27,26 +27,8 @@
 				Hi, call me Katcha. I'm junior front-end developer and this is
 				my first larger web application inspired by Trello.
 			</p>
-			<div>
-				<aside class="stack">
-					<h3>Technologies:</h3>
-					<ul>
-						<li>Vue.js 3</li>
-						<li>Pinia</li>
-						<li>Vite</li>
-						<li>Vuelidate</li>
-						<li>SASS</li>
-						<li>Adobe Illustrator</li>
-						<li>JSON-server</li>
-						<li>Axios</li>
-					</ul>
-					<p>
-						Don't forget run <span>npm run server</span> in second
-						terminal to start JSON-server API.
-					</p>
-				</aside>
-
-				<section class="info">
+			<div class="content">
+				<article class="info">
 					<p>
 						After simple registration you'll be redirected to your
 						personal board, where you can create or edit your
@@ -66,10 +48,27 @@
 						Avatars for projects and users are chosen randomly from
 						<a href="https://picsum.photos/">Lorem Picsum</a>
 						webpage. SVG icons are used from
-						<a href="https://heroicons.com/">Hericons</a>, social
+						<a href="https://heroicons.com/">Heroicons</a>, social
 						icons and illustrations are made in Adobe Illustrator.
 					</p>
-				</section>
+				</article>
+				<aside class="stack">
+					<h3>Technologies:</h3>
+					<ul>
+						<li>Vue.js 3</li>
+						<li>Pinia</li>
+						<li>Vite</li>
+						<li>Vuelidate</li>
+						<li>SASS</li>
+						<li>Adobe Illustrator</li>
+						<li>JSON-server</li>
+						<li>Axios</li>
+					</ul>
+					<p>
+						Don't forget run <span>npm run server</span> in second
+						terminal to start JSON-server API.
+					</p>
+				</aside>
 			</div>
 
 			<RouterLink class="btn" :to="{ name: 'auth' }">
@@ -137,7 +136,7 @@
 			margin: 0.5rem auto 1rem auto;
 			text-align: center;
 		}
-		div {
+		.content {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -249,7 +248,7 @@
 			.intro {
 				font-size: $lg;
 			}
-			div {
+			.content {
 				margin-top: 2rem;
 				flex-direction: row;
 				gap: 2rem;
@@ -257,16 +256,16 @@
 				.stack {
 					background: linear-gradient(
 						to right,
-						$bg-user-tab,
-						transparent
+						transparent,
+						$bg-user-tab
 					);
 				}
 
 				.info {
 					background: linear-gradient(
 						to right,
-						transparent,
-						$bg-user-tab
+						$bg-user-tab,
+						transparent
 					);
 				}
 			}

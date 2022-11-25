@@ -58,6 +58,7 @@ import AppSVGIcon from '../../AppSVGIcon.vue'
 const props = defineProps({
 	card: {
 		type: Object,
+		required: true,
 	},
 })
 
@@ -65,7 +66,7 @@ const props = defineProps({
 const projectStore = useProjectStore()
 const tasks = computed(() => {
 	let currTasks = []
-	props.card?.tasks.forEach((taskId) => {
+	props.card.tasks.forEach((taskId) => {
 		currTasks.push(findById(projectStore.tasks, taskId))
 	})
 	return currTasks
@@ -113,7 +114,6 @@ const onDrop = async (e, cardId) => {
 const deleteModal = ref(false)
 const toggleDeleteModal = () => {
 	deleteModal.value = !deleteModal.value
-	// showPopup.value = false
 }
 </script>
 

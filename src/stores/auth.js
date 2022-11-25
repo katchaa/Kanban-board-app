@@ -69,7 +69,7 @@ export const useAuthStore = defineStore('auth', {
 				email: data.email,
 				password: data.password,
 				avatar: `http://picsum.photos/id/${Math.floor(
-					Math.random() * 1000
+					Math.random() * 500
 				)}/200/300`,
 				projects: [],
 			}
@@ -80,8 +80,6 @@ export const useAuthStore = defineStore('auth', {
 					this.authUser = res.data.id
 				})
 				.catch((err) => console.log(err))
-
-			await this.fetchUser()
 		},
 
 		async login(data) {
@@ -106,7 +104,6 @@ export const useAuthStore = defineStore('auth', {
 				.catch((err) => {
 					this.authError = err.message
 				})
-			await this.fetchUser()
 		},
 
 		async logout() {

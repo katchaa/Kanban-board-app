@@ -9,7 +9,7 @@ form {
 		width: 100%;
 		padding: 0.35rem;
 		font-size: $sm;
-		border-radius: $radius;
+		border-radius: $radius-sm;
 
 		&:focus {
 			outline: none;
@@ -31,3 +31,4 @@ form {
 		margin-top: -0.3rem;
 	}
 }
+

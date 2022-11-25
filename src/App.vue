@@ -6,7 +6,6 @@
 </template>
 
 <style lang="scss">
-// @import '@/assets/scss/main.scss';
 #app {
 	background-image: linear-gradient(to right, #38bdf8, #5eead4);
 	min-height: 100vh;

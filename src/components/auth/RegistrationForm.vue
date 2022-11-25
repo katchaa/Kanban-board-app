@@ -1,6 +1,6 @@
 <template>
 	<section class="card">
-		<h3>Registration</h3>
+		<h3>Sign up</h3>
 		<form novalidate @submit.prevent="registration()">
 			<input type="text" placeholder="Username" v-model="user.username" />
 			<span
@@ -66,7 +66,7 @@
 			>
 				{{ error.$message }}
 			</span>
-			<AppButton class="btn">Registration</AppButton>
+			<AppButton class="btn">Sign up</AppButton>
 		</form>
 		<p>
 			Already have an account?
