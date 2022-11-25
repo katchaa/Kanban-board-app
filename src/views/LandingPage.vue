@@ -7,7 +7,7 @@
 				</a>
 
 				<a
-					href="http://www.linkedin.com/in/kateřina-kratochvílová-b52452232"
+					href="http://www.linkedin.com/in/kateřina-kratochvílová"
 					target="_blank"
 				>
 					<img src="../assets/svg/social/li.svg" alt="LinkedIn" />
