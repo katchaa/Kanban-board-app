@@ -4,15 +4,11 @@
 	</span>
 </template>
 
-<script setup>
-const props = defineProps({
-	msg: {
-		type: String || undefined,
-	},
-	show: {
-		type: Boolean,
-	},
-})
+<script setup lang="ts">
+const props = defineProps<{
+	msg: String | undefined
+	show: Boolean
+}>()
 </script>
 
 <style scoped lang="scss">

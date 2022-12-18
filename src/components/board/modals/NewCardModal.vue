@@ -17,7 +17,7 @@
 	</AppModal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
@@ -25,15 +25,11 @@ import AppButton from '../../AppButton.vue'
 import AppModal from '../../AppModal.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 
-const props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
-
+const props = defineProps<{
+	show: boolean
+}>()
 // Add new card
-const cardTitle = ref('')
+const cardTitle = ref<string>('')
 const projectStore = useProjectStore()
 const route = useRoute()
 const add = async () => {

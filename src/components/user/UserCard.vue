@@ -47,9 +47,10 @@
 	</DeleteModal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useAuthStore } from '../../stores/auth'
+import { User } from '../../types/userTypes'
 import AppSVGIcon from '../AppSVGIcon.vue'
 import DeleteModal from '../board/modals/DeleteModal.vue'
 import ChangePasswordModal from './modals/ChangePasswordModal.vue'
@@ -58,33 +59,29 @@ import UserEditPopup from './UserEditPopup.vue'
 
 // User data from store
 const authStore = useAuthStore()
-const user = computed(() => {
+const user = computed<User>(() => {
 	return authStore.user
 })
 
 // Toggle edit popup
-const showEditPopup = ref(false)
-const toggleEditPopup = () => {
-	showEditPopup.value = !showEditPopup.value
-}
+const showEditPopup = ref<boolean>(false)
+const toggleEditPopup = (): boolean =>
+	(showEditPopup.value = !showEditPopup.value)
 
 // Toggle edit profile modal
-const editUserModal = ref(false)
-const toggleEditModal = () => {
-	editUserModal.value = !editUserModal.value
-}
+const editUserModal = ref<boolean>(false)
+const toggleEditModal = (): boolean =>
+	(editUserModal.value = !editUserModal.value)
 
 // Toggle change password modal
-const changePasswordModal = ref(false)
-const togglePasswordModal = () => {
-	changePasswordModal.value = !changePasswordModal.value
-}
+const changePasswordModal = ref<boolean>(false)
+const togglePasswordModal = (): boolean =>
+	(changePasswordModal.value = !changePasswordModal.value)
 
 // Toggle delete modal
-const showDeleteModal = ref(false)
-const toggleDeleteModal = () => {
-	showDeleteModal.value = !showDeleteModal.value
-}
+const showDeleteModal = ref<boolean>(false)
+const toggleDeleteModal = (): boolean =>
+	(showDeleteModal.value = !showDeleteModal.value)
 </script>
 
 <style scoped lang="scss">

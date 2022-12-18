@@ -29,32 +29,31 @@
 	</Transition>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useProjectStore } from '../../../stores/project'
+import { Task } from '../../../types/projectTypes'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
 
-const props = defineProps({
-	task: {
-		type: Object,
-		required: true,
-	},
-})
+const props = defineProps<{
+	task: Task
+}>()
 
 // Edit task text
-const edit = ref(false)
-const text = ref()
+const edit = ref<boolean>(false)
+const text = ref<HTMLParagraphElement>()
 const startEdit = () => {
 	edit.value = true
 	setTimeout(() => {
-		text.value.focus()
+		text.value?.focus()
 	}, 0)
 }
 
 const newText = ref('')
-const editText = (e) => {
-	newText.value = e.target.innerText
+const editText = (e: Event) => {
+	const text = e.target as HTMLParagraphElement
+	newText.value = text.innerText
 }
 
 const projectStore = useProjectStore()
@@ -69,10 +68,9 @@ const editTask = async () => {
 }
 
 // Toggle delete modal
-const deleteModal = ref(false)
-const toggleDeleteModal = () => {
-	deleteModal.value = !deleteModal.value
-	// showPopup.value = false
+const deleteModal = ref<boolean>(false)
+const toggleDeleteModal = (): boolean => {
+	return (deleteModal.value = !deleteModal.value)
 }
 </script>
 

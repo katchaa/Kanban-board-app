@@ -14,27 +14,18 @@
 	</AppModal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
 import AppButton from '../../AppButton.vue'
 import AppModal from '../../AppModal.vue'
 
-const props = defineProps({
-	id: {
-		type: String,
-		required: true,
-	},
-	type: {
-		type: String,
-		required: true,
-	},
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
+const props = defineProps<{
+	id: string
+	type: string
+	show: boolean
+}>()
 
 const emit = defineEmits(['closeDeleteModal'])
 const cancelDelete = () => {
@@ -46,6 +37,8 @@ const projectStore = useProjectStore()
 const authStore = useAuthStore()
 const router = useRouter()
 const route = useRoute()
+
+//Přepsat na switch??
 const deleteItem = async () => {
 	if (props.type === 'project') {
 		await projectStore.deleteProject(props.id)

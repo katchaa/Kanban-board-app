@@ -5,15 +5,15 @@
 	</TransitionGroup>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import TheAsideList from './TheAsideList.vue'
 import TheAsideDrawer from './TheAsideDrawer.vue'
 import { ref } from 'vue'
 
-const showDrawer = ref(false)
+const showDrawer = ref<boolean>(false)
 
-const toggleDrawer = () => {
-	showDrawer.value = !showDrawer.value
+const toggleDrawer = (): boolean => {
+	return (showDrawer.value = !showDrawer.value)
 }
 </script>
 

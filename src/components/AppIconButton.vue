@@ -15,25 +15,20 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import AppSVGIcon from './AppSVGIcon.vue'
 import AppTooltip from './AppTooltip.vue'
 
-const props = defineProps({
-	icon: {
-		type: String,
-		required: true,
-	},
-	tooltip: {
-		type: String,
-	},
-})
+const props = defineProps<{
+	icon: String
+	tooltip?: String
+}>()
 
 // Tooltip toggle
-const showTooltip = ref(false)
-const toggleTooltip = () => {
-	showTooltip.value = !showTooltip.value
+const showTooltip = ref<boolean>(false)
+const toggleTooltip = (): boolean => {
+	return (showTooltip.value = !showTooltip.value)
 }
 </script>
 

@@ -7,18 +7,19 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useProjectStore } from '../../stores/project'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import ProjectNavbar from '../../components/board/project/ProjectNavbar.vue'
 import ProjectCard from '../../components/board/project/ProjectCard.vue'
+import { Card } from '../../types/projectTypes'
 
 const projectStore = useProjectStore()
 const route = useRoute()
 
 // Filter project cards from store
-const cards = computed(() => {
+const cards = computed<Card[]>(() => {
 	return projectStore.cards.filter(
 		(card) => card.projectId === route.params?.projectId
 	)

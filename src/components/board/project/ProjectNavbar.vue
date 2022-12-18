@@ -47,48 +47,49 @@
 	</nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 import AppIconButton from '../../AppIconButton.vue'
-import NewCardModal from '@/components/board/modals/NewCardModal.vue'
+import NewCardModal from '../modals/NewCardModal.vue'
 import AppPopup from '../../AppPopup.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
 import EditProjectModal from '../modals/EditProjectModal.vue'
 import { findById } from '../../../helpers/project'
 import AppSVGIcon from '../../AppSVGIcon.vue'
+import { Project } from '../../../types/projectTypes'
 
 const projectStore = useProjectStore()
 const route = useRoute()
-const project = computed(() => {
+const project = computed<Project>(() => {
 	return findById(projectStore.projects, route.params.projectId)
 })
 
 // Add new card modal
-const showNewCardModal = ref(false)
-const toggleNewCardModal = () => {
-	showNewCardModal.value = !showNewCardModal.value
+const showNewCardModal = ref<boolean>(false)
+const toggleNewCardModal = (): boolean => {
+	return (showNewCardModal.value = !showNewCardModal.value)
 }
 
 // Toggle popup
-const showPopup = ref(false)
-const togglePopup = () => {
-	showPopup.value = !showPopup.value
+const showPopup = ref<boolean>(false)
+const togglePopup = (): boolean => {
+	return (showPopup.value = !showPopup.value)
 }
 
 // Delete modal
-const deleteModal = ref(false)
-const toggleDeleteModal = () => {
-	deleteModal.value = !deleteModal.value
+const deleteModal = ref<boolean>(false)
+const toggleDeleteModal = (): boolean => {
 	showPopup.value = false
+	return (deleteModal.value = !deleteModal.value)
 }
 
 // Edit modal
-const editModal = ref(false)
-const toggleEditModal = () => {
-	editModal.value = !editModal.value
+const editModal = ref<boolean>(false)
+const toggleEditModal = (): boolean => {
 	showPopup.value = false
+	return (editModal.value = !editModal.value)
 }
 </script>
 

@@ -22,7 +22,7 @@
 	</AppModal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
@@ -31,19 +31,15 @@ import AppButton from '../../AppButton.vue'
 import AppModal from '../../AppModal.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 
-const props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
-
+const props = defineProps<{
+	show: boolean
+}>()
 // Add new project
 const projectStore = useProjectStore()
 const authStore = useAuthStore()
 const route = useRoute()
 
-let newProject = reactive({
+let newProject = reactive<{ projectName: string; companyName: string }>({
 	projectName: '',
 	companyName: '',
 })

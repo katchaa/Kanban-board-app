@@ -17,18 +17,19 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { useProjectStore } from '../../../stores/project'
+import { Project } from '../../../types/projectTypes'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 
 const emit = defineEmits(['toggleDrawer'])
-const toggleDrawer = () => {
+const toggleDrawer = (): void => {
 	emit('toggleDrawer')
 }
 
 const projectStore = useProjectStore()
-const projects = computed(() => {
+const projects = computed<Project[] | undefined>(() => {
 	return projectStore.projects
 })
 </script>

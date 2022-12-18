@@ -22,7 +22,7 @@
 	</AppModal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive, computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
@@ -30,26 +30,24 @@ import { findById } from '../../../helpers/project'
 import AppButton from '../../AppButton.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 import AppModal from '../../AppModal.vue'
+import { Project } from '../../../types/projectTypes'
 
-const props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
+const props = defineProps<{
+	show: boolean
+}>()
 // Current project data
 const route = useRoute()
-const projectId = ref(route.params.projectId)
+const projectId = ref<string | string[]>(route.params.projectId)
 
 const projectStore = useProjectStore()
-const currProject = computed(() => {
+const currProject = computed<Project | undefined>(() => {
 	return findById(projectStore.projects, projectId.value)
 })
 
 // Project data to edit
 const project = reactive({
-	projectName: currProject.value.projectName,
-	companyName: currProject.value.companyName,
+	projectName: currProject.value?.projectName,
+	companyName: currProject.value?.companyName,
 })
 
 const editProject = async () => {

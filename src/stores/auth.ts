@@ -3,17 +3,19 @@ import { useProjectStore } from './project'
 import { nanoid } from 'nanoid'
 import axios from 'axios'
 import { handleDelete, handleEdit } from '../helpers/project'
+import {Login, Registration, User} from '../types/userTypes'
+import {Project} from '../types/projectTypes'
 
 export const useAuthStore = defineStore('auth', {
 	state: () => {
 		return {
-			user: {},
+			user: {} as User,
 			authUser: localStorage.getItem('user'),
 			authError: null,
 		}
 	},
 	getters: {
-		getFullName() {
+		getFullName(): string {
 			return `${this.user.firstName} ${this.user.lastName}`
 		},
 	},
@@ -32,18 +34,18 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
-		async editUser(userId, data) {
+		async editUser(userId: string, data: {username: string, firstName: string, lastName: string}) {
 			await handleEdit('users', userId, data)
 		},
 
-		async changePassword(userId, password) {
+		async changePassword(userId: string, password: string) {
 			await handleEdit('users', userId, { password })
 		},
 
-		async deleteAccount(userId) {
+		async deleteAccount(userId: string) {
 			// Delete all users cards and tasks
 			const projectStore = useProjectStore()
-			const projects = projectStore.projects.filter(
+			const projects: Project[] = projectStore.projects.filter(
 				(project) => project.userId === userId
 			)
 			let cards = []
@@ -59,8 +61,8 @@ export const useAuthStore = defineStore('auth', {
 			localStorage.removeItem('user')
 		},
 
-		async registration(data) {
-			const newUser = {
+		async registration(data: Registration) {
+			const newUser: User = {
 				id: nanoid(),
 				username: data.username,
 				firstName: data.firstName,
@@ -81,7 +83,7 @@ export const useAuthStore = defineStore('auth', {
 				.catch((err) => console.log(err))
 		},
 
-		async login(data) {
+		async login(data: Login) {
 			await axios
 				.get('http://localhost:3001/users', {
 					params: {

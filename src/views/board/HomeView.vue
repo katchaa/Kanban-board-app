@@ -24,28 +24,22 @@
 	</section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import { useAuthStore } from '../../stores/auth'
 import { useProjectStore } from '../../stores/project'
+import { Project } from '../../types/projectTypes'
+import { User } from '../../types/userTypes'
 
 const authStore = useAuthStore()
 const projectStore = useProjectStore()
 
-const user = computed(() => {
+const user = computed<User>(() => {
 	return authStore.user
 })
 
-const projects = computed(() => {
-	let projects = []
-	// if (user.value) {
-	for (const projectId of user.value.projects) {
-		projects.push(
-			projectStore.projects.find((project) => project.id === projectId)
-		)
-		// }
-	}
-	return projects
+const projects = computed<Project[] | undefined>(() => {
+	return projectStore.projects
 })
 </script>
 

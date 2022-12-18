@@ -14,7 +14,7 @@
 	</article>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { shallowRef } from 'vue'
 import CardCreate from './CardCreate.vue'
 import CardEdit from './CardEdit.vue'

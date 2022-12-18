@@ -13,13 +13,11 @@
 	</article>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
-const taskInfo = ref(false)
-const toggleInfo = () => {
-	taskInfo.value = !taskInfo.value
-}
+const taskInfo = ref<boolean>(false)
+const toggleInfo = (): boolean => (taskInfo.value = !taskInfo.value)
 </script>
 
 <style scoped lang="scss">

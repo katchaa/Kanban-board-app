@@ -8,13 +8,14 @@ import {
 	handleEdit,
 	handlePost,
 } from '../helpers/project'
+import { Project, Card, Task } from '../types/projectTypes'
 
 export const useProjectStore = defineStore('project', {
 	state: () => {
 		return {
-			projects: [],
-			cards: [],
-			tasks: [],
+			projects: [] as Project[],
+			cards: [] as Card[],
+			tasks: [] as Task[],
 		}
 	},
 	actions: {
@@ -33,12 +34,12 @@ export const useProjectStore = defineStore('project', {
 						this.projects.push(...res.data)
 					})
 					.catch((err) => console.log(err))
-				const projectId = this.projects.map((project) => project.id)
+				const projectId: string | string[] = this.projects.map((project) => project.id)
 				await this.fetchCards(projectId)
 			}
 		},
 
-		async fetchCards(projectId) {
+		async fetchCards(projectId: string | string[]) {
 			await axios
 				.get('http://localhost:3001/cards', {
 					params: {
@@ -50,11 +51,11 @@ export const useProjectStore = defineStore('project', {
 					this.cards.push(...res.data)
 				})
 				.catch((err) => console.log(err))
-			const cardId = this.cards.map((card) => card.id)
+			const cardId: string[] = this.cards.map((card) => card.id)
 			await this.fetchTasks(cardId)
 		},
 
-		async fetchTasks(cardId) {
+		async fetchTasks(cardId: string[]) {
 			await axios
 				.get('http://localhost:3001/tasks', {
 					params: {
@@ -69,14 +70,14 @@ export const useProjectStore = defineStore('project', {
 		},
 
 		// Projects actions
-		async addProject(projectData, userId) {
-			const newProject = {
+		async addProject(projectData:{projectName: string, companyName: string }, userId: string | string[]) {
+			const newProject: Project = {
 				id: nanoid(),
 				...projectData,
 				avatar: `http://picsum.photos/id/${Math.floor(
 					Math.random() * 500
 				)}/200/300`,
-				cards: [],
+				cards: [] as string[],
 				userId,
 			}
 			await handlePost('projects', newProject)
@@ -84,7 +85,7 @@ export const useProjectStore = defineStore('project', {
 			// Edit user projects array
 			const authStore = useAuthStore()
 			const user = authStore.user
-			let projects = this.projects
+			let projects: string[] = []
 			if (user.projects.length) {
 				projects = [...user.projects, newProject.id]
 			} else {
@@ -93,15 +94,15 @@ export const useProjectStore = defineStore('project', {
 			await handleEdit('users', user.id, { projects })
 		},
 
-		async editProject(projectId, data) {
+		async editProject(projectId: string | string[], data: {projectName: string | undefined, companyName: string | undefined}) {
 			await handleEdit('projects', projectId, data)
 		},
 
-		async deleteProject(projectId) {
+		async deleteProject(projectId: string) {
 			// Edit user projects array
 			const authStore = useAuthStore()
 			const user = authStore.user
-			const projectToDelete = user.projects.indexOf(projectId)
+			const projectToDelete: number = user.projects.indexOf(projectId)
 			user.projects.splice(projectToDelete, 1)
 			await handleEdit('users', user.id, { projects: user.projects })
 
@@ -118,9 +119,9 @@ export const useProjectStore = defineStore('project', {
 		},
 
 		// Cards actions
-		async addCard(title, projectId) {
+		async addCard(title: string, projectId: string | string[]) {
 			// Card post
-			const newCard = {
+			const newCard: Card = {
 				id: nanoid(),
 				title,
 				tasks: [],
@@ -130,7 +131,7 @@ export const useProjectStore = defineStore('project', {
 
 			// Edit projects cards array
 			const project = findById(this.projects, projectId)
-			let cards = this.cards
+			let cards: string[] = []
 			if (project.cards.length) {
 				cards = [...project.cards, newCard.id]
 			} else {
@@ -139,27 +140,29 @@ export const useProjectStore = defineStore('project', {
 			await handleEdit('projects', project.id, { cards })
 		},
 
-		async editCard(cardId, title) {
+		async editCard(cardId: string, title: string) {
 			await handleEdit('cards', cardId, { title })
 		},
 
-		async deleteCard(cardId) {
+		async deleteCard(cardId: string) {
 			// Edit project cards array
 			const project = this.projects.find((project) =>
 				project.cards.includes(cardId)
 			)
-			const cardToDelete = project.cards.indexOf(cardId)
-			project.cards.splice(cardToDelete, 1)
-			await handleEdit('projects', project.id, { cards: project.cards })
+			if(project) {
+				const cardToDelete: number | undefined = project.cards.indexOf(cardId)
+				project.cards.splice(cardToDelete, 1)
+				await handleEdit('projects', project.id, { cards: project.cards })
+			}
 
 			//Delete current card
 			await handleDelete('cards', cardId)
 		},
 
 		// Tasks actions
-		async addTask(text, cardId) {
+		async addTask(text: string, cardId: string) {
 			// Task post
-			const newTask = {
+			const newTask: Task = {
 				id: nanoid(),
 				text,
 				cardId,
@@ -168,7 +171,7 @@ export const useProjectStore = defineStore('project', {
 
 			// Edit card tasks array
 			const card = findById(this.cards, cardId)
-			let tasks = this.tasks
+			let tasks: string[] = []
 			if (card.tasks.length) {
 				tasks = [...card.tasks, newTask.id]
 			} else {
@@ -177,22 +180,25 @@ export const useProjectStore = defineStore('project', {
 			await handleEdit('cards', card.id, { tasks })
 		},
 
-		async editTask(taskId, text) {
+		async editTask(taskId: string, text: string) {
 			await handleEdit('tasks', taskId, { text })
 		},
 
-		async deleteTask(taskId) {
+		async deleteTask(taskId: string) {
 			// Edit card tasks array
 			const card = this.cards.find((card) => card.tasks.includes(taskId))
-			const taskToDelete = card.tasks.indexOf(taskId)
-			card.tasks.splice(taskToDelete, 1)
-			await handleEdit('cards', card.id, { tasks: card.tasks })
+			if(card) {
+
+				const taskToDelete = card.tasks.indexOf(taskId)
+				card.tasks.splice(taskToDelete, 1)
+				await handleEdit('cards', card.id, { tasks: card.tasks })
+			}
 
 			// Delete current task
 			await handleDelete('tasks', taskId)
 		},
 
-		async dragAndDrop(cardId, taskId) {
+		async dragAndDrop(cardId:string, taskId: string) {
 			const task = findById(this.tasks, taskId)
 			const nextCard = findById(this.cards, cardId)
 			const prevCard = findById(this.cards, task.cardId)

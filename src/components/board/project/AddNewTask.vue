@@ -19,32 +19,29 @@
 	</section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 import AppButton from '../../AppButton.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 
-const props = defineProps({
-	cardId: {
-		type: String,
-		required: true,
-	},
-})
+const props = defineProps<{
+	cardId: string
+}>()
 
 //Toggle textarea
-let showTextarea = ref(false)
+let showTextarea = ref<boolean>(false)
 
-const toggleTextarea = () => {
-	showTextarea.value = !showTextarea.value
+const toggleTextarea = (): boolean => {
 	text.value = ''
+	return (showTextarea.value = !showTextarea.value)
 }
 
 // Add task
 const projectStore = useProjectStore()
 const route = useRoute()
-const text = ref('')
+const text = ref<string>('')
 
 const addTask = async () => {
 	await projectStore.addTask(text.value, props.cardId).then(() => {

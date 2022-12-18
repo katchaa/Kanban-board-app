@@ -39,25 +39,20 @@
 	</AppModal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import useVuelidate from '@vuelidate/core'
 import { required, sameAs, not, helpers } from '@vuelidate/validators'
 import { computed, reactive } from 'vue'
 import { useAuthStore } from '../../../stores/auth'
+import { User } from '../../../types/userTypes'
 import AppButton from '../../AppButton.vue'
 import AppModal from '../../AppModal.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 
-const props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-	},
-	user: {
-		type: Object,
-		required: true,
-	},
-})
+const props = defineProps<{
+	show: boolean
+	user: User
+}>()
 
 const emit = defineEmits(['closeModal'])
 

@@ -8,13 +8,10 @@
 	</Teleport>
 </template>
 
-<script setup>
-const props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
+<script setup lang="ts">
+const props = defineProps<{
+	show: Boolean
+}>()
 </script>
 
 <style lang="scss" scoped>

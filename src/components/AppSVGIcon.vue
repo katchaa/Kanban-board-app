@@ -200,13 +200,10 @@
 	</svg>
 </template>
 
-<script setup>
-const props = defineProps({
-	icon: {
-		type: String,
-		required: true,
-	},
-})
+<script setup lang="ts">
+const props = defineProps<{
+	icon: String
+}>()
 </script>
 
 <style scoped lang="scss">

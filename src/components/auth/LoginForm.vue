@@ -34,20 +34,21 @@
 	</section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import useVuelidate from '@vuelidate/core'
 import { required, email, helpers } from '@vuelidate/validators'
 import { useAuthStore } from '../../stores/auth'
 import AppButton from '../AppButton.vue'
+import { Login } from '../../types/userTypes'
 
 const emit = defineEmits(['toggleForm'])
-const showRegister = () => {
+const showRegister = (): void => {
 	emit('toggleForm')
 }
 
-const user = reactive({
+const user = reactive<Login>({
 	email: '',
 	password: '',
 })

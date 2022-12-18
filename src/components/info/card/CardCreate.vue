@@ -26,13 +26,11 @@
 	</article>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
-const cardInfo = ref(false)
-const toggleInfo = () => {
-	cardInfo.value = !cardInfo.value
-}
+const cardInfo = ref<boolean>(false)
+const toggleInfo = (): boolean => (cardInfo.value = !cardInfo.value)
 </script>
 
 <style scoped lang="scss">

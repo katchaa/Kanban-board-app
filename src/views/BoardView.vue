@@ -1,24 +1,25 @@
 <template>
 	<div class="grid-board">
 		<TheBoardNavbar class="board-navbar" />
-		<TheAsideNavbar class="board-aside-navbar" v-if="projects.length" />
-		<RouterView class="router-view" :class="{ full: !projects.length }" />
+		<TheAsideNavbar class="board-aside-navbar" v-if="projects?.length" />
+		<RouterView class="router-view" :class="{ full: !projects?.length }" />
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import TheAsideNavbar from '../components/board/layout/TheAsideNavbar.vue'
 import TheBoardNavbar from '../components/board/layout/TheBoardNavbar.vue'
 import { useAuthStore } from '../stores/auth'
 import { useProjectStore } from '../stores/project'
+import { Project } from '../types/projectTypes'
 
 const authStore = useAuthStore()
 const projectStore = useProjectStore()
 await authStore.fetchUser()
 await projectStore.fetchProjects()
 
-const projects = computed(() => projectStore.projects)
+const projects = computed<Project[] | undefined>(() => projectStore.projects)
 </script>
 
 <style scoped lang="scss">

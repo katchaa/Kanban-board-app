@@ -19,15 +19,15 @@
 	</section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import TaskInfo from '../../components/info/task/TaskInfo.vue'
 import CardInfo from '../../components/info/card/CardInfo.vue'
 import ProjectInfo from '../../components/info/project/ProjectInfo.vue'
 
-const show = ref('project')
-const toggleInfo = (item) => {
-	show.value = item
+const show = ref<string>('project')
+const toggleInfo = (item: string): string => {
+	return (show.value = item)
 }
 </script>
 

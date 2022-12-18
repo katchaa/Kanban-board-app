@@ -16,7 +16,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import LoginForm from '@/components/auth/LoginForm.vue'
 import RegistrationForm from '@/components/auth/RegistrationForm.vue'
 import { onMounted, ref } from 'vue'
@@ -30,10 +30,10 @@ onMounted(() => {
 	projectStore.$reset()
 })
 
-const showForm = ref(false)
+const showForm = ref<boolean>(false)
 
-const toggleForm = () => {
-	showForm.value = !showForm.value
+const toggleForm = (): boolean => {
+	return (showForm.value = !showForm.value)
 }
 </script>
 

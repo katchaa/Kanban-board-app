@@ -12,7 +12,7 @@
 					class="title"
 					:class="{ edit: edit }"
 					:contenteditable="edit"
-					ref="card"
+					ref="cardTitle"
 					spellcheck="false"
 					@dblclick="startEdit()"
 					@input="editTitle"
@@ -46,7 +46,7 @@
 	</Transition>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useProjectStore } from '../../../stores/project'
 import { findById } from '../../../helpers/project'
@@ -54,37 +54,34 @@ import ProjectTask from './ProjectTask.vue'
 import AddNewTask from './AddNewTask.vue'
 import DeleteModal from '../modals/DeleteModal.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
-
-const props = defineProps({
-	card: {
-		type: Object,
-		required: true,
-	},
-})
-
+import { Card, Task } from '../../../types/projectTypes'
+const props = defineProps<{
+	card: Card
+}>()
 // Find tasks according id's order in card.tasks array
 const projectStore = useProjectStore()
-const tasks = computed(() => {
-	let currTasks = []
-	props.card.tasks.forEach((taskId) => {
+const tasks = computed<Task[] | undefined>(() => {
+	let currTasks: Task[] = []
+	props.card.tasks.forEach((taskId: string) => {
 		currTasks.push(findById(projectStore.tasks, taskId))
 	})
 	return currTasks
 })
 
 // Edit card title
-const edit = ref(false)
-const card = ref()
+const edit = ref<boolean>(false)
+const cardTitle = ref<HTMLHeadingElement>()
 const startEdit = () => {
 	edit.value = true
 	setTimeout(() => {
-		card.value.focus()
+		cardTitle.value?.focus()
 	}, 0)
 }
 
 const newTitle = ref('')
-const editTitle = (e) => {
-	newTitle.value = e.target.innerText
+const editTitle = (e: Event) => {
+	const title = e.target as HTMLHeadingElement
+	newTitle.value = title.innerText
 }
 
 const editCard = async () => {
@@ -98,22 +95,26 @@ const editCard = async () => {
 }
 
 // Task drag and drop
-const startDrag = (e, taskId) => {
-	e.dataTransfer.dropEffect = 'move'
-	e.dataTransfer.effectAllowed = 'move'
-	e.dataTransfer.setData('taskId', taskId)
+const startDrag = (e: DragEvent, taskId: string) => {
+	if (e.dataTransfer !== null) {
+		e.dataTransfer.dropEffect = 'move'
+		e.dataTransfer.effectAllowed = 'move'
+		e.dataTransfer.setData('taskId', taskId)
+	}
 }
 
-const onDrop = async (e, cardId) => {
-	const taskId = e.dataTransfer.getData('taskId')
-	await projectStore.dragAndDrop(cardId, taskId).then(() => {
-		projectStore.fetchProjects()
-	})
+const onDrop = async (e: DragEvent, cardId: string) => {
+	if (e.dataTransfer !== null) {
+		const taskId = e.dataTransfer.getData('taskId')
+		await projectStore.dragAndDrop(cardId, taskId).then(() => {
+			projectStore.fetchProjects()
+		})
+	}
 }
 // Toggle delete modal
-const deleteModal = ref(false)
-const toggleDeleteModal = () => {
-	deleteModal.value = !deleteModal.value
+const deleteModal = ref<boolean>(false)
+const toggleDeleteModal = (): boolean => {
+	return (deleteModal.value = !deleteModal.value)
 }
 </script>
 

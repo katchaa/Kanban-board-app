@@ -14,7 +14,7 @@
 	</section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { shallowRef } from 'vue'
 import AppButton from '../../AppButton.vue'
 import ProjectCreate from '../project/ProjectCreate.vue'

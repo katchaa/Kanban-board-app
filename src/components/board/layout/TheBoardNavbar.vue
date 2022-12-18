@@ -36,29 +36,30 @@
 	</nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useAuthStore } from '../../../stores/auth'
+import { User } from '../../../types/userTypes'
 import AppIconButton from '../../AppIconButton.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 import UserMenuPopup from '../../user/UserMenuPopup.vue'
 import NewProjectModal from '../modals/NewProjectModal.vue'
 
 const authStore = useAuthStore()
-const user = computed(() => {
+const user = computed<User>(() => {
 	return authStore.user
 })
 
 // Toggle new project modal
-const showNewProjectModal = ref(false)
-const toggleNewProjectModal = () => {
-	showNewProjectModal.value = !showNewProjectModal.value
+const showNewProjectModal = ref<boolean>(false)
+const toggleNewProjectModal = (): boolean => {
+	return (showNewProjectModal.value = !showNewProjectModal.value)
 }
 
 // Toggle user menu popup
-const showUserMenu = ref(false)
-const toggleUserMenu = () => {
-	showUserMenu.value = !showUserMenu.value
+const showUserMenu = ref<boolean>(false)
+const toggleUserMenu = (): boolean => {
+	return (showUserMenu.value = !showUserMenu.value)
 }
 </script>
 

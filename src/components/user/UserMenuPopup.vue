@@ -9,16 +9,13 @@
 	</Transition>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../stores/auth'
 
-const props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
+const props = defineProps<{
+	show: boolean
+}>()
 
 const emit = defineEmits(['closeMenu'])
 

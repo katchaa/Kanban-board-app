@@ -14,13 +14,10 @@
 	</Transition>
 </template>
 
-<script setup>
-const props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
+<script setup lang="ts">
+const props = defineProps<{
+	show: boolean
+}>()
 
 const emit = defineEmits([
 	'closePopup',

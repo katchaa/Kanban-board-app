@@ -14,7 +14,7 @@
 	</article>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { shallowRef } from 'vue'
 import TaskCreate from './TaskCreate.vue'
 import TaskEdit from './TaskEdit.vue'

@@ -56,7 +56,7 @@
 	</AppModal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, reactive } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
@@ -64,17 +64,12 @@ import { useAuthStore } from '../../../stores/auth'
 import AppButton from '../../AppButton.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 import AppModal from '../../AppModal.vue'
+import { User } from '../../../types/userTypes'
 
-const props = defineProps({
-	user: {
-		type: Object,
-		required: true,
-	},
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
+const props = defineProps<{
+	user: User
+	show: boolean
+}>()
 
 // Edit user data
 let userData = reactive({

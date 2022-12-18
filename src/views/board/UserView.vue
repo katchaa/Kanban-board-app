@@ -4,7 +4,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import UserCard from '../../components/user/UserCard.vue'
 </script>
 

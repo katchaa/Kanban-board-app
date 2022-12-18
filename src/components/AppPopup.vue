@@ -8,20 +8,17 @@
 	</Transition>
 </template>
 
-<script setup>
-const props = defineProps({
-	show: {
-		type: Boolean,
-		required: true,
-	},
-})
+<script setup lang="ts">
+const props = defineProps<{
+	show: Boolean
+}>()
 const emit = defineEmits(['editMode', 'deleteMode'])
 
-const editMode = () => {
+const editMode = (): void => {
 	emit('editMode')
 }
 
-const deleteMode = () => {
+const deleteMode = (): void => {
 	emit('deleteMode')
 }
 </script>
