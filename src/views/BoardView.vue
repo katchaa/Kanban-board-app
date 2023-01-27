@@ -2,7 +2,11 @@
 	<div class="grid-board">
 		<TheBoardNavbar class="board-navbar" />
 		<TheAsideNavbar class="board-aside-navbar" v-if="projects.length" />
-		<RouterView class="router-view" :class="{ full: !projects.length }" />
+		<RouterView
+			class="router-view"
+			:class="{ full: !projects.length }"
+			:key="$route.path"
+		/>
 	</div>
 </template>
 

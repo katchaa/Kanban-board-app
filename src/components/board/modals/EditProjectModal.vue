@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, ref } from 'vue'
+import { reactive, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 import { findById } from '../../../helpers/project'
@@ -37,16 +37,15 @@ const props = defineProps({
 		required: true,
 	},
 })
-// Current project data
-const route = useRoute()
-const projectId = ref(route.params.projectId)
 
+const route = useRoute()
 const projectStore = useProjectStore()
+
+// Current project data
+const projectId = computed(() => route.params.projectId)
 const currProject = computed(() => {
 	return findById(projectStore.projects, projectId.value)
 })
-
-// Project data to edit
 const project = reactive({
 	projectName: currProject.value.projectName,
 	companyName: currProject.value.companyName,
