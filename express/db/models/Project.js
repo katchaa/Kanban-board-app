@@ -17,6 +17,12 @@ const ProjectSchema = Schema({
 		type: Schema.Types.ObjectId,
 		ref: 'User',
 	},
+	cards: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Card',
+		},
+	],
 });
 
 module.exports = mongoose.model('Project', ProjectSchema);

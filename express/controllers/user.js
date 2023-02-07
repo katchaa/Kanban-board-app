@@ -39,7 +39,18 @@ exports.logout = async (req, res) => {
 };
 
 exports.getMe = async (req, res) => {
-	const user = await User.findOne({ _id: req.userId }).populate('projects');
+	const user = await User.findOne({ _id: req.userId }).populate({
+		path: 'projects',
+		model: 'Project',
+		populate: {
+			path: 'cards',
+			model: 'Card',
+			// populate: {
+			// 	path: 'tasks',
+			// 	model: 'Task',
+			// },
+		},
+	});
 
 	if (!user) {
 		res.status(403);
