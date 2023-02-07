@@ -45,10 +45,10 @@ exports.getMe = async (req, res) => {
 		populate: {
 			path: 'cards',
 			model: 'Card',
-			// populate: {
-			// 	path: 'tasks',
-			// 	model: 'Task',
-			// },
+			populate: {
+				path: 'tasks',
+				model: 'Task',
+			},
 		},
 	});
 

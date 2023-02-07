@@ -2,8 +2,6 @@ const cardRoutes = require('express').Router();
 const cardController = require('../controllers/card');
 const auth = require('../middlewares/auth');
 
-module.exports = cardRoutes;
-
 cardRoutes.post('/', auth, cardController.post);
 
 cardRoutes
@@ -13,3 +11,4 @@ cardRoutes
 	.delete(cardController.delete);
 
 module.exports = cardRoutes;
+

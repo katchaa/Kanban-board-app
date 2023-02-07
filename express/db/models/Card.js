@@ -9,7 +9,15 @@ const CardSchema = Schema({
 	projectId: {
 		type: Schema.Types.ObjectId,
 		ref: 'Project',
+		required: true,
 	},
+	tasks: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Task',
+		},
+	],
 });
 
 module.exports = mongoose.model('Card', CardSchema);
+
