@@ -42,3 +42,27 @@ exports.delete = async (req, res) => {
 	res.status(200).json(task);
 };
 
+exports.dragNdrop = async (req, res) => {
+	const task = await Task.findOne({ _id: req.params.id });
+	const prewCard = await Card.findOne({ _id: task.cardId });
+	const nextCard = await Card.findOne({ _id: req.body });
+	await Card.findOneAndUpdate(
+		{ _id: prewCard._id },
+		{
+			$pull: {
+				tasks: req.params.id,
+			},
+		}
+	);
+	await Card.findByIdAndUpdate(
+		{ _id: nextCard._id },
+		{
+			$push: {
+				tasks: req.params.id,
+			},
+		}
+	);
+	await Task.updateOne({ _id: req.params.id }, { $set: req.body });
+	res.status(200).json(task);
+};
+

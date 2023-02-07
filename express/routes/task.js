@@ -3,6 +3,7 @@ const taskController = require('../controllers/task');
 const auth = require('../middlewares/auth');
 
 taskRoutes.post('/', auth, taskController.post);
+taskRoutes.patch('/dnd/:id', auth, taskController.dragNdrop);
 
 taskRoutes
 	.use(auth)
