@@ -113,4 +113,3 @@ exports.deleteUser = async (req, res) => {
 	clearCookie(res);
 	res.status(200).json(user);
 };
-
