@@ -1,5 +1,6 @@
 const Card = require('../db/models/Card');
 const Project = require('../db/models/Project');
+const Task = require('../db/models/Task');
 
 exports.post = async (req, res) => {
 	const data = req.body;
@@ -38,6 +39,7 @@ exports.delete = async (req, res) => {
 			},
 		}
 	);
+	await Task.deleteMany({ cardId: req.params.id });
 	await Card.findOneAndDelete({ _id: req.params.id });
 	res.status(200).json(card);
 };

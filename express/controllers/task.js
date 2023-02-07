@@ -38,7 +38,7 @@ exports.delete = async (req, res) => {
 			},
 		}
 	);
-	await Task.findByIdAndDelete({ _id: req.params.id });
+	await Task.deleteOne({ _id: req.params.id });
 	res.status(200).json(task);
 };
 

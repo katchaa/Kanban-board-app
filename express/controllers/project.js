@@ -1,4 +1,6 @@
+const Card = require('../db/models/Card');
 const Project = require('../db/models/Project');
+const Task = require('../db/models/Task');
 const User = require('../db/models/User');
 
 exports.post = async (req, res) => {
@@ -29,7 +31,6 @@ exports.edit = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-	const project = await Project.findByIdAndDelete({ _id: req.params.id });
 	await User.findByIdAndUpdate(
 		{ _id: req.userId },
 		{
@@ -38,6 +39,12 @@ exports.delete = async (req, res) => {
 			},
 		}
 	);
+	const cards = await Card.find({ projectId: req.params.id });
+	for (const card of cards) {
+		await Task.deleteMany({ cardId: card._id });
+	}
+	await Card.deleteMany({ projectId: req.params.id });
+	const project = await Project.deleteOne({ _id: req.params.id });
 	res.status(200).json(project);
 };
 

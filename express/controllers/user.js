@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { setCookie, clearCookie } = require('../utils/setCookie');
 const User = require('../db/models/User');
+const Project = require('../db/models/Project');
+const Card = require('../db/models/Card');
+const Task = require('../db/models/Task');
 const secret = process.env.TOKEN_SECRET;
 
 exports.register = async (req, res) => {
@@ -97,7 +100,16 @@ exports.changePassword = async (req, res) => {
 };
 
 exports.deleteUser = async (req, res) => {
-	const user = await User.findOneAndDelete({ _id: req.userId });
+	const projects = await Project.find({ userId: req.userId });
+	for (const project of projects) {
+		const cards = await Card.find({ projectId: project._id });
+		for (const card of cards) {
+			await Task.deleteMany({ cardId: card._id });
+		}
+		await Card.deleteMany({ projectId: project._id });
+	}
+	await Project.deleteMany({ userId: req.userId });
+	const user = await User.deleteOne({ _id: req.userId });
 	clearCookie(res);
 	res.status(200).json(user);
 };
