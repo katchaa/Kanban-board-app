@@ -7,13 +7,13 @@
 			@click="toggleDrawer()"
 			class="link"
 			v-for="project in projects"
-			:key="project?.id"
+			:key="project?._id"
 			:to="{
 				name: 'project',
-				params: { projectId: project?.id },
+				params: { projectId: project?._id },
 			}"
 		>
-			<img :src="project?.avatar" :alt="project?.projectName" />
+			<img :src="project?.cover" :alt="project?.projectName" />
 			<p class="title">
 				{{ project?.projectName }}
 			</p>
@@ -33,9 +33,7 @@ const toggleDrawer = () => {
 }
 
 const projectStore = useProjectStore()
-const projects = computed(() => {
-	return projectStore.projects
-})
+const projects = computed(() => projectStore.projects)
 </script>
 
 <style scoped lang="scss">

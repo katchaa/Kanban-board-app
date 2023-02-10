@@ -60,7 +60,7 @@ const deleteItem = async () => {
 		router.push({ name: 'auth' })
 	}
 	emit('closeDeleteModal')
-	await projectStore.fetchProjects()
+	await projectStore.fetchUser()
 }
 </script>
 

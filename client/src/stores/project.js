@@ -30,115 +30,58 @@ export const useProjectStore = defineStore('project', {
 				.get('http://localhost:3001/user/me', { withCredentials: true })
 				.then((res) => {
 					this.user = res.data
-					for (const project of this.user.projects) {
-						this.projects.push(project)
-						for (const card of project.cards) {
-							this.cards.push(card)
-							for (const task of card.tasks) {
-								this.tasks.push(task)
-							}
-						}
+					// for (const project of this.user.projects) {
+					// 	this.projects.push(project)
+					// 	for (const card of project.cards) {
+					// 		this.cards.push(card)
+					// 		for (const task of card.tasks) {
+					// 			this.tasks.push(task)
+					// 		}
+					// 	}
+					// }
+					this.projects = res.data.projects
+					for (const project of this.projects) {
+						this.cards.push(project.cards)
+					}
+					for (const card of this.cards) {
+						this.tasks.push(card.tasks)
 					}
 				})
 				.catch((err) => console.log(err))
 		},
 
-		async fetchProjects() {
-			const authStore = useAuthStore()
-			if (authStore.authUser) {
-				await axios
-					.get('http://localhost:3001/projects', {
-						params: {
-							userId: authStore.authUser,
-						},
-					})
-					.then((res) => {
-						this.projects = []
-						this.projects.push(...res.data)
-					})
-					.catch((err) => console.log(err))
-				const projectId = this.projects.map((project) => project.id)
-				await this.fetchCards(projectId)
-			}
-		},
-
-		async fetchCards(projectId) {
-			await axios
-				.get('http://localhost:3001/cards', {
-					params: {
-						projectId: projectId,
-					},
-				})
-				.then((res) => {
-					this.cards = []
-					this.cards.push(...res.data)
-				})
-				.catch((err) => console.log(err))
-			const cardId = this.cards.map((card) => card.id)
-			await this.fetchTasks(cardId)
-		},
-
-		async fetchTasks(cardId) {
-			await axios
-				.get('http://localhost:3001/tasks', {
-					params: {
-						cardId: cardId,
-					},
-				})
-				.then((res) => {
-					this.tasks = []
-					this.tasks.push(...res.data)
-				})
-				.catch((err) => console.log(err))
-		},
-
 		// Projects actions
-		async addProject(projectData, userId) {
+		async addProject(projectData) {
 			const newProject = {
-				id: nanoid(),
 				...projectData,
-				avatar: `http://picsum.photos/id/${Math.floor(
+				cover: `http://picsum.photos/id/${Math.floor(
 					Math.random() * 500
 				)}/200/300`,
-				cards: [],
-				userId,
 			}
-			await handlePost('projects', newProject)
-
-			// Edit user projects array
-			const authStore = useAuthStore()
-			const user = authStore.user
-			let projects = this.projects
-			if (user.projects.length) {
-				projects = [...user.projects, newProject.id]
-			} else {
-				projects = [newProject.id]
-			}
-			await handleEdit('users', user.id, { projects })
+			await axios
+				.post('http://localhost:3001/project', newProject, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async editProject(projectId, data) {
-			await handleEdit('projects', projectId, data)
+			await axios
+				.patch(`http://localhost:3001/project/${projectId}`, data, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async deleteProject(projectId) {
-			// Edit user projects array
-			const authStore = useAuthStore()
-			const user = authStore.user
-			const projectToDelete = user.projects.indexOf(projectId)
-			user.projects.splice(projectToDelete, 1)
-			await handleEdit('users', user.id, { projects: user.projects })
-
-			// Delete project's cards
-			const cards = this.cards.filter(
-				(card) => card.projectId === projectId
-			)
-			cards.forEach(async (card) => {
-				await handleDelete('cards', card.id)
-			})
-
-			// Delete current project
-			await handleDelete('projects', projectId)
+			await axios
+				.delete(`http://localhost:3001/project/${projectId}`, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		// Cards actions

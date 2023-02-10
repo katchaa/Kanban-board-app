@@ -47,7 +47,9 @@ let newProject = reactive({
 })
 
 const add = async () => {
-	await projectStore.addProject(newProject, route.params.userId)
+	await projectStore
+		.addProject(newProject, route.params.userId)
+		.then(() => projectStore.fetchUser())
 
 	newProject.projectName = ''
 	newProject.companyName = ''

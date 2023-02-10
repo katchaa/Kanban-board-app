@@ -20,7 +20,7 @@
 			/>
 			<DeleteModal
 				type="project"
-				:id="project?.id"
+				:id="project?._id"
 				:show="deleteModal"
 				@close-delete-modal="toggleDeleteModal()"
 			>
@@ -64,6 +64,8 @@ const route = useRoute()
 const project = computed(() => {
 	return findById(projectStore.projects, route.params.projectId)
 })
+
+console.log(project.value)
 
 // Add new card modal
 const showNewCardModal = ref(false)

@@ -5,19 +5,19 @@
 		<main class="cards">
 			<RouterLink
 				class="link"
+				v-for="project in projects"
+				:key="project.id"
 				:to="{
 					name: 'project',
 					params: {
-						projectId: project.id,
+						projectId: project._id,
 					},
 				}"
-				v-for="project in projects"
-				:key="project.id"
 			>
 				<h3 class="title">
 					{{ project.projectName }}
 				</h3>
-				<img :src="project.avatar" :alt="project.projectName" />
+				<img :src="project.cover" :alt="project.projectName" />
 			</RouterLink>
 		</main>
 	</section>
@@ -34,15 +34,14 @@ const user = computed(() => {
 })
 
 const projects = computed(() => {
-	let projects = []
-	// if (user.value) {
-	for (const projectId of user.value.projects) {
-		projects.push(
-			projectStore.projects.find((project) => project.id === projectId)
-		)
-		// }
-	}
-	return projects
+	// let projects = []
+	// for (const projectId of user.value.projects) {
+	// 	projects.push(
+	// 		projectStore.projects.find((project) => project._id === projectId)
+	// 	)
+	// }
+	// return projects
+	return projectStore.projects
 })
 </script>
 
