@@ -65,8 +65,6 @@ const project = computed(() => {
 	return findById(projectStore.projects, route.params.projectId)
 })
 
-console.log(project.value)
-
 // Add new card modal
 const showNewCardModal = ref(false)
 const toggleNewCardModal = () => {

@@ -29,22 +29,20 @@ export const useProjectStore = defineStore('project', {
 			await axios
 				.get('http://localhost:3001/user/me', { withCredentials: true })
 				.then((res) => {
+					this.projects = []
+					this.cards = []
+					this.tasks = []
 					this.user = res.data
-					// for (const project of this.user.projects) {
-					// 	this.projects.push(project)
-					// 	for (const card of project.cards) {
-					// 		this.cards.push(card)
-					// 		for (const task of card.tasks) {
-					// 			this.tasks.push(task)
-					// 		}
-					// 	}
-					// }
 					this.projects = res.data.projects
-					for (const project of this.projects) {
-						this.cards.push(project.cards)
-					}
-					for (const card of this.cards) {
-						this.tasks.push(card.tasks)
+					for (const project of res.data.projects) {
+						if (project.cards.length) {
+							this.cards.push(...project.cards)
+							for (const card of project.cards) {
+								if (card.tasks.length) {
+									this.tasks.push(...card.tasks)
+								}
+							}
+						}
 					}
 				})
 				.catch((err) => console.log(err))
@@ -86,41 +84,38 @@ export const useProjectStore = defineStore('project', {
 
 		// Cards actions
 		async addCard(title, projectId) {
-			// Card post
 			const newCard = {
-				id: nanoid(),
 				title,
-				tasks: [],
 				projectId,
 			}
-			await handlePost('cards', newCard)
-
-			// Edit projects cards array
-			const project = findById(this.projects, projectId)
-			let cards = this.cards
-			if (project.cards.length) {
-				cards = [...project.cards, newCard.id]
-			} else {
-				cards = [newCard.id]
-			}
-			await handleEdit('projects', project.id, { cards })
+			await axios
+				.post('http://localhost:3001/card', newCard, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async editCard(cardId, title) {
-			await handleEdit('cards', cardId, { title })
+			await axios
+				.patch(
+					`http://localhost:3001/card/${cardId}`,
+					{ title },
+					{
+						withCredentials: true,
+					}
+				)
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async deleteCard(cardId) {
-			// Edit project cards array
-			const project = this.projects.find((project) =>
-				project.cards.includes(cardId)
-			)
-			const cardToDelete = project.cards.indexOf(cardId)
-			project.cards.splice(cardToDelete, 1)
-			await handleEdit('projects', project.id, { cards: project.cards })
-
-			//Delete current card
-			await handleDelete('cards', cardId)
+			await axios
+				.delete(`http://localhost:3001/card/${cardId}`, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		// Tasks actions

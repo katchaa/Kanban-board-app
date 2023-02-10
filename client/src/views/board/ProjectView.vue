@@ -20,7 +20,7 @@ const route = useRoute()
 // Filter project cards from store
 const cards = computed(() => {
 	return projectStore.cards.filter(
-		(card) => card.projectId === route.params?.projectId
+		(card) => card.projectId === route.params.projectId
 	)
 })
 </script>
