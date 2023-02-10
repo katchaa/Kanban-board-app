@@ -2,12 +2,10 @@
 	<nav class="navbar">
 		<!-- Icons tab -->
 		<div class="icons">
-			<RouterLink
-				:to="{ name: 'projectHome', params: { userId: user.id } }"
-			>
+			<RouterLink :to="{ name: 'projectHome' }">
 				<AppIconButton icon="home" tooltip="Home" size="9" />
 			</RouterLink>
-			<RouterLink :to="{ name: 'info', params: { userId: user.id } }">
+			<RouterLink :to="{ name: 'info' }">
 				<AppIconButton icon="info" tooltip="Info" size="9" />
 			</RouterLink>
 			<AppIconButton
@@ -38,15 +36,15 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useAuthStore } from '../../../stores/auth'
+import { useProjectStore } from '../../../stores/project'
 import AppIconButton from '../../AppIconButton.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 import UserMenuPopup from '../../user/UserMenuPopup.vue'
 import NewProjectModal from '../modals/NewProjectModal.vue'
 
-const authStore = useAuthStore()
+const projectStore = useProjectStore()
 const user = computed(() => {
-	return authStore.user
+	return projectStore.user
 })
 
 // Toggle new project modal

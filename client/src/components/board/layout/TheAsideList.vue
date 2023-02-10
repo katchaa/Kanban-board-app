@@ -7,7 +7,7 @@
 			class="avatar"
 			:to="{
 				name: 'project',
-				params: { userId: project?.userId, projectId: project?.id },
+				params: { projectId: project?.id },
 			}"
 			v-for="project in projects"
 			:key="project?.id"

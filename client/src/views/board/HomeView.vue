@@ -8,7 +8,6 @@
 				:to="{
 					name: 'project',
 					params: {
-						userId: user.id,
 						projectId: project.id,
 					},
 				}"
@@ -26,14 +25,12 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useAuthStore } from '../../stores/auth'
 import { useProjectStore } from '../../stores/project'
 
-const authStore = useAuthStore()
 const projectStore = useProjectStore()
 
 const user = computed(() => {
-	return authStore.user
+	return projectStore.user
 })
 
 const projects = computed(() => {

@@ -12,13 +12,37 @@ import {
 export const useProjectStore = defineStore('project', {
 	state: () => {
 		return {
+			user: {},
 			projects: [],
 			cards: [],
 			tasks: [],
 		}
 	},
+	getters: {
+		getFullName() {
+			return `${this.user.firstName} ${this.user.lastName}`
+		},
+	},
 	actions: {
 		// Data fetching
+		async fetchUser() {
+			await axios
+				.get('http://localhost:3001/user/me', { withCredentials: true })
+				.then((res) => {
+					this.user = res.data
+					for (const project of this.user.projects) {
+						this.projects.push(project)
+						for (const card of project.cards) {
+							this.cards.push(card)
+							for (const task of card.tasks) {
+								this.tasks.push(task)
+							}
+						}
+					}
+				})
+				.catch((err) => console.log(err))
+		},
+
 		async fetchProjects() {
 			const authStore = useAuthStore()
 			if (authStore.authUser) {

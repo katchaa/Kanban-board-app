@@ -77,7 +77,7 @@ const login = async () => {
 		if (authError.value || v$.value.$error) {
 			return
 		}
-		router.push({ name: 'board', params: { userId: authStore.authUser } })
+		router.push({ name: 'board' })
 	}
 }
 </script>

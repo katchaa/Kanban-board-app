@@ -10,7 +10,7 @@
 			:key="project?.id"
 			:to="{
 				name: 'project',
-				params: { userId: project?.userId, projectId: project?.id },
+				params: { projectId: project?.id },
 			}"
 		>
 			<img :src="project?.avatar" :alt="project?.projectName" />

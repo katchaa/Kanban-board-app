@@ -20,25 +20,20 @@
 				<p>Email:</p>
 			</div>
 			<div class="user-data">
-				<p>{{ authStore.getFullName }}</p>
+				<p>{{ fullName }}</p>
 				<p>{{ user.email }}</p>
 			</div>
 		</main>
 	</section>
 
 	<!-- Edit form -->
-	<EditUserModal
-		:show="editUserModal"
-		:user="user"
-		@close-modal="toggleEditModal()"
-	/>
+	<EditUserModal :show="editUserModal" @close-modal="toggleEditModal()" />
 	<ChangePasswordModal
-		:user="user"
 		:show="changePasswordModal"
 		@close-modal="togglePasswordModal()"
 	/>
 	<DeleteModal
-		:id="user.id"
+		:id="user._id"
 		type="user"
 		:show="showDeleteModal"
 		@close-delete-modal="toggleDeleteModal()"
@@ -49,7 +44,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useAuthStore } from '../../stores/auth'
+import { useProjectStore } from '../../stores/project'
 import AppSVGIcon from '../AppSVGIcon.vue'
 import DeleteModal from '../board/modals/DeleteModal.vue'
 import ChangePasswordModal from './modals/ChangePasswordModal.vue'
@@ -57,10 +52,9 @@ import EditUserModal from './modals/EditUserModal.vue'
 import UserEditPopup from './UserEditPopup.vue'
 
 // User data from store
-const authStore = useAuthStore()
-const user = computed(() => {
-	return authStore.user
-})
+const projectStore = useProjectStore()
+const user = computed(() => projectStore.user)
+const fullName = computed(() => projectStore.getFullName)
 
 // Toggle edit popup
 const showEditPopup = ref(false)

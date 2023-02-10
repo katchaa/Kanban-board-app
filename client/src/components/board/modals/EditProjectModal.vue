@@ -53,7 +53,6 @@ const project = reactive({
 
 const editProject = async () => {
 	await projectStore.editProject(projectId.value, project)
-	await projectStore.fetchProjects()
 	closeModal()
 }
 

@@ -25,7 +25,6 @@
 <script setup>
 import { reactive } from 'vue'
 import { useRoute } from 'vue-router'
-import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
 import AppButton from '../../AppButton.vue'
 import AppModal from '../../AppModal.vue'
@@ -40,7 +39,6 @@ const props = defineProps({
 
 // Add new project
 const projectStore = useProjectStore()
-const authStore = useAuthStore()
 const route = useRoute()
 
 let newProject = reactive({
@@ -49,10 +47,8 @@ let newProject = reactive({
 })
 
 const add = async () => {
-	await projectStore.addProject(newProject, route.params.userId).then(() => {
-		projectStore.fetchProjects()
-		authStore.fetchUser()
-	})
+	await projectStore.addProject(newProject, route.params.userId)
+
 	newProject.projectName = ''
 	newProject.companyName = ''
 	closeModal()

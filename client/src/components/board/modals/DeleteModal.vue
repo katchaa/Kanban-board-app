@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '../../../stores/auth'
 import { useProjectStore } from '../../../stores/project'
 import AppButton from '../../AppButton.vue'
@@ -45,20 +45,18 @@ const cancelDelete = () => {
 const projectStore = useProjectStore()
 const authStore = useAuthStore()
 const router = useRouter()
-const route = useRoute()
 const deleteItem = async () => {
 	if (props.type === 'project') {
 		await projectStore.deleteProject(props.id)
 		router.push({
 			name: 'projectHome',
-			params: { userId: route.params.userId },
 		})
 	} else if (props.type === 'card') {
 		await projectStore.deleteCard(props.id)
 	} else if (props.type === 'task') {
 		await projectStore.deleteTask(props.id)
 	} else if (props.type === 'user') {
-		await authStore.deleteAccount(props.id)
+		await authStore.deleteAccount()
 		router.push({ name: 'auth' })
 	}
 	emit('closeDeleteModal')
