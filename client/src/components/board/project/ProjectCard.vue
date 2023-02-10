@@ -66,8 +66,8 @@ const props = defineProps({
 const projectStore = useProjectStore()
 const tasks = computed(() => {
 	let currTasks = []
-	props.card.tasks.forEach((taskId) => {
-		currTasks.push(findById(projectStore.tasks, taskId))
+	props.card.tasks.forEach((task) => {
+		currTasks.push(findById(projectStore.tasks, task._id))
 	})
 	return currTasks
 })
@@ -107,7 +107,7 @@ const startDrag = (e, taskId) => {
 const onDrop = async (e, cardId) => {
 	const taskId = e.dataTransfer.getData('taskId')
 	await projectStore.dragAndDrop(cardId, taskId).then(() => {
-		projectStore.fetchProjects()
+		projectStore.fetchUser()
 	})
 }
 // Toggle delete modal

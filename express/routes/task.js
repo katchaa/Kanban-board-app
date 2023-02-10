@@ -12,4 +12,3 @@ taskRoutes
 	.delete(taskController.delete);
 
 module.exports = taskRoutes;
-

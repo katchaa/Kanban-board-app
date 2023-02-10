@@ -1,13 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { nanoid } from 'nanoid'
-import { useAuthStore } from './auth'
-import {
-	findById,
-	handleDelete,
-	handleEdit,
-	handlePost,
-} from '../helpers/project'
+import { findById } from '../helpers/project'
 
 export const useProjectStore = defineStore('project', {
 	state: () => {
@@ -120,57 +113,53 @@ export const useProjectStore = defineStore('project', {
 
 		// Tasks actions
 		async addTask(text, cardId) {
-			// Task post
 			const newTask = {
-				id: nanoid(),
 				text,
 				cardId,
 			}
-			await handlePost('tasks', newTask)
-
-			// Edit card tasks array
-			const card = findById(this.cards, cardId)
-			let tasks = this.tasks
-			if (card.tasks.length) {
-				tasks = [...card.tasks, newTask.id]
-			} else {
-				tasks = [newTask.id]
-			}
-			await handleEdit('cards', card.id, { tasks })
+			await axios
+				.post('http://localhost:3001/task', newTask, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async editTask(taskId, text) {
-			await handleEdit('tasks', taskId, { text })
+			await axios
+				.patch(
+					`http://localhost:3001/task/${taskId}`,
+					{ text },
+					{
+						withCredentials: true,
+					}
+				)
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async deleteTask(taskId) {
-			// Edit card tasks array
-			const card = this.cards.find((card) => card.tasks.includes(taskId))
-			const taskToDelete = card.tasks.indexOf(taskId)
-			card.tasks.splice(taskToDelete, 1)
-			await handleEdit('cards', card.id, { tasks: card.tasks })
-
-			// Delete current task
-			await handleDelete('tasks', taskId)
+			await axios
+				.delete(`http://localhost:3001/task/${taskId}`, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async dragAndDrop(cardId, taskId) {
 			const task = findById(this.tasks, taskId)
-			const nextCard = findById(this.cards, cardId)
-			const prevCard = findById(this.cards, task.cardId)
-
-			const nextCardTasks = [...nextCard.tasks, task.id]
-			const prevCardTasks = [...prevCard.tasks]
-			const taskToMove = prevCardTasks.indexOf(task.id)
-			prevCardTasks.splice(taskToMove, 1)
-
-			if (nextCard.id === prevCard.id) {
-				return
-			} else {
-				await handleEdit('tasks', taskId, { cardId })
-				await handleEdit('cards', prevCard.id, { tasks: prevCardTasks })
-				await handleEdit('cards', nextCard.id, { tasks: nextCardTasks })
-			}
+			if (task.cardId === cardId) return
+			await axios
+				.patch(
+					`http://localhost:3001/task/dnd/${taskId}`,
+					{ _id: cardId },
+					{
+						withCredentials: true,
+					}
+				)
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 	},
 })

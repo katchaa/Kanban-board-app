@@ -19,7 +19,7 @@
 			</button>
 			<DeleteModal
 				type="task"
-				:id="props.task.id"
+				:id="props.task._id"
 				:show="deleteModal"
 				@close-delete-modal="toggleDeleteModal()"
 			>
@@ -62,8 +62,8 @@ const editTask = async () => {
 	if (newText.value === '' || newText.value === props.task.text) {
 		edit.value = false
 	} else {
-		await projectStore.editTask(props.task.id, newText.value)
-		await projectStore.fetchProjects()
+		await projectStore.editTask(props.task._id, newText.value)
+		await projectStore.fetchUser()
 		edit.value = false
 	}
 }
