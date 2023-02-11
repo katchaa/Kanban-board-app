@@ -5,20 +5,19 @@
 		<main class="cards">
 			<RouterLink
 				class="link"
+				v-for="project in projects"
+				:key="project.id"
 				:to="{
 					name: 'project',
 					params: {
-						userId: user.id,
-						projectId: project.id,
+						projectId: project._id,
 					},
 				}"
-				v-for="project in projects"
-				:key="project.id"
 			>
 				<h3 class="title">
 					{{ project.projectName }}
 				</h3>
-				<img :src="project.avatar" :alt="project.projectName" />
+				<img :src="project.cover" :alt="project.projectName" />
 			</RouterLink>
 		</main>
 	</section>
@@ -26,26 +25,23 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useAuthStore } from '../../stores/auth'
 import { useProjectStore } from '../../stores/project'
 
-const authStore = useAuthStore()
 const projectStore = useProjectStore()
 
 const user = computed(() => {
-	return authStore.user
+	return projectStore.user
 })
 
 const projects = computed(() => {
-	let projects = []
-	// if (user.value) {
-	for (const projectId of user.value.projects) {
-		projects.push(
-			projectStore.projects.find((project) => project.id === projectId)
-		)
-		// }
-	}
-	return projects
+	// let projects = []
+	// for (const projectId of user.value.projects) {
+	// 	projects.push(
+	// 		projectStore.projects.find((project) => project._id === projectId)
+	// 	)
+	// }
+	// return projects
+	return projectStore.projects
 })
 </script>
 
