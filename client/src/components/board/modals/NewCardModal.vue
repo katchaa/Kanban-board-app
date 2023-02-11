@@ -39,7 +39,7 @@ const route = useRoute()
 const add = async () => {
 	await projectStore
 		.addCard(cardTitle.value, route.params.projectId)
-		.then(() => projectStore.fetchProjects())
+		.then(() => projectStore.fetchUser())
 	closeModal()
 }
 

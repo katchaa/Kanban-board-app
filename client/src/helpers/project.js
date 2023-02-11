@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const findById = (resource, id) => {
-	return resource.find((r) => r.id === id)
+	return resource.find((r) => r._id === id)
 }
 
 export const handlePost = async (directory, data) => {

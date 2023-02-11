@@ -64,23 +64,22 @@ import { useAuthStore } from '../../../stores/auth'
 import AppButton from '../../AppButton.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
 import AppModal from '../../AppModal.vue'
+import { useProjectStore } from '../../../stores/project'
 
 const props = defineProps({
-	user: {
-		type: Object,
-		required: true,
-	},
 	show: {
 		type: Boolean,
 		required: true,
 	},
 })
 
+const projectStore = useProjectStore()
+const user = computed(() => projectStore.user)
 // Edit user data
 let userData = reactive({
-	username: props.user.username,
-	firstName: props.user.firstName,
-	lastName: props.user.lastName,
+	username: user.value.username,
+	firstName: user.value.firstName,
+	lastName: user.value.lastName,
 })
 // Validation settings
 const rules = computed(() => {
@@ -114,9 +113,7 @@ const editUser = async () => {
 		lastName: userData.lastName,
 	})
 	if (result) {
-		authStore
-			.editUser(props.user.id, newUser)
-			.then(() => authStore.fetchUser())
+		authStore.editUser(newUser).then(() => projectStore.fetchUser())
 		emit('closeModal')
 	}
 }

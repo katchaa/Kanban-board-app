@@ -2,7 +2,7 @@
 	<div class="container">
 		<ProjectNavbar />
 		<div class="cards">
-			<ProjectCard v-for="card in cards" :key="card.id" :card="card" />
+			<ProjectCard v-for="card in cards" :key="card._id" :card="card" />
 		</div>
 	</div>
 </template>
@@ -20,7 +20,7 @@ const route = useRoute()
 // Filter project cards from store
 const cards = computed(() => {
 	return projectStore.cards.filter(
-		(card) => card.projectId === route.params?.projectId
+		(card) => card.projectId === route.params.projectId
 	)
 })
 </script>
