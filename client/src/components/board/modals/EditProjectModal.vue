@@ -52,8 +52,9 @@ const project = reactive({
 })
 
 const editProject = async () => {
-	await projectStore.editProject(projectId.value, project)
-	await projectStore.fetchProjects()
+	await projectStore
+		.editProject(projectId.value, project)
+		.then(() => projectStore.fetchUser())
 	closeModal()
 }
 

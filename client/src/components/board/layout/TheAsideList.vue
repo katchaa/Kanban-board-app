@@ -7,12 +7,12 @@
 			class="avatar"
 			:to="{
 				name: 'project',
-				params: { userId: project?.userId, projectId: project?.id },
+				params: { projectId: project?._id },
 			}"
 			v-for="project in projects"
-			:key="project?.id"
+			:key="project?._id"
 		>
-			<img :src="project?.avatar" :alt="project?.projectName" />
+			<img :src="project?.cover" :alt="project?.projectName" />
 		</RouterLink>
 	</div>
 </template>
@@ -56,6 +56,7 @@ const projects = computed(() => {
 			width: 2.25rem;
 			height: 2.25rem;
 			border-radius: $radius-sm;
+			object-fit: cover;
 		}
 	}
 }

@@ -1,214 +1,165 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { nanoid } from 'nanoid'
-import { useAuthStore } from './auth'
-import {
-	findById,
-	handleDelete,
-	handleEdit,
-	handlePost,
-} from '../helpers/project'
+import { findById } from '../helpers/project'
 
 export const useProjectStore = defineStore('project', {
 	state: () => {
 		return {
+			user: {},
 			projects: [],
 			cards: [],
 			tasks: [],
 		}
 	},
+	getters: {
+		getFullName() {
+			return `${this.user.firstName} ${this.user.lastName}`
+		},
+	},
 	actions: {
 		// Data fetching
-		async fetchProjects() {
-			const authStore = useAuthStore()
-			if (authStore.authUser) {
-				await axios
-					.get('http://localhost:3001/projects', {
-						params: {
-							userId: authStore.authUser,
-						},
-					})
-					.then((res) => {
-						this.projects = []
-						this.projects.push(...res.data)
-					})
-					.catch((err) => console.log(err))
-				const projectId = this.projects.map((project) => project.id)
-				await this.fetchCards(projectId)
-			}
-		},
-
-		async fetchCards(projectId) {
+		async fetchUser() {
 			await axios
-				.get('http://localhost:3001/cards', {
-					params: {
-						projectId: projectId,
-					},
-				})
+				.get('http://localhost:3001/user/me', { withCredentials: true })
 				.then((res) => {
+					this.projects = []
 					this.cards = []
-					this.cards.push(...res.data)
-				})
-				.catch((err) => console.log(err))
-			const cardId = this.cards.map((card) => card.id)
-			await this.fetchTasks(cardId)
-		},
-
-		async fetchTasks(cardId) {
-			await axios
-				.get('http://localhost:3001/tasks', {
-					params: {
-						cardId: cardId,
-					},
-				})
-				.then((res) => {
 					this.tasks = []
-					this.tasks.push(...res.data)
+					this.user = res.data
+					this.projects = res.data.projects
+					for (const project of res.data.projects) {
+						if (project.cards.length) {
+							this.cards.push(...project.cards)
+							for (const card of project.cards) {
+								if (card.tasks.length) {
+									this.tasks.push(...card.tasks)
+								}
+							}
+						}
+					}
 				})
 				.catch((err) => console.log(err))
 		},
 
 		// Projects actions
-		async addProject(projectData, userId) {
+		async addProject(projectData) {
 			const newProject = {
-				id: nanoid(),
 				...projectData,
-				avatar: `http://picsum.photos/id/${Math.floor(
+				cover: `http://picsum.photos/id/${Math.floor(
 					Math.random() * 500
 				)}/200/300`,
-				cards: [],
-				userId,
 			}
-			await handlePost('projects', newProject)
-
-			// Edit user projects array
-			const authStore = useAuthStore()
-			const user = authStore.user
-			let projects = this.projects
-			if (user.projects.length) {
-				projects = [...user.projects, newProject.id]
-			} else {
-				projects = [newProject.id]
-			}
-			await handleEdit('users', user.id, { projects })
+			await axios
+				.post('http://localhost:3001/project', newProject, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async editProject(projectId, data) {
-			await handleEdit('projects', projectId, data)
+			await axios
+				.patch(`http://localhost:3001/project/${projectId}`, data, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async deleteProject(projectId) {
-			// Edit user projects array
-			const authStore = useAuthStore()
-			const user = authStore.user
-			const projectToDelete = user.projects.indexOf(projectId)
-			user.projects.splice(projectToDelete, 1)
-			await handleEdit('users', user.id, { projects: user.projects })
-
-			// Delete project's cards
-			const cards = this.cards.filter(
-				(card) => card.projectId === projectId
-			)
-			cards.forEach(async (card) => {
-				await handleDelete('cards', card.id)
-			})
-
-			// Delete current project
-			await handleDelete('projects', projectId)
+			await axios
+				.delete(`http://localhost:3001/project/${projectId}`, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		// Cards actions
 		async addCard(title, projectId) {
-			// Card post
 			const newCard = {
-				id: nanoid(),
 				title,
-				tasks: [],
 				projectId,
 			}
-			await handlePost('cards', newCard)
-
-			// Edit projects cards array
-			const project = findById(this.projects, projectId)
-			let cards = this.cards
-			if (project.cards.length) {
-				cards = [...project.cards, newCard.id]
-			} else {
-				cards = [newCard.id]
-			}
-			await handleEdit('projects', project.id, { cards })
+			await axios
+				.post('http://localhost:3001/card', newCard, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async editCard(cardId, title) {
-			await handleEdit('cards', cardId, { title })
+			await axios
+				.patch(
+					`http://localhost:3001/card/${cardId}`,
+					{ title },
+					{
+						withCredentials: true,
+					}
+				)
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async deleteCard(cardId) {
-			// Edit project cards array
-			const project = this.projects.find((project) =>
-				project.cards.includes(cardId)
-			)
-			const cardToDelete = project.cards.indexOf(cardId)
-			project.cards.splice(cardToDelete, 1)
-			await handleEdit('projects', project.id, { cards: project.cards })
-
-			//Delete current card
-			await handleDelete('cards', cardId)
+			await axios
+				.delete(`http://localhost:3001/card/${cardId}`, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		// Tasks actions
 		async addTask(text, cardId) {
-			// Task post
 			const newTask = {
-				id: nanoid(),
 				text,
 				cardId,
 			}
-			await handlePost('tasks', newTask)
-
-			// Edit card tasks array
-			const card = findById(this.cards, cardId)
-			let tasks = this.tasks
-			if (card.tasks.length) {
-				tasks = [...card.tasks, newTask.id]
-			} else {
-				tasks = [newTask.id]
-			}
-			await handleEdit('cards', card.id, { tasks })
+			await axios
+				.post('http://localhost:3001/task', newTask, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async editTask(taskId, text) {
-			await handleEdit('tasks', taskId, { text })
+			await axios
+				.patch(
+					`http://localhost:3001/task/${taskId}`,
+					{ text },
+					{
+						withCredentials: true,
+					}
+				)
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async deleteTask(taskId) {
-			// Edit card tasks array
-			const card = this.cards.find((card) => card.tasks.includes(taskId))
-			const taskToDelete = card.tasks.indexOf(taskId)
-			card.tasks.splice(taskToDelete, 1)
-			await handleEdit('cards', card.id, { tasks: card.tasks })
-
-			// Delete current task
-			await handleDelete('tasks', taskId)
+			await axios
+				.delete(`http://localhost:3001/task/${taskId}`, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
 		async dragAndDrop(cardId, taskId) {
 			const task = findById(this.tasks, taskId)
-			const nextCard = findById(this.cards, cardId)
-			const prevCard = findById(this.cards, task.cardId)
-
-			const nextCardTasks = [...nextCard.tasks, task.id]
-			const prevCardTasks = [...prevCard.tasks]
-			const taskToMove = prevCardTasks.indexOf(task.id)
-			prevCardTasks.splice(taskToMove, 1)
-
-			if (nextCard.id === prevCard.id) {
-				return
-			} else {
-				await handleEdit('tasks', taskId, { cardId })
-				await handleEdit('cards', prevCard.id, { tasks: prevCardTasks })
-				await handleEdit('cards', nextCard.id, { tasks: nextCardTasks })
-			}
+			if (task.cardId === cardId) return
+			await axios
+				.patch(
+					`http://localhost:3001/task/dnd/${taskId}`,
+					{ _id: cardId },
+					{
+						withCredentials: true,
+					}
+				)
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 	},
 })

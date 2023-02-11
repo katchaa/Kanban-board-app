@@ -20,7 +20,7 @@
 			/>
 			<DeleteModal
 				type="project"
-				:id="project?.id"
+				:id="project?._id"
 				:show="deleteModal"
 				@close-delete-modal="toggleDeleteModal()"
 			>

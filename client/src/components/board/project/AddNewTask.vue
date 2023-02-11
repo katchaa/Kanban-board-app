@@ -21,7 +21,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 import { useProjectStore } from '../../../stores/project'
 import AppButton from '../../AppButton.vue'
 import AppSVGIcon from '../../AppSVGIcon.vue'
@@ -43,12 +42,11 @@ const toggleTextarea = () => {
 
 // Add task
 const projectStore = useProjectStore()
-const route = useRoute()
 const text = ref('')
 
 const addTask = async () => {
 	await projectStore.addTask(text.value, props.cardId).then(() => {
-		projectStore.fetchCards(route.params.projectId)
+		projectStore.fetchUser()
 	})
 	toggleTextarea()
 }

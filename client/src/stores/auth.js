@@ -1,67 +1,47 @@
 import { defineStore } from 'pinia'
-import { useProjectStore } from './project'
-import { nanoid } from 'nanoid'
 import axios from 'axios'
-import { handleDelete, handleEdit } from '../helpers/project'
 
 export const useAuthStore = defineStore('auth', {
 	state: () => {
 		return {
-			user: {},
+			// user: {},
 			authUser: localStorage.getItem('user'),
 			authError: null,
 		}
 	},
-	getters: {
-		getFullName() {
-			return `${this.user.firstName} ${this.user.lastName}`
-		},
-	},
 	actions: {
-		async fetchUser() {
-			if (this.authUser) {
-				await axios
-					.get('http://localhost:3001/users', {
-						params: {
-							id: this.authUser,
-						},
-					})
-					.then((res) => {
-						this.user = res.data[0]
-					})
-			}
+		async editUser(data) {
+			await axios
+				.patch('http://localhost:3001/user/edit', data, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
-		async editUser(userId, data) {
-			await handleEdit('users', userId, data)
+		async changePassword(data) {
+			await axios
+				.patch('http://localhost:3001/user/change-password', data, {
+					withCredentials: true,
+				})
+				.then((res) => console.log(res))
+				.catch((err) => console.log(err))
 		},
 
-		async changePassword(userId, password) {
-			await handleEdit('users', userId, { password })
-		},
-
-		async deleteAccount(userId) {
-			// Delete all users cards and tasks
-			const projectStore = useProjectStore()
-			const projects = projectStore.projects.filter(
-				(project) => project.userId === userId
-			)
-			let cards = []
-			for (let project of projects) {
-				cards.push(...project.cards)
-			}
-			for (let cardId of cards) {
-				await handleDelete('cards', cardId)
-			}
-
-			// Delete user account
-			await handleDelete('users', userId)
-			localStorage.removeItem('user')
+		async deleteAccount() {
+			await axios
+				.delete('http://localhost:3001/user/delete-user', {
+					withCredentials: true,
+				})
+				.then((res) => {
+					console.log(res.data)
+					localStorage.removeItem('user')
+				})
+				.catch((err) => console.log(err))
 		},
 
 		async registration(data) {
 			const newUser = {
-				id: nanoid(),
 				username: data.username,
 				firstName: data.firstName,
 				lastName: data.lastName,
@@ -70,24 +50,22 @@ export const useAuthStore = defineStore('auth', {
 				avatar: `http://picsum.photos/id/${Math.floor(
 					Math.random() * 500
 				)}/200/300`,
-				projects: [],
 			}
 			await axios
-				.post('http://localhost:3001/users', newUser)
+				.post('http://localhost:3001/register', newUser, {
+					withCredentials: true,
+				})
 				.then((res) => {
-					localStorage.setItem('user', res.data.id)
-					this.authUser = res.data.id
+					localStorage.setItem('user', res.data._id)
+					this.authUser = res.data._id
 				})
 				.catch((err) => console.log(err))
 		},
 
 		async login(data) {
 			await axios
-				.get('http://localhost:3001/users', {
-					params: {
-						email: data.email,
-						password: data.password,
-					},
+				.post('http://localhost:3001/login', data, {
+					withCredentials: true,
 				})
 				.then((res) => {
 					if (res.data.length === 0) {
@@ -96,8 +74,8 @@ export const useAuthStore = defineStore('auth', {
 						)
 					} else {
 						this.authError = null
-						localStorage.setItem('user', res.data[0].id)
-						this.authUser = res.data[0].id
+						localStorage.setItem('user', res.data._id)
+						this.authUser = res.data._id
 					}
 				})
 				.catch((err) => {
@@ -106,7 +84,10 @@ export const useAuthStore = defineStore('auth', {
 		},
 
 		async logout() {
-			localStorage.removeItem('user')
+			await axios
+				.post('http://localhost:3001/logout', { withcretentials: true })
+				.then(() => localStorage.removeItem('user'))
+				.catch((err) => console.log(err))
 		},
 	},
 })

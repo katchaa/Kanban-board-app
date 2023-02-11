@@ -14,7 +14,7 @@ const router = createRouter({
 			meta: { auth: false },
 		},
 		{
-			path: '/:userId',
+			path: '/board',
 			name: 'board',
 			component: () =>
 				import(

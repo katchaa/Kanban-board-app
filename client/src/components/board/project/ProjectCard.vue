@@ -2,7 +2,7 @@
 	<Transition name="card" appear>
 		<section
 			class="card"
-			@drop="onDrop($event, props.card.id)"
+			@drop="onDrop($event, props.card._id)"
 			@dragenter.prevent
 			@dragover.prevent
 		>
@@ -26,7 +26,7 @@
 			</header>
 			<DeleteModal
 				type="card"
-				:id="props.card.id"
+				:id="props.card._id"
 				:show="deleteModal"
 				@close-delete-modal="toggleDeleteModal()"
 			>
@@ -35,13 +35,13 @@
 			<div class="tasks">
 				<ProjectTask
 					v-for="task in tasks"
-					:key="task?.id"
+					:key="task?._id"
 					:task="task"
 					draggable="true"
-					@dragstart="startDrag($event, task.id)"
+					@dragstart="startDrag($event, task._id)"
 				/>
 			</div>
-			<AddNewTask :cardId="props.card.id" />
+			<AddNewTask :cardId="props.card._id" />
 		</section>
 	</Transition>
 </template>
@@ -66,8 +66,8 @@ const props = defineProps({
 const projectStore = useProjectStore()
 const tasks = computed(() => {
 	let currTasks = []
-	props.card.tasks.forEach((taskId) => {
-		currTasks.push(findById(projectStore.tasks, taskId))
+	props.card.tasks.forEach((task) => {
+		currTasks.push(findById(projectStore.tasks, task._id))
 	})
 	return currTasks
 })
@@ -91,8 +91,8 @@ const editCard = async () => {
 	if (newTitle.value === '' || newTitle.value === props.card.title) {
 		edit.value = false
 	} else {
-		await projectStore.editCard(props.card.id, newTitle.value)
-		await projectStore.fetchProjects()
+		await projectStore.editCard(props.card._id, newTitle.value)
+		await projectStore.fetchUser()
 		edit.value = false
 	}
 }
@@ -107,7 +107,7 @@ const startDrag = (e, taskId) => {
 const onDrop = async (e, cardId) => {
 	const taskId = e.dataTransfer.getData('taskId')
 	await projectStore.dragAndDrop(cardId, taskId).then(() => {
-		projectStore.fetchProjects()
+		projectStore.fetchUser()
 	})
 }
 // Toggle delete modal
