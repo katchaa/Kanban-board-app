@@ -43,4 +43,3 @@ exports.delete = async (req, res) => {
 	await Card.findOneAndDelete({ _id: req.params.id });
 	res.status(200).json(card);
 };
-

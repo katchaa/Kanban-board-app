@@ -24,7 +24,6 @@ import AppModal from '../../AppModal.vue'
 const props = defineProps({
 	id: {
 		type: String,
-		required: true,
 	},
 	type: {
 		type: String,
@@ -60,7 +59,9 @@ const deleteItem = async () => {
 		router.push({ name: 'auth' })
 	}
 	emit('closeDeleteModal')
-	await projectStore.fetchUser()
+	if (props.type !== 'user') {
+		await projectStore.fetchUser()
+	}
 }
 </script>
 
