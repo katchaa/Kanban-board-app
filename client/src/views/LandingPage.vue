@@ -61,12 +61,13 @@
 						<li>Vuelidate</li>
 						<li>SASS</li>
 						<li>Adobe Illustrator</li>
-						<li>JSON-server</li>
 						<li>Axios</li>
+						<li>Express.js</li>
+						<li>MongoDB</li>
 					</ul>
 					<p>
-						Don't forget run <span>npm run server</span> in second
-						terminal to start JSON-server API.
+						Don't forget run <span>npm run dev</span> in second
+						terminal to start Express server and MongoDB.
 					</p>
 				</aside>
 			</div>
