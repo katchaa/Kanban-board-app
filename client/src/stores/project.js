@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { findById } from '../helpers/project'
+import {
+	findById,
+	handleDelete,
+	handleEdit,
+	handlePost,
+} from '../helpers/project'
 
 export const useProjectStore = defineStore('project', {
 	state: () => {
@@ -49,30 +54,15 @@ export const useProjectStore = defineStore('project', {
 					Math.random() * 500
 				)}/200/300`,
 			}
-			await axios
-				.post('http://localhost:3001/project', newProject, {
-					withCredentials: true,
-				})
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handlePost('project', newProject)
 		},
 
 		async editProject(projectId, data) {
-			await axios
-				.patch(`http://localhost:3001/project/${projectId}`, data, {
-					withCredentials: true,
-				})
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handleEdit('project', projectId, data)
 		},
 
 		async deleteProject(projectId) {
-			await axios
-				.delete(`http://localhost:3001/project/${projectId}`, {
-					withCredentials: true,
-				})
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handleDelete('project', projectId)
 		},
 
 		// Cards actions
@@ -81,34 +71,15 @@ export const useProjectStore = defineStore('project', {
 				title,
 				projectId,
 			}
-			await axios
-				.post('http://localhost:3001/card', newCard, {
-					withCredentials: true,
-				})
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handlePost('card', newCard)
 		},
 
 		async editCard(cardId, title) {
-			await axios
-				.patch(
-					`http://localhost:3001/card/${cardId}`,
-					{ title },
-					{
-						withCredentials: true,
-					}
-				)
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handleEdit('card', cardId, title)
 		},
 
 		async deleteCard(cardId) {
-			await axios
-				.delete(`http://localhost:3001/card/${cardId}`, {
-					withCredentials: true,
-				})
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handleDelete('card', cardId)
 		},
 
 		// Tasks actions
@@ -117,49 +88,21 @@ export const useProjectStore = defineStore('project', {
 				text,
 				cardId,
 			}
-			await axios
-				.post('http://localhost:3001/task', newTask, {
-					withCredentials: true,
-				})
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handlePost('task', newTask)
 		},
 
 		async editTask(taskId, text) {
-			await axios
-				.patch(
-					`http://localhost:3001/task/${taskId}`,
-					{ text },
-					{
-						withCredentials: true,
-					}
-				)
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handleEdit('task', taskId, text)
 		},
 
 		async deleteTask(taskId) {
-			await axios
-				.delete(`http://localhost:3001/task/${taskId}`, {
-					withCredentials: true,
-				})
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handleDelete('task', taskId)
 		},
 
 		async dragAndDrop(cardId, taskId) {
 			const task = findById(this.tasks, taskId)
 			if (task.cardId === cardId) return
-			await axios
-				.patch(
-					`http://localhost:3001/task/dnd/${taskId}`,
-					{ _id: cardId },
-					{
-						withCredentials: true,
-					}
-				)
-				.then((res) => console.log(res))
-				.catch((err) => console.log(err))
+			await handleEdit('task/dnd', taskId, { _id: cardId })
 		},
 	},
 })

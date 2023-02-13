@@ -6,21 +6,27 @@ export const findById = (resource, id) => {
 
 export const handlePost = async (directory, data) => {
 	await axios
-		.post(`http://localhost:3001/${directory}`, data)
+		.post(`http://localhost:3001/${directory}`, data, {
+			withCredentials: true,
+		})
 		.then((res) => console.log(`${directory} - ${res.data}`))
 		.catch((err) => console.log(err))
 }
 
 export const handleEdit = async (directory, id, data) => {
 	await axios
-		.patch(`http://localhost:3001/${directory}/${id}`, data)
+		.patch(`http://localhost:3001/${directory}/${id}`, data, {
+			withCredentials: true,
+		})
 		.then((res) => console.log(`${directory} - ${res.data}`))
 		.catch((err) => console.log(err))
 }
 
 export const handleDelete = async (directory, id) => {
 	await axios
-		.delete(`http://localhost:3001/${directory}/${id}`)
+		.delete(`http://localhost:3001/${directory}/${id}`, {
+			withCredentials: true,
+		})
 		.then((res) => console.log(`${directory} - ${res.data}`))
 		.catch((err) => console.log(err))
 }
