@@ -1,4 +1,6 @@
 import { fileURLToPath, URL } from 'node:url'
+import dns from 'dns'
+dns.setDefaultResultOrder('verbatim')
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
